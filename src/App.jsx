@@ -1,82 +1,91 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-// Context Providers for authentication, cart management, and theme handling
-// import { AuthProvider } from './Context/AuthContext';
-// import { CartProvider } from './contexts/CartContext';
-// import { ThemeProvider } from './contexts/ThemeContext';
+// Context Providers
+import AuthContext from "./Context/AuthContext"; // Provides authentication-related context
+import CartContext from "./Context/CartContext"; // Manages shopping cart state
+import ThemeContext from "./Context/ThemeContext"; // Manages theme (dark/light mode)
 
-// Layout components for different sections of the application
-import MainLayout from './layouts/MainLayout';
-import DashboardLayout from './layouts/DashboardLayout';
-import AuthLayout from './layouts/AuthLayout';
+// Custom Hooks
+import UseAuth from "./Hooks/UseAuth"; // Hook to manage authentication logic
+import UseCart from "./Hooks/UseCart"; // Hook to manage cart operations
 
-// Pages inside the "home" folder
-import Home from './pages/home/Home';
+// Layouts
+import AuthLayout from "./Layouts/AuthLayout"; // Layout for authentication pages
+import DashboardLayout from "./Layouts/DashboardLayout"; // Layout for dashboard pages
+import MainLayout from "./Layouts/MainLayout"; // Main layout for general pages
 
-// Authentication-related pages inside the "auth" folder
-import Login from './pages/auth/Login';
-import Register from './pages/auth/Register';
-import ForgotPassword from './pages/auth/ForgotPassword';
+// Authentication Pages
+import Login from "./Pages/Auth/Login"; // User login page
+import Register from "./Pages/Auth/Register"; // User registration page
+import ForgotPassword from "./Pages/Auth/ForgotPassword"; // Password recovery page
 
-// Dashboard components inside the "dashboard" folder
-import Dashboard from './components/dashboard/Dashboard';
+// Home & Main Pages
+import Home from "./Pages/Home/Home"; // Homepage
+import Cart from "./Pages/Cart/Cart"; // Shopping cart page
 
-// Cart-related pages inside the "cart" folder
-import Cart from './pages/cart/Cart';
+// Order Pages
+import OrderHistory from "./Pages/Orders/OrderHistory"; // View past orders
+import OrderDetails from "./Pages/Orders/OrderDetails"; // View specific order details
 
-// Order-related pages inside the "orders" folder
-import OrderHistory from './pages/orders/OrderHistory';
-import OrderDetails from './pages/orders/OrderDetails';
+// Payment Pages
+import Checkout from "./Pages/Payments/Checkout"; // Checkout process page
+import Payments from "./Pages/Payments/Payments"; // Payment methods and processing page
+import Success from "./Pages/Payments/Success"; // Payment success confirmation page
 
-// Payment-related pages inside the "payments" folder
-import Checkout from './pages/payments/Checkout';
-import Payment from './pages/payments/Payment';
-import Success from './pages/payments/Success';
+// User Profile & Settings
+import Profile from "./Pages/User/Profile"; // User profile page
+import Settings from "./Pages/User/Settings"; // User settings page
 
-// User profile and settings pages inside the "user" folder
-import Profile from './pages/user/Profile';
-import Settings from './pages/user/Settings';
+// Dashboard
+import Dashboard from "./components/Dashboard/Dashboard"; // Main dashboard component
+
+// Services (Business Logic)
+import AuthService from "./Services/AuthService"; // Handles user authentication API calls
+import CartService from "./Services/CartService"; // Handles cart-related API calls
+import PaymentService from "./Services/PaymentService"; // Handles payment transactions
+
+// Utility Functions
+import FormatCurrency from "./Utils/FormatCurrency"; // Formats numbers as currency
+import ToastNotifications from "./Utils/ToastNotifications"; // Displays toast notifications
+import ValidateEmail from "./Utils/ValidateEmail"; // Validates email format
 
 function App() {
   return (
-    // Wrapping the entire app with context providers
-    <AuthProvider>
-      <CartProvider>
-        <ThemeProvider>
+    <AuthContext.Provider value={UseAuth()}>
+      <CartContext.Provider value={UseCart()}>
+        <ThemeContext.Provider value={{ theme: "light" }}> {/* Example theme setup */}
           <Router>
             <Routes>
-              {/* Routes wrapped in the Main Layout */}
-              <Route path="/" element={<MainLayout />}>
-                <Route index element={<Home />} />
-                <Route path="cart" element={<Cart />} />
-                <Route path="orders" element={<OrderHistory />} />
-                <Route path="orders/:id" element={<OrderDetails />} />
-                <Route path="profile" element={<Profile />} />
-                <Route path="settings" element={<Settings />} />
-              </Route>
+              {/* Public Routes */}
+              <Route path="/" element={<MainLayout><Home /></MainLayout>} />
+              <Route path="/cart" element={<MainLayout><Cart /></MainLayout>} />
+              
+              {/* Authentication Routes */}
+              <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
+              <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
+              <Route path="/forgot-password" element={<AuthLayout><ForgotPassword /></AuthLayout>} />
 
-              {/* Authentication routes wrapped in Auth Layout */}
-              <Route path="/auth" element={<AuthLayout />}>
-                <Route path="login" element={<Login />} />
-                <Route path="register" element={<Register />} />
-                <Route path="forgot-password" element={<ForgotPassword />} />
-              </Route>
+              {/* Order Routes */}
+              <Route path="/orders" element={<DashboardLayout><OrderHistory /></DashboardLayout>} />
+              <Route path="/orders/:id" element={<DashboardLayout><OrderDetails /></DashboardLayout>} />
 
-              {/* Dashboard routes wrapped in Dashboard Layout */}
-              <Route path="/dashboard" element={<DashboardLayout />}>
-                <Route index element={<Dashboard />} />
-              </Route>
+              {/* Payment Routes */}
+              <Route path="/checkout" element={<DashboardLayout><Checkout /></DashboardLayout>} />
+              <Route path="/payments" element={<DashboardLayout><Payments /></DashboardLayout>} />
+              <Route path="/payment-success" element={<DashboardLayout><Success /></DashboardLayout>} />
 
-              {/* Payment-related standalone routes */}
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/payment" element={<Payment />} />
-              <Route path="/success" element={<Success />} />
+              {/* User Profile & Settings */}
+              <Route path="/profile" element={<DashboardLayout><Profile /></DashboardLayout>} />
+              <Route path="/settings" element={<DashboardLayout><Settings /></DashboardLayout>} />
+
+              {/* Dashboard */}
+              <Route path="/dashboard" element={<DashboardLayout><Dashboard /></DashboardLayout>} />
             </Routes>
           </Router>
-        </ThemeProvider>
-      </CartProvider>
-    </AuthProvider>
+        </ThemeContext.Provider>
+      </CartContext.Provider>
+    </AuthContext.Provider>
   );
 }
 
