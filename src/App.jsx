@@ -16,6 +16,11 @@ import Login from "./Pages/Auth/Login";
 import Register from "./Pages/Auth/Register";
 import ForgotPassword from "./Pages/Auth/ForgotPassword";
 
+
+// Common pages
+import Header from "./components/Common/Header";
+import Footer from "./components/Common/Footer";
+
 // Public Pages
 import Home from "./Pages/Home/Home";
 import Cart from "./Pages/Cart/Cart";
@@ -52,6 +57,8 @@ function App() {
               <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
               <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
               <Route path="/forgot-password" element={<AuthLayout><ForgotPassword /></AuthLayout>} />
+              <Route path="/header" element={<Header />} />
+              <Route path="/footer" element={<Footer />} />
 
               {/* Protected Routes (Require Authentication) */}
               <Route path="/orders" element={
