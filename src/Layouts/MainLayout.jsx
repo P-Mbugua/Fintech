@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
 
-function MainLayout() {
+function MainLayout({ children }) {
   return (
     <div>
-      
+      <header>Navbar</header>
+      <main>{children}</main>
+      <footer>Footer</footer>
     </div>
-  )
+  );
 }
 
-export default MainLayout
+export default MainLayout;
