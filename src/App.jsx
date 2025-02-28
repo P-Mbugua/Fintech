@@ -2,90 +2,90 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Context Providers
-import AuthContext from "./Context/AuthContext"; // Provides authentication-related context
-import CartContext from "./Context/CartContext"; // Manages shopping cart state
-import ThemeContext from "./Context/ThemeContext"; // Manages theme (dark/light mode)
-
-// Custom Hooks
-import UseAuth from "./Hooks/UseAuth"; // Hook to manage authentication logic
-import UseCart from "./Hooks/UseCart"; // Hook to manage cart operations
+import { AuthProvider } from "./Context/AuthContext";
+import { CartProvider } from "./Context/CartContext";
+import { ThemeProvider } from "./Context/ThemeContext";
 
 // Layouts
-import AuthLayout from "./Layouts/AuthLayout"; // Layout for authentication pages
-import DashboardLayout from "./Layouts/DashboardLayout"; // Layout for dashboard pages
-import MainLayout from "./Layouts/MainLayout"; // Main layout for general pages
+import AuthLayout from "./Layouts/AuthLayout";
+import DashboardLayout from "./Layouts/DashboardLayout";
+import MainLayout from "./Layouts/MainLayout";
 
-// Authentication Pages
-import Login from "./Pages/Auth/Login"; // User login page
-import Register from "./Pages/Auth/Register"; // User registration page
-import ForgotPassword from "./Pages/Auth/ForgotPassword"; // Password recovery page
+// Authentication Pages (Public)
+import Login from "./Pages/Auth/Login";
+import Register from "./Pages/Auth/Register";
+import ForgotPassword from "./Pages/Auth/ForgotPassword";
 
-// Home & Main Pages
-import Home from "./Pages/Home/Home"; // Homepage
-import Cart from "./Pages/Cart/Cart"; // Shopping cart page
+// Public Pages
+import Home from "./Pages/Home/Home";
+import Cart from "./Pages/Cart/Cart";
 
-// Order Pages
-import OrderHistory from "./Pages/Orders/OrderHistory"; // View past orders
-import OrderDetails from "./Pages/Orders/OrderDetails"; // View specific order details
+// Order Pages (Protected)
+import OrderHistory from "./Pages/Orders/OrderHistory";
+import OrderDetails from "./Pages/Orders/OrderDetails";
 
-// Payment Pages
-import Checkout from "./Pages/Payments/Checkout"; // Checkout process page
-import Payments from "./Pages/Payments/Payments"; // Payment methods and processing page
-import Success from "./Pages/Payments/Success"; // Payment success confirmation page
+// Payment Pages (Protected)
+import Checkout from "./Pages/Payments/Checkout";
+import Payments from "./Pages/Payments/Payments";
+import Success from "./Pages/Payments/Success";
 
-// User Profile & Settings
-import Profile from "./Pages/User/Profile"; // User profile page
-import Settings from "./Pages/User/Settings"; // User settings page
+// User Profile & Settings (Protected)
+import Profile from "./Pages/User/Profile";
+import Settings from "./Pages/User/Settings";
 
-// Dashboard
-import Dashboard from "./components/Dashboard/Dashboard"; // Main dashboard component
+// Dashboard (Protected)
+import Dashboard from "./components/Dashboard/Dashboard";
 
-// Services (Business Logic)
-import AuthService from "./Services/AuthService"; // Handles user authentication API calls
-import CartService from "./Services/CartService"; // Handles cart-related API calls
-import PaymentService from "./Services/PaymentService"; // Handles payment transactions
-
-// Utility Functions
-import FormatCurrency from "./Utils/FormatCurrency"; // Formats numbers as currency
-import ToastNotifications from "./Utils/ToastNotifications"; // Displays toast notifications
-import ValidateEmail from "./Utils/ValidateEmail"; // Validates email format
+// Route Protection
+import ProtectedRoute from "./Routes/ProtectedRoute";
 
 function App() {
   return (
-    <AuthContext.Provider value={UseAuth()}>
-      <CartContext.Provider value={UseCart()}>
-        <ThemeContext.Provider value={{ theme: "light" }}> {/* Example theme setup */}
+    <AuthProvider>
+      <CartProvider>
+        <ThemeProvider>
           <Router>
             <Routes>
-              {/* Public Routes */}
+              {/* Public Routes (No authentication required) */}
               <Route path="/" element={<MainLayout><Home /></MainLayout>} />
               <Route path="/cart" element={<MainLayout><Cart /></MainLayout>} />
-              
-              {/* Authentication Routes */}
               <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
               <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
               <Route path="/forgot-password" element={<AuthLayout><ForgotPassword /></AuthLayout>} />
 
-              {/* Order Routes */}
-              <Route path="/orders" element={<DashboardLayout><OrderHistory /></DashboardLayout>} />
-              <Route path="/orders/:id" element={<DashboardLayout><OrderDetails /></DashboardLayout>} />
+              {/* Protected Routes (Require Authentication) */}
+              <Route path="/orders" element={
+                <ProtectedRoute><DashboardLayout><OrderHistory /></DashboardLayout></ProtectedRoute>
+              } />
+              <Route path="/orders/:id" element={
+                <ProtectedRoute><DashboardLayout><OrderDetails /></DashboardLayout></ProtectedRoute>
+              } />
 
-              {/* Payment Routes */}
-              <Route path="/checkout" element={<DashboardLayout><Checkout /></DashboardLayout>} />
-              <Route path="/payments" element={<DashboardLayout><Payments /></DashboardLayout>} />
-              <Route path="/payment-success" element={<DashboardLayout><Success /></DashboardLayout>} />
+              <Route path="/checkout" element={
+                <ProtectedRoute><DashboardLayout><Checkout /></DashboardLayout></ProtectedRoute>
+              } />
+              <Route path="/payments" element={
+                <ProtectedRoute><DashboardLayout><Payments /></DashboardLayout></ProtectedRoute>
+              } />
+              <Route path="/payment-success" element={
+                <ProtectedRoute><DashboardLayout><Success /></DashboardLayout></ProtectedRoute>
+              } />
 
-              {/* User Profile & Settings */}
-              <Route path="/profile" element={<DashboardLayout><Profile /></DashboardLayout>} />
-              <Route path="/settings" element={<DashboardLayout><Settings /></DashboardLayout>} />
+              <Route path="/profile" element={
+                <ProtectedRoute><DashboardLayout><Profile /></DashboardLayout></ProtectedRoute>
+              } />
+              <Route path="/settings" element={
+                <ProtectedRoute><DashboardLayout><Settings /></DashboardLayout></ProtectedRoute>
+              } />
 
-              {/* Dashboard */}
-              <Route path="/dashboard" element={<DashboardLayout><Dashboard /></DashboardLayout>} />
+              <Route path="/dashboard" element={
+                <ProtectedRoute><DashboardLayout><Dashboard /></DashboardLayout></ProtectedRoute>
+              } />
             </Routes>
           </Router>
-        </ThemeContext.Provider>
-      </CartContext.Provider>
-    </AuthContext.Provider>
+        </ThemeProvider>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 
