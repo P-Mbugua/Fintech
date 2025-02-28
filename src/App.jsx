@@ -30,6 +30,7 @@ import OrderHistory from "./Pages/Orders/OrderHistory";
 import OrderDetails from "./Pages/Orders/OrderDetails";
 
 // Payment Pages (Protected)
+// Done
 import Checkout from "./Pages/Payments/Checkout";
 import Payments from "./Pages/Payments/Payments";
 import Success from "./Pages/Payments/Success";
