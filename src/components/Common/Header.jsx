@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { 
-  Menu, X, ShoppingCart, User, LayoutDashboard, CreditCard, LogOut 
-} from "lucide-react"; // Icons for better UI
+  Menu, X, ShoppingCart, User, LayoutDashboard, CreditCard, LogOut, UserPlus, LogIn 
+} from "lucide-react"; // Added LogIn icon for login button
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,6 +34,12 @@ function Header() {
           <Link to="/profile" className="flex items-center gap-2 hover:text-gray-200 transition">
             <User size={22} /> Profile
           </Link>
+          <Link to="/register" className="flex items-center gap-2 bg-green-500 px-4 py-2 rounded-lg text-white hover:bg-green-600 transition">
+            <UserPlus size={22} /> Register
+          </Link>
+          <Link to="/login" className="flex items-center gap-2 bg-yellow-500 px-4 py-2 rounded-lg text-white hover:bg-yellow-600 transition">
+            <LogIn size={22} /> Login
+          </Link>
           <button onClick={handleLogout} className="flex items-center gap-2 hover:text-red-300 transition">
             <LogOut size={22} /> Logout
           </button>
@@ -59,6 +65,12 @@ function Header() {
           </Link>
           <Link to="/profile" className="flex items-center gap-2 hover:text-gray-300 transition">
             <User size={24} /> Profile
+          </Link>
+          <Link to="/register" className="flex items-center gap-2 bg-green-500 px-4 py-2 rounded-lg text-white hover:bg-green-600 transition">
+            <UserPlus size={24} /> Register
+          </Link>
+          <Link to="/login" className="flex items-center gap-2 bg-yellow-500 px-4 py-2 rounded-lg text-white hover:bg-yellow-600 transition">
+            <LogIn size={24} /> Login
           </Link>
           <button onClick={handleLogout} className="flex items-center gap-2 text-red-300 hover:text-red-500 transition">
             <LogOut size={24} /> Logout
