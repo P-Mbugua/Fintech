@@ -15,7 +15,8 @@ function Header() {
 
           <a href="#" className="flex items-center space-x-1 text-gray-800">
             <span className="font-bold">Fintech</span>
-            <span className="bg-blue-600 text-white px-3 py-2 rounded-full text-lg font-extrabold">com</span>
+            <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-extrabold">com</span>
+
           </a>
 
 
