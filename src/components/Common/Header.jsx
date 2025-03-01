@@ -64,9 +64,6 @@ function Header() {
               <Link to="/Returns" className="block px-4 py-2 hover:bg-gray-100">Returns</Link>
               <Link to="/Track Orders" className="block px-4 py-2 hover:bg-gray-100">Track Orders</Link>
               <Link to="/logout" className="block px-4 py-2 hover:bg-gray-100">Logout</Link>
-              <Link to="/logout" className="block px-4 py-2 hover:bg-gray-100">Logout</Link>
-              <Link to="/logout" className="block px-4 py-2 hover:bg-gray-100">Logout</Link>
-              <Link to="/logout" className="block px-4 py-2 hover:bg-gray-100">Logout</Link>
             </div>
           </div>
 
