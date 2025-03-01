@@ -19,6 +19,10 @@ function Header() {
           <Link to="/login" className="flex items-center gap-1 hover:text-blue-600">
               Help Centre
           </Link>
+
+          <Link to="/login" className="flex items-center gap-1 hover:text-blue-600">
+              Help Centre
+          </Link>
           </div>
 
         </div>
