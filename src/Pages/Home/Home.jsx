@@ -22,7 +22,7 @@ function Home() {
   ];
 
   return (
-    <div className="flex justify-center items-center bg-blue-600">
+    <div className="flex justify-center items-center p-4 bg-blue-600">
       {/* Container */}
       <div className="w-[900px] bg-white rounded-lg shadow-md">
         {/* Top Section */}
