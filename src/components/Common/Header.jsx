@@ -13,7 +13,7 @@ function Header() {
         {/* Logo */}
         <div className="flex items-center space-x-2 text-4xl font-bold">
           <span className="text-gray-800">Fintech</span>
-          <span className="bg-blue-600 text-white px-3 py-3 rounded-full text-sm font-extrabold">com</span>
+ <span className="bg-blue-600 text-white px-3 py-3 rounded-full text-sm font-extrabold">com</span>
 
           
           <div className=" ml-20 text-gray-700 text-sm display-none md:flex items-center space-x-4 font-normal">
