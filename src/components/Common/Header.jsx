@@ -16,6 +16,8 @@ function Header() {
           <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-bold">com</span>
         </div>
 
+        <span>|</span>
+
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6 text-gray-700 text-sm">
           <Link to="/login" className="flex items-center gap-1 hover:text-blue-600">
