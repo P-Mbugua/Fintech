@@ -13,11 +13,11 @@ function Header() {
         {/* Logo */}
         <div className="flex items-center space-x-2 text-4xl font-bold">
 
-          <a href="#" className="flex items-center space-x-1 text-gray-800">
-            <span className="font-bold">Fintech</span>
-            <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-extrabold">com</span>
+        <a href="#" className="flex items-center gap-1 text-gray-800">
+  <span className="font-bold leading-none">Fintech</span>
+  <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-extrabold leading-none">com</span>
+</a>
 
-          </a>
 
 
 
