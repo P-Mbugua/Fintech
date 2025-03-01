@@ -1,5 +1,5 @@
 import React from "react";
-import { FaFacebookF, FaTwitter, FaInstagram, FaCcVisa, FaCcMastercard, FaPaypal } from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaInstagram, FaCcVisa, FaCcMastercard, FaPaypal, FaGooglePlay, FaApple } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -68,9 +68,13 @@ const Footer = () => {
           {/* Download App */}
           <div>
             <h4 className="font-semibold mb-3 text-gray-900">Download Our App</h4>
-            <div className="flex space-x-3">
-              <img src="/appstore.png" alt="App Store" className="h-10 hover:opacity-80 transition duration-300" />
-              <img src="/googleplay.png" alt="Google Play" className="h-10 hover:opacity-80 transition duration-300" />
+            <div className="flex space-x-6 text-4xl">
+              <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer">
+                <FaApple className="cursor-pointer hover:text-black transition duration-300" />
+              </a>
+              <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer">
+                <FaGooglePlay className="cursor-pointer hover:text-green-600 transition duration-300" />
+              </a>
             </div>
           </div>
 
