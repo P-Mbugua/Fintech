@@ -1,69 +1,99 @@
 import React from "react";
-import { FaFacebookF, FaTwitter, FaInstagram, FaCcVisa, FaCcMastercard, FaCcPaypal } from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+import { FaCcVisa, FaCcMastercard, FaCcPaypal } from "react-icons/fa";
 
 function Footer() {
   return (
-    <footer className="relative bg-[#F5F5F5] text-[#333] py-12 overflow-hidden">
-      {/* Background Mask */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-[#E0E0E0] to-[#F5F5F5] opacity-50 pointer-events-none"></div>
-      
-      <div className="container mx-auto px-6 relative z-10">
+    <footer className="bg-[#004080] text-white py-12">
+      <div className="container mx-auto px-6">
         {/* Top Section */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 text-sm">
-          {/** Column Items */}
-          {[
-            { title: "Shop", links: ["Daily Deals", "App Only Deals", "Clearance Sale", "Gift Vouchers"] },
-            { title: "Account", links: ["My Account", "Track Order", "Returns", "Invoices"] },
-            { title: "Help", links: ["Help Centre", "Contact Us", "Shipping & Delivery", "Returns"] },
-            { title: "Company", links: ["About Us", "Careers", "Sell on MbuguaPeter", "Press & News"] },
-            { title: "Policy", links: ["Returns Policy", "Privacy Policy", "Terms & Conditions"] },
-          ].map((column, index) => (
-            <div key={index}>
-              <h4 className="font-semibold mb-4 text-[#222] relative after:content-[''] after:block after:w-10 after:h-[2px] after:bg-[#007BFF] after:mt-1">
-                {column.title}
-              </h4>
+        <div className="bg-gray-200 p-8 rounded-lg shadow-lg">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 text-sm text-gray-800">
+            {/* Column 1 - Shop */}
+            <div>
+              <h4 className="font-semibold mb-4 text-gray-900">Shop</h4>
               <ul className="space-y-2">
-                {column.links.map((link, i) => (
-                  <li key={i} className="hover:text-[#007BFF] cursor-pointer transition-colors duration-200">{link}</li>
-                ))}
+                <li className="hover:text-[#007BFF] cursor-pointer">Daily Deals</li>
+                <li className="hover:text-[#007BFF] cursor-pointer">App Only Deals</li>
+                <li className="hover:text-[#007BFF] cursor-pointer">Clearance Sale</li>
+                <li className="hover:text-[#007BFF] cursor-pointer">Gift Vouchers</li>
               </ul>
             </div>
-          ))}
+            
+            {/* Column 2 - Account */}
+            <div>
+              <h4 className="font-semibold mb-4 text-gray-900">Account</h4>
+              <ul className="space-y-2">
+                <li className="hover:text-[#007BFF] cursor-pointer">My Account</li>
+                <li className="hover:text-[#007BFF] cursor-pointer">Track Order</li>
+                <li className="hover:text-[#007BFF] cursor-pointer">Returns</li>
+                <li className="hover:text-[#007BFF] cursor-pointer">Invoices</li>
+              </ul>
+            </div>
+            
+            {/* Column 3 - Help */}
+            <div>
+              <h4 className="font-semibold mb-4 text-gray-900">Help</h4>
+              <ul className="space-y-2">
+                <li className="hover:text-[#007BFF] cursor-pointer">Help Centre</li>
+                <li className="hover:text-[#007BFF] cursor-pointer">Contact Us</li>
+                <li className="hover:text-[#007BFF] cursor-pointer">Shipping & Delivery</li>
+                <li className="hover:text-[#007BFF] cursor-pointer">Returns</li>
+              </ul>
+            </div>
+            
+            {/* Column 4 - Company */}
+            <div>
+              <h4 className="font-semibold mb-4 text-gray-900">Company</h4>
+              <ul className="space-y-2">
+                <li className="hover:text-[#007BFF] cursor-pointer">About Us</li>
+                <li className="hover:text-[#007BFF] cursor-pointer">Careers</li>
+                <li className="hover:text-[#007BFF] cursor-pointer">Sell on MbuguaPeter</li>
+                <li className="hover:text-[#007BFF] cursor-pointer">Press & News</li>
+              </ul>
+            </div>
+            
+            {/* Column 5 - Policy */}
+            <div>
+              <h4 className="font-semibold mb-4 text-gray-900">Policy</h4>
+              <ul className="space-y-2">
+                <li className="hover:text-[#007BFF] cursor-pointer">Returns Policy</li>
+                <li className="hover:text-[#007BFF] cursor-pointer">Privacy Policy</li>
+                <li className="hover:text-[#007BFF] cursor-pointer">Terms & Conditions</li>
+              </ul>
+            </div>
+          </div>
         </div>
 
         {/* Middle Section */}
         <div className="flex flex-wrap justify-between items-center mt-12">
           {/* App Download Buttons */}
           <div>
-            <h4 className="font-semibold mb-3 text-[#222]">Download Our Apps</h4>
+            <h4 className="font-semibold mb-3">Download Our Apps</h4>
             <div className="flex space-x-3">
-              <button className="bg-[#007BFF] text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-[#0056b3]">
-                <span className="font-medium">App Store</span>
-              </button>
-              <button className="bg-[#28A745] text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-[#218838]">
-                <span className="font-medium">Google Play</span>
-              </button>
+              <img src="/appstore.svg" alt="App Store" className="h-10" />
+              <img src="/googleplay.svg" alt="Google Play" className="h-10" />
             </div>
           </div>
-
+          
           {/* Social Media Links */}
           <div>
-            <h4 className="font-semibold mb-3 text-[#222]">Follow Us</h4>
+            <h4 className="font-semibold mb-3">Follow Us</h4>
             <div className="flex space-x-4">
-              <FaFacebookF className="text-[#333] text-xl cursor-pointer hover:text-[#007BFF]" />
-              <FaTwitter className="text-[#333] text-xl cursor-pointer hover:text-[#1DA1F2]" />
-              <FaInstagram className="text-[#333] text-xl cursor-pointer hover:text-[#E1306C]" />
+              <FaFacebookF className="text-white text-xl cursor-pointer hover:text-[#007BFF]" />
+              <FaTwitter className="text-white text-xl cursor-pointer hover:text-[#1DA1F2]" />
+              <FaInstagram className="text-white text-xl cursor-pointer hover:text-[#E1306C]" />
             </div>
           </div>
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-300 mt-8 pt-6 text-center text-sm bg-[#007BFF] text-white py-6 rounded-t-lg">
+        <div className="border-t border-gray-300 mt-8 pt-6 text-center text-sm">
           <p>&copy; {new Date().getFullYear()} MbuguaPeter. All rights reserved.</p>
           <div className="flex justify-center space-x-4 mt-3">
-            <FaCcVisa className="text-3xl" />
-            <FaCcMastercard className="text-3xl" />
-            <FaCcPaypal className="text-3xl" />
+            <FaCcVisa className="text-white text-3xl" />
+            <FaCcMastercard className="text-white text-3xl" />
+            <FaCcPaypal className="text-white text-3xl" />
           </div>
         </div>
       </div>
