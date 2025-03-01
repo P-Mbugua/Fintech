@@ -1,100 +1,118 @@
 import React from "react";
-import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
-import { FaCcVisa, FaCcMastercard, FaCcPaypal } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaInstagram,
+  FaCcVisa,
+  FaCcMastercard,
+  FaCcPaypal,
+  FaGooglePlay,
+  FaApple,
+} from "react-icons/fa";
 
 function Footer() {
   return (
-    <footer className="bg-[#004080] text-white py-12">
-      <div className="container mx-auto px-6">
-        {/* Top Section */}
-        <div className="bg-gray-200 p-8 rounded-lg shadow-lg">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 text-sm text-gray-800">
+    <footer className="text-gray-100">
+      {/* Top Section - Light Gray Background */}
+      <div className="bg-gray-100 text-gray-800 py-12 relative">
+        <div className="container mx-auto px-6">
+          {/* Mask effect */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white opacity-10"></div>
+
+          {/* Grid Layout */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 text-sm relative z-10">
             {/* Column 1 - Shop */}
             <div>
               <h4 className="font-semibold mb-4 text-gray-900">Shop</h4>
               <ul className="space-y-2">
-                <li className="hover:text-[#007BFF] cursor-pointer">Daily Deals</li>
-                <li className="hover:text-[#007BFF] cursor-pointer">App Only Deals</li>
-                <li className="hover:text-[#007BFF] cursor-pointer">Clearance Sale</li>
-                <li className="hover:text-[#007BFF] cursor-pointer">Gift Vouchers</li>
+                <li className="hover:text-blue-500 cursor-pointer">Daily Deals</li>
+                <li className="hover:text-blue-500 cursor-pointer">App Only Deals</li>
+                <li className="hover:text-blue-500 cursor-pointer">Clearance Sale</li>
+                <li className="hover:text-blue-500 cursor-pointer">Gift Vouchers</li>
               </ul>
             </div>
-            
+
             {/* Column 2 - Account */}
             <div>
               <h4 className="font-semibold mb-4 text-gray-900">Account</h4>
               <ul className="space-y-2">
-                <li className="hover:text-[#007BFF] cursor-pointer">My Account</li>
-                <li className="hover:text-[#007BFF] cursor-pointer">Track Order</li>
-                <li className="hover:text-[#007BFF] cursor-pointer">Returns</li>
-                <li className="hover:text-[#007BFF] cursor-pointer">Invoices</li>
+                <li className="hover:text-blue-500 cursor-pointer">My Account</li>
+                <li className="hover:text-blue-500 cursor-pointer">Track Order</li>
+                <li className="hover:text-blue-500 cursor-pointer">Returns</li>
+                <li className="hover:text-blue-500 cursor-pointer">Invoices</li>
               </ul>
             </div>
-            
+
             {/* Column 3 - Help */}
             <div>
               <h4 className="font-semibold mb-4 text-gray-900">Help</h4>
               <ul className="space-y-2">
-                <li className="hover:text-[#007BFF] cursor-pointer">Help Centre</li>
-                <li className="hover:text-[#007BFF] cursor-pointer">Contact Us</li>
-                <li className="hover:text-[#007BFF] cursor-pointer">Shipping & Delivery</li>
-                <li className="hover:text-[#007BFF] cursor-pointer">Returns</li>
+                <li className="hover:text-blue-500 cursor-pointer">Help Centre</li>
+                <li className="hover:text-blue-500 cursor-pointer">Contact Us</li>
+                <li className="hover:text-blue-500 cursor-pointer">Shipping & Delivery</li>
+                <li className="hover:text-blue-500 cursor-pointer">Returns</li>
               </ul>
             </div>
-            
+
             {/* Column 4 - Company */}
             <div>
               <h4 className="font-semibold mb-4 text-gray-900">Company</h4>
               <ul className="space-y-2">
-                <li className="hover:text-[#007BFF] cursor-pointer">About Us</li>
-                <li className="hover:text-[#007BFF] cursor-pointer">Careers</li>
-                <li className="hover:text-[#007BFF] cursor-pointer">Sell on MbuguaPeter</li>
-                <li className="hover:text-[#007BFF] cursor-pointer">Press & News</li>
+                <li className="hover:text-blue-500 cursor-pointer">About Us</li>
+                <li className="hover:text-blue-500 cursor-pointer">Careers</li>
+                <li className="hover:text-blue-500 cursor-pointer">Sell on MbuguaPeter</li>
+                <li className="hover:text-blue-500 cursor-pointer">Press & News</li>
               </ul>
             </div>
-            
+
             {/* Column 5 - Policy */}
             <div>
               <h4 className="font-semibold mb-4 text-gray-900">Policy</h4>
               <ul className="space-y-2">
-                <li className="hover:text-[#007BFF] cursor-pointer">Returns Policy</li>
-                <li className="hover:text-[#007BFF] cursor-pointer">Privacy Policy</li>
-                <li className="hover:text-[#007BFF] cursor-pointer">Terms & Conditions</li>
+                <li className="hover:text-blue-500 cursor-pointer">Returns Policy</li>
+                <li className="hover:text-blue-500 cursor-pointer">Privacy Policy</li>
+                <li className="hover:text-blue-500 cursor-pointer">Terms & Conditions</li>
               </ul>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Middle Section */}
-        <div className="flex flex-wrap justify-between items-center mt-12">
+      {/* Middle Section - Blue Background */}
+      <div className="bg-blue-900 text-white py-10">
+        <div className="container mx-auto px-6 flex flex-wrap justify-between items-center">
           {/* App Download Buttons */}
-          <div>
+          <div className="mb-6 md:mb-0">
             <h4 className="font-semibold mb-3">Download Our Apps</h4>
             <div className="flex space-x-3">
-              <img src="/appstore.svg" alt="App Store" className="h-10" />
-              <img src="/googleplay.svg" alt="Google Play" className="h-10" />
+              <button className="flex items-center bg-gray-700 px-4 py-2 rounded-lg hover:bg-gray-600 transition">
+                <FaApple className="text-2xl mr-2" /> App Store
+              </button>
+              <button className="flex items-center bg-gray-700 px-4 py-2 rounded-lg hover:bg-gray-600 transition">
+                <FaGooglePlay className="text-2xl mr-2" /> Google Play
+              </button>
             </div>
           </div>
-          
+
           {/* Social Media Links */}
           <div>
             <h4 className="font-semibold mb-3">Follow Us</h4>
             <div className="flex space-x-4">
-              <FaFacebookF className="text-white text-xl cursor-pointer hover:text-[#007BFF]" />
-              <FaTwitter className="text-white text-xl cursor-pointer hover:text-[#1DA1F2]" />
-              <FaInstagram className="text-white text-xl cursor-pointer hover:text-[#E1306C]" />
+              <FaFacebookF className="text-xl cursor-pointer hover:text-blue-400" />
+              <FaTwitter className="text-xl cursor-pointer hover:text-blue-300" />
+              <FaInstagram className="text-xl cursor-pointer hover:text-pink-400" />
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Bottom Section */}
-        <div className="border-t border-gray-300 mt-8 pt-6 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} MbuguaPeter. All rights reserved.</p>
-          <div className="flex justify-center space-x-4 mt-3">
-            <FaCcVisa className="text-white text-3xl" />
-            <FaCcMastercard className="text-white text-3xl" />
-            <FaCcPaypal className="text-white text-3xl" />
-          </div>
+      {/* Bottom Section */}
+      <div className="bg-blue-900 border-t border-gray-600 text-center py-6 text-sm">
+        <p>&copy; {new Date().getFullYear()} MbuguaPeter. All rights reserved.</p>
+        <div className="flex justify-center space-x-4 mt-3">
+          <FaCcVisa className="text-2xl text-white hover:text-gray-300" />
+          <FaCcMastercard className="text-2xl text-white hover:text-gray-300" />
+          <FaCcPaypal className="text-2xl text-white hover:text-gray-300" />
         </div>
       </div>
     </footer>
