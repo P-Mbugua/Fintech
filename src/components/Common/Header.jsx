@@ -11,11 +11,11 @@ function Header() {
     <header className="bg-white shadow-sm border-b">
       <div className="container mx-auto flex justify-between items-center p-4">
         {/* Logo */}
-        <div className="flex items-center space-x-2 text-2xl font-bold">
+        <div className="flex items-center space-x-2 text-4xl font-bold">
           <span className="text-gray-800">Fintech</span>
           <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-bold">com</span>
           
-          <div className=" ml-20 text-gray-700 text-sm display-none md:flex items-center space-x-4 font-semi-bold">
+          <div className=" ml-20 text-gray-700 text-sm display-none md:flex items-center space-x-4 font-normal">
           <Link to="/login" className="flex items-center gap-1 hover:text-blue-600">
               Help Centre
           </Link>
