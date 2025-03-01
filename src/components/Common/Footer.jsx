@@ -3,61 +3,61 @@ import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 
 function Footer() {
   return (
-    <footer className="bg-gray-100 text-gray-800 py-12">
+    <footer className="bg-[#F5F5F5] text-[#333] py-12">
       <div className="container mx-auto px-6">
         {/* Top Section */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 text-sm">
           {/* Column 1 - Shop */}
           <div>
-            <h4 className="font-semibold mb-4">Shop</h4>
+            <h4 className="font-semibold mb-4 text-[#222]">Shop</h4>
             <ul className="space-y-2">
-              <li className="hover:text-blue-500 cursor-pointer">Daily Deals</li>
-              <li className="hover:text-blue-500 cursor-pointer">App Only Deals</li>
-              <li className="hover:text-blue-500 cursor-pointer">Clearance Sale</li>
-              <li className="hover:text-blue-500 cursor-pointer">Gift Vouchers</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">Daily Deals</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">App Only Deals</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">Clearance Sale</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">Gift Vouchers</li>
             </ul>
           </div>
 
           {/* Column 2 - Account */}
           <div>
-            <h4 className="font-semibold mb-4">Account</h4>
+            <h4 className="font-semibold mb-4 text-[#222]">Account</h4>
             <ul className="space-y-2">
-              <li className="hover:text-blue-500 cursor-pointer">My Account</li>
-              <li className="hover:text-blue-500 cursor-pointer">Track Order</li>
-              <li className="hover:text-blue-500 cursor-pointer">Returns</li>
-              <li className="hover:text-blue-500 cursor-pointer">Invoices</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">My Account</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">Track Order</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">Returns</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">Invoices</li>
             </ul>
           </div>
 
           {/* Column 3 - Help */}
           <div>
-            <h4 className="font-semibold mb-4">Help</h4>
+            <h4 className="font-semibold mb-4 text-[#222]">Help</h4>
             <ul className="space-y-2">
-              <li className="hover:text-blue-500 cursor-pointer">Help Centre</li>
-              <li className="hover:text-blue-500 cursor-pointer">Contact Us</li>
-              <li className="hover:text-blue-500 cursor-pointer">Shipping & Delivery</li>
-              <li className="hover:text-blue-500 cursor-pointer">Returns</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">Help Centre</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">Contact Us</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">Shipping & Delivery</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">Returns</li>
             </ul>
           </div>
 
           {/* Column 4 - Company */}
           <div>
-            <h4 className="font-semibold mb-4">Company</h4>
+            <h4 className="font-semibold mb-4 text-[#222]">Company</h4>
             <ul className="space-y-2">
-              <li className="hover:text-blue-500 cursor-pointer">About Us</li>
-              <li className="hover:text-blue-500 cursor-pointer">Careers</li>
-              <li className="hover:text-blue-500 cursor-pointer">Sell on MbuguaPeter</li>
-              <li className="hover:text-blue-500 cursor-pointer">Press & News</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">About Us</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">Careers</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">Sell on MbuguaPeter</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">Press & News</li>
             </ul>
           </div>
 
           {/* Column 5 - Policy */}
           <div>
-            <h4 className="font-semibold mb-4">Policy</h4>
+            <h4 className="font-semibold mb-4 text-[#222]">Policy</h4>
             <ul className="space-y-2">
-              <li className="hover:text-blue-500 cursor-pointer">Returns Policy</li>
-              <li className="hover:text-blue-500 cursor-pointer">Privacy Policy</li>
-              <li className="hover:text-blue-500 cursor-pointer">Terms & Conditions</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">Returns Policy</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">Privacy Policy</li>
+              <li className="hover:text-[#007BFF] cursor-pointer">Terms & Conditions</li>
             </ul>
           </div>
         </div>
@@ -66,7 +66,7 @@ function Footer() {
         <div className="flex flex-wrap justify-between items-center mt-12">
           {/* App Download Buttons */}
           <div>
-            <h4 className="font-semibold mb-3">Download Our Apps</h4>
+            <h4 className="font-semibold mb-3 text-[#222]">Download Our Apps</h4>
             <div className="flex space-x-3">
               <img src="/appstore.png" alt="App Store" className="h-10" />
               <img src="/googleplay.png" alt="Google Play" className="h-10" />
@@ -75,11 +75,11 @@ function Footer() {
 
           {/* Social Media Links */}
           <div>
-            <h4 className="font-semibold mb-3">Follow Us</h4>
+            <h4 className="font-semibold mb-3 text-[#222]">Follow Us</h4>
             <div className="flex space-x-4">
-              <FaFacebookF className="text-gray-600 text-xl cursor-pointer hover:text-blue-500" />
-              <FaTwitter className="text-gray-600 text-xl cursor-pointer hover:text-blue-400" />
-              <FaInstagram className="text-gray-600 text-xl cursor-pointer hover:text-pink-500" />
+              <FaFacebookF className="text-[#333] text-xl cursor-pointer hover:text-[#007BFF]" />
+              <FaTwitter className="text-[#333] text-xl cursor-pointer hover:text-[#1DA1F2]" />
+              <FaInstagram className="text-[#333] text-xl cursor-pointer hover:text-[#E1306C]" />
             </div>
           </div>
         </div>
