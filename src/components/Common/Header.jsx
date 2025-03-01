@@ -13,9 +13,9 @@ function Header() {
         {/* Logo */}
         <div className="flex items-center space-x-2 text-4xl font-bold">
         <a href="#" className="flex items-center space-x-1 text-gray-800 hover:underline">
-  <span>Fintech</span>
-  <span className="bg-blue-600 text-white px-3 py-2 rounded-full text-lg font-extrabold">com</span>
-</a>
+          <span>Fintech</span>
+          <span className="bg-blue-600 text-white px-3 py-2 rounded-full text-lg font-extrabold">com</span>
+        </a>
 
 
 
