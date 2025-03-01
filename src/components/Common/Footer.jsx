@@ -1,107 +1,104 @@
 import React from "react";
-import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaInstagram, FaCcVisa, FaCcMastercard, FaPaypal } from "react-icons/fa";
 
-function Footer() {
+const Footer = () => {
   return (
-    <footer className="bg-[#F5F5F5] text-[#333] pt-12">
+    <footer className="bg-gray-100 text-gray-800 pt-12">
       <div className="container mx-auto px-6">
+        
         {/* Top Section */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 text-sm">
-          {/* Column 1 - Shop */}
+          {/* Shop */}
           <div>
-            <h4 className="font-semibold mb-4 text-[#222]">Shop</h4>
+            <h4 className="font-semibold mb-4 text-gray-900">Shop</h4>
             <ul className="space-y-2">
-              {["Daily Deals", "App Only Deals", "Clearance Sale", "Gift Vouchers"].map((item, index) => (
-                <li key={index} className="hover:text-blue-500 cursor-pointer transition">
-                  {item}
-                </li>
-              ))}
+              <li className="hover:text-blue-600 cursor-pointer">Daily Deals</li>
+              <li className="hover:text-blue-600 cursor-pointer">App Only Deals</li>
+              <li className="hover:text-blue-600 cursor-pointer">Clearance Sale</li>
+              <li className="hover:text-blue-600 cursor-pointer">Gift Vouchers</li>
             </ul>
           </div>
 
-          {/* Column 2 - Account */}
+          {/* Account */}
           <div>
-            <h4 className="font-semibold mb-4 text-[#222]">Account</h4>
+            <h4 className="font-semibold mb-4 text-gray-900">Account</h4>
             <ul className="space-y-2">
-              {["My Account", "Track Order", "Returns", "Invoices"].map((item, index) => (
-                <li key={index} className="hover:text-blue-500 cursor-pointer transition">
-                  {item}
-                </li>
-              ))}
+              <li className="hover:text-blue-600 cursor-pointer">My Account</li>
+              <li className="hover:text-blue-600 cursor-pointer">Track Order</li>
+              <li className="hover:text-blue-600 cursor-pointer">Returns</li>
+              <li className="hover:text-blue-600 cursor-pointer">Invoices</li>
             </ul>
           </div>
 
-          {/* Column 3 - Help */}
+          {/* Help */}
           <div>
-            <h4 className="font-semibold mb-4 text-[#222]">Help</h4>
+            <h4 className="font-semibold mb-4 text-gray-900">Help</h4>
             <ul className="space-y-2">
-              {["Help Centre", "Contact Us", "Shipping & Delivery", "Returns"].map((item, index) => (
-                <li key={index} className="hover:text-blue-500 cursor-pointer transition">
-                  {item}
-                </li>
-              ))}
+              <li className="hover:text-blue-600 cursor-pointer">Help Centre</li>
+              <li className="hover:text-blue-600 cursor-pointer">Contact Us</li>
+              <li className="hover:text-blue-600 cursor-pointer">Shipping & Delivery</li>
+              <li className="hover:text-blue-600 cursor-pointer">Returns</li>
             </ul>
           </div>
 
-          {/* Column 4 - Company */}
+          {/* Company */}
           <div>
-            <h4 className="font-semibold mb-4 text-[#222]">Company</h4>
+            <h4 className="font-semibold mb-4 text-gray-900">Company</h4>
             <ul className="space-y-2">
-              {["About Us", "Careers", "Sell on MbuguaPeter", "Press & News"].map((item, index) => (
-                <li key={index} className="hover:text-blue-500 cursor-pointer transition">
-                  {item}
-                </li>
-              ))}
+              <li className="hover:text-blue-600 cursor-pointer">About Us</li>
+              <li className="hover:text-blue-600 cursor-pointer">Careers</li>
+              <li className="hover:text-blue-600 cursor-pointer">Sell on MbuguaPeter</li>
+              <li className="hover:text-blue-600 cursor-pointer">Press & News</li>
             </ul>
           </div>
 
-          {/* Column 5 - Policy */}
+          {/* Policy */}
           <div>
-            <h4 className="font-semibold mb-4 text-[#222]">Policy</h4>
+            <h4 className="font-semibold mb-4 text-gray-900">Policy</h4>
             <ul className="space-y-2">
-              {["Returns Policy", "Privacy Policy", "Terms & Conditions"].map((item, index) => (
-                <li key={index} className="hover:text-blue-500 cursor-pointer transition">
-                  {item}
-                </li>
-              ))}
+              <li className="hover:text-blue-600 cursor-pointer">Returns Policy</li>
+              <li className="hover:text-blue-600 cursor-pointer">Privacy Policy</li>
+              <li className="hover:text-blue-600 cursor-pointer">Terms & Conditions</li>
             </ul>
           </div>
         </div>
 
         {/* Middle Section */}
         <div className="flex flex-wrap justify-between items-center mt-12">
-          {/* App Download Buttons */}
+          {/* Download App */}
           <div>
-            <h4 className="font-semibold mb-3 text-[#222]">Download Our Apps</h4>
+            <h4 className="font-semibold mb-3 text-gray-900">Download Our App</h4>
             <div className="flex space-x-3">
-              <img src="/appstore.png" alt="App Store" className="h-10 cursor-pointer" />
-              <img src="/googleplay.png" alt="Google Play" className="h-10 cursor-pointer" />
+              <img src="/appstore.png" alt="App Store" className="h-10 hover:opacity-80 transition duration-300" />
+              <img src="/googleplay.png" alt="Google Play" className="h-10 hover:opacity-80 transition duration-300" />
             </div>
           </div>
 
-          {/* Social Media Links */}
+          {/* Social Media */}
           <div>
-            <h4 className="font-semibold mb-3 text-[#222]">Follow Us</h4>
-            <div className="flex space-x-4">
-              <FaFacebookF className="text-[#333] text-xl cursor-pointer hover:text-blue-600 transition" />
-              <FaTwitter className="text-[#333] text-xl cursor-pointer hover:text-[#1DA1F2] transition" />
-              <FaInstagram className="text-[#333] text-xl cursor-pointer hover:text-[#E1306C] transition" />
+            <h4 className="font-semibold mb-3 text-gray-900">Follow Us</h4>
+            <div className="flex space-x-4 text-2xl">
+              <FaFacebookF className="cursor-pointer hover:text-blue-600 transition duration-300" />
+              <FaTwitter className="cursor-pointer hover:text-blue-400 transition duration-300" />
+              <FaInstagram className="cursor-pointer hover:text-pink-600 transition duration-300" />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom Section with Blue Background */}
-      <div className="bg-blue-900 text-white mt-8 pt-6 pb-4 text-center text-sm">
-        <p>&copy; {new Date().getFullYear()} MbuguaPeter. All rights reserved.</p>
-        <div className="flex justify-center space-x-4 mt-3">
-          <img src="/visa.png" alt="Visa" className="h-6 opacity-80 hover:opacity-100 transition" />
-          <img src="/mastercard.png" alt="MasterCard" className="h-6 opacity-80 hover:opacity-100 transition" />
-          <img src="/paypal.png" alt="PayPal" className="h-6 opacity-80 hover:opacity-100 transition" />
+      {/* Bottom Section */}
+      <div className="bg-[#004aad] text-white mt-8 py-6">
+        <div className="container mx-auto text-center">
+          <p className="text-sm">&copy; {new Date().getFullYear()} MbuguaPeter. All rights reserved.</p>
+          <div className="flex justify-center space-x-6 mt-3 text-3xl">
+            <FaCcVisa className="cursor-pointer hover:text-gray-300 transition duration-300" />
+            <FaCcMastercard className="cursor-pointer hover:text-gray-300 transition duration-300" />
+            <FaPaypal className="cursor-pointer hover:text-gray-300 transition duration-300" />
+          </div>
         </div>
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;
