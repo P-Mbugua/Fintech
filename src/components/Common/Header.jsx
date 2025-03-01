@@ -15,9 +15,9 @@ function Header() {
           <span className="text-gray-800">takealot</span>
           <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-bold">com</span>
           
-          <div>
+          <div className="text-gray-700 text-sm">
           <Link to="/login" className="flex items-center gap-1 hover:text-blue-600">
-            <UserCheck size={18} /> Login
+              Help Centre
           </Link>
           </div>
 
