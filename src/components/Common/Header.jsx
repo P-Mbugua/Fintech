@@ -12,7 +12,7 @@ function Header() {
       <div className="container mx-auto flex justify-between items-center p-4">
         {/* Logo */}
         <div className="flex items-center space-x-2 text-2xl font-bold">
-          <span className="text-gray-800">takealot</span>
+          <span className="text-gray-800">Fintech</span>
           <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-bold">com</span>
           
           <div className=" ml-20 text-gray-700 text-sm display-none md:flex items-center space-x-4">
@@ -20,7 +20,7 @@ function Header() {
               Help Centre
           </Link>
 
-              <div className="w-px h-8 bg-gray-200"></div>
+              <div className="w-px h-6 bg-gray-200"></div>
 
           <Link to="/login" className="flex items-center gap-1 hover:text-blue-600">
               Sell on Fintech
@@ -37,10 +37,22 @@ function Header() {
           <Link to="/login" className="flex items-center gap-1 hover:text-blue-600">
             <UserCheck size={18} /> Login
           </Link>
+
+
+          <div className="w-px h-6 bg-gray-200"></div>
+
+
           <Link to="/register" className="flex items-center gap-1 hover:text-blue-600">
             <UserRoundPlus size={18} /> Register
           </Link>
+
+
+          <div className="w-px h-6 bg-gray-200"></div>
+
+
           <Link to="/orders" className="hover:text-blue-600">Orders</Link>
+
+          <div className="w-px h-6 bg-gray-200"></div>
 
           {/* My Account Dropdown */}
           <div className="relative group">
