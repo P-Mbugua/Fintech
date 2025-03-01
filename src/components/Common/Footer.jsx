@@ -1,14 +1,19 @@
 import React from "react";
-import { FaFacebookF, FaTwitter, FaInstagram, FaCcVisa, FaCcMastercard, FaPaypal, FaGooglePlay, FaApple } from "react-icons/fa";
+import { 
+  FaFacebookF, FaTwitter, FaInstagram, 
+  FaCcVisa, FaCcMastercard, FaPaypal, 
+  FaGooglePlay, FaApple 
+} from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-100 text-gray-800 pt-12">
-      <div className="container mx-auto px-6">
+    <footer className="bg-gray-100 text-gray-800">
+      {/* Container */}
+      <div className="container mx-auto px-6 py-12">
         
         {/* Top Section */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 text-sm">
-          {/* Shop */}
+          {/** Shop Section */}
           <div>
             <h4 className="font-semibold mb-4 text-gray-900">Shop</h4>
             <ul className="space-y-2">
@@ -19,7 +24,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Account */}
+          {/** Account Section */}
           <div>
             <h4 className="font-semibold mb-4 text-gray-900">Account</h4>
             <ul className="space-y-2">
@@ -30,7 +35,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Help */}
+          {/** Help Section */}
           <div>
             <h4 className="font-semibold mb-4 text-gray-900">Help</h4>
             <ul className="space-y-2">
@@ -41,7 +46,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Company */}
+          {/** Company Section */}
           <div>
             <h4 className="font-semibold mb-4 text-gray-900">Company</h4>
             <ul className="space-y-2">
@@ -52,7 +57,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Policy */}
+          {/** Policy Section */}
           <div>
             <h4 className="font-semibold mb-4 text-gray-900">Policy</h4>
             <ul className="space-y-2">
@@ -65,7 +70,8 @@ const Footer = () => {
 
         {/* Middle Section */}
         <div className="flex flex-wrap justify-between items-center mt-12">
-          {/* Download App */}
+          
+          {/** Download App Section */}
           <div>
             <h4 className="font-semibold mb-3 text-gray-900">Download Our App</h4>
             <div className="flex space-x-6 text-4xl">
@@ -78,7 +84,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Social Media */}
+          {/** Social Media Section */}
           <div>
             <h4 className="font-semibold mb-3 text-gray-900">Follow Us</h4>
             <div className="flex space-x-4 text-2xl">
