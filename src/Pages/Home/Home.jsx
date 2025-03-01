@@ -27,53 +27,52 @@ const categories = [
   "Toys",
 ];
 
-const banners = [
-  "/banner1.jpg",
-  "/banner2.jpg",
-  "/banner3.jpg",
-];
+const banners = ["/banner1.jpg", "/banner2.jpg", "/banner3.jpg"];
 
 function Home() {
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
-      <aside className="w-64 bg-white p-4 shadow-lg">
-        <h2 className="text-lg font-bold flex items-center gap-2 border-b pb-2 mb-4">
-          <FaBars /> Shop by Department
-        </h2>
-        <ul className="space-y-2">
-          {categories.map((category, index) => (
-            <li
-              key={index}
-              className="cursor-pointer p-2 hover:bg-gray-200 rounded"
-            >
-              {category}
-            </li>
-          ))}
-        </ul>
-      </aside>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      {/* Half-Page Wrapper */}
+      <div className="flex w-1/2 bg-white shadow-lg rounded-lg overflow-hidden">
+        {/* Sidebar - Smaller */}
+        <aside className="w-32 bg-gray-50 p-2 shadow-md">
+          <h2 className="text-xs font-semibold flex items-center gap-2 border-b pb-1 mb-2">
+            <FaBars /> Menu
+          </h2>
+          <ul className="space-y-1">
+            {categories.slice(0, 6).map((category, index) => ( // Show fewer items
+              <li
+                key={index}
+                className="cursor-pointer p-1 text-xs hover:bg-gray-200 rounded"
+              >
+                {category}
+              </li>
+            ))}
+          </ul>
+        </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 p-4">
-        {/* Banner Carousel */}
-        <Swiper
-          modules={[Pagination, Autoplay]}
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 3000 }}
-          loop
-          className="w-full h-64 rounded-lg overflow-hidden shadow-lg"
-        >
-          {banners.map((banner, index) => (
-            <SwiperSlide key={index}>
-              <img
-                src={banner}
-                alt={`Banner ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </main>
+        {/* Main Content - Half Page */}
+        <main className="flex-1 p-2">
+          {/* Banner Carousel - Smaller */}
+          <Swiper
+            modules={[Pagination, Autoplay]}
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 3000 }}
+            loop
+            className="w-full h-32 rounded-md overflow-hidden shadow-md"
+          >
+            {banners.map((banner, index) => (
+              <SwiperSlide key={index}>
+                <img
+                  src={banner}
+                  alt={`Banner ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </main>
+      </div>
     </div>
   );
 }
