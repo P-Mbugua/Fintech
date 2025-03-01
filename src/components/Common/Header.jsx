@@ -14,9 +14,12 @@ function Header() {
         <div className="flex items-center space-x-2 text-2xl font-bold">
           <span className="text-gray-800">takealot</span>
           <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-bold">com</span>
+
+          
         </div>
 
-        <span>|</span>
+        <div className="w-px h-8 bg-gray-300"></div>
+
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6 text-gray-700 text-sm">
