@@ -76,13 +76,13 @@ function Header() {
           </div>
 
          {/* Wishlist & Cart */}
-<a href="/wishlist" className="relative hover:text-red-500">
-  <Heart size={20} className="text-red-500" />
-</a>
-<a href="/cart" className="relative flex items-center bg-green-500 text-white px-2 py-1 rounded-full">
-  <ShoppingCart size={20} />
-  <span className="ml-1">0</span>
-</a>
+          <a href="/wishlist" className="relative hover:text-red-500">
+            <Heart size={20} className="text-red-500" />
+          </a>
+          <a href="/cart" className="relative flex items-center bg-green-500 text-white px-2 py-1 rounded-full">
+            <ShoppingCart size={20} />
+            <span className="ml-1">0</span>
+          </a>
 
         </nav>
 
