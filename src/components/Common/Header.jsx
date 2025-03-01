@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { ShoppingCart, Heart, ChevronDown, User, LogIn, UserPlus } from "lucide-react";
+import { 
+  ShoppingCart, Heart, ChevronDown, UserCheck, UserRoundPlus, Menu, X 
+} from "lucide-react";
 
 function Header() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <header className="bg-white shadow-sm border-b">
       <div className="container mx-auto flex justify-between items-center p-4">
@@ -12,22 +16,16 @@ function Header() {
           <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-bold">com</span>
         </div>
 
-        {/* Left Links */}
-        <nav className="hidden md:flex space-x-6 text-gray-700 text-sm">
-          <Link to="#" className="hover:text-blue-600">Help Centre</Link>
-          <Link to="#" className="hover:text-blue-600">Sell on Takealot</Link>
-        </nav>
-
-        {/* Right Links */}
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6 text-gray-700 text-sm">
           <Link to="/login" className="flex items-center gap-1 hover:text-blue-600">
-            <LogIn size={18} /> Login
+            <UserCheck size={18} /> Login
           </Link>
           <Link to="/register" className="flex items-center gap-1 hover:text-blue-600">
-            <UserPlus size={18} /> Register
+            <UserRoundPlus size={18} /> Register
           </Link>
           <Link to="/orders" className="hover:text-blue-600">Orders</Link>
-          
+
           {/* My Account Dropdown */}
           <div className="relative group">
             <button className="flex items-center gap-1 hover:text-blue-600">
@@ -48,7 +46,38 @@ function Header() {
             <span className="ml-1">0</span>
           </button>
         </nav>
+
+        {/* Mobile Menu Button */}
+        <button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
+
+      {/* Mobile Dropdown Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white shadow-md p-4 space-y-4">
+          <Link to="/login" className="flex items-center gap-2 text-gray-700">
+            <UserCheck size={18} /> Login
+          </Link>
+          <Link to="/register" className="flex items-center gap-2 text-gray-700">
+            <UserRoundPlus size={18} /> Register
+          </Link>
+          <Link to="/orders" className="block text-gray-700">Orders</Link>
+          <Link to="/profile" className="block text-gray-700">My Account</Link>
+          <Link to="/logout" className="block text-gray-700">Logout</Link>
+
+          {/* Wishlist & Cart */}
+          <div className="flex items-center justify-between">
+            <button className="hover:text-red-500">
+              <Heart size={20} className="text-red-500" />
+            </button>
+            <button className="flex items-center bg-green-500 text-white px-3 py-1 rounded-full">
+              <ShoppingCart size={20} />
+              <span className="ml-1">0</span>
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
