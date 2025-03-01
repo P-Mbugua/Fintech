@@ -99,13 +99,7 @@ function Header() {
         )}
       </header>
 
-      {/* Main Content (Prevents Overlapping with Header) */}
-      <main className="mt-20 p-4">
-        <h1 className="text-3xl font-bold">Welcome to Fintech</h1>
-        <p className="text-gray-600 mt-2">
-          Explore our financial solutions and services designed for you.
-        </p>
-      </main>
+     
     </>
   );
 }
