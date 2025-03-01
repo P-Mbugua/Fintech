@@ -1,79 +1,51 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { 
-  Menu, X, ShoppingCart, User, LayoutDashboard, CreditCard, LogOut, UserPlus, LogIn 
-} from "lucide-react"; // Added LogIn icon for login button
+import { ShoppingCart, Heart, ChevronDown, User, LogIn, UserPlus } from "lucide-react";
 
 function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  // Handle Logout (You can replace this with actual logout logic)
-  const handleLogout = () => {
-    console.log("User logged out");
-  };
-
   return (
-    <header className="bg-blue-600 text-white shadow-lg">
+    <header className="bg-white shadow-sm border-b">
       <div className="container mx-auto flex justify-between items-center p-4">
         {/* Logo */}
-        <h1 className="text-2xl font-extrabold tracking-wide">
-          <Link to="/" className="hover:text-gray-200 transition">FintechApp</Link>
-        </h1>
+        <div className="flex items-center space-x-2 text-2xl font-bold">
+          <span className="text-gray-800">takealot</span>
+          <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-bold">com</span>
+        </div>
 
-        {/* Large Screen Navigation */}
-        <nav className="hidden md:flex space-x-6 items-center text-lg font-medium">
-          <Link to="/" className="flex items-center gap-2 hover:text-gray-200 transition">
-            <LayoutDashboard size={22} /> Dashboard
-          </Link>
-          <Link to="/cart" className="flex items-center gap-2 hover:text-gray-200 transition">
-            <ShoppingCart size={22} /> Cart
-          </Link>
-          <Link to="/transactions" className="flex items-center gap-2 hover:text-gray-200 transition">
-            <CreditCard size={22} /> Transactions
-          </Link>
-          <Link to="/profile" className="flex items-center gap-2 hover:text-gray-200 transition">
-            <User size={22} /> Profile
-          </Link>
-          <Link to="/register" className="flex items-center gap-2 bg-green-500 px-4 py-2 rounded-lg text-white hover:bg-green-600 transition">
-            <UserPlus size={22} /> Register
-          </Link>
-          <Link to="/login" className="flex items-center gap-2 bg-yellow-500 px-4 py-2 rounded-lg text-white hover:bg-yellow-600 transition">
-            <LogIn size={22} /> Login
-          </Link>
-          <button onClick={handleLogout} className="flex items-center gap-2 hover:text-red-300 transition">
-            <LogOut size={22} /> Logout
-          </button>
+        {/* Left Links */}
+        <nav className="hidden md:flex space-x-6 text-gray-700 text-sm">
+          <Link to="#" className="hover:text-blue-600">Help Centre</Link>
+          <Link to="#" className="hover:text-blue-600">Sell on Takealot</Link>
         </nav>
 
-        {/* Mobile Menu Button */}
-        <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          {isMenuOpen ? <X size={30} /> : <Menu size={30} />}
-        </button>
-      </div>
+        {/* Right Links */}
+        <nav className="hidden md:flex items-center space-x-6 text-gray-700 text-sm">
+          <Link to="/login" className="flex items-center gap-1 hover:text-blue-600">
+            <LogIn size={18} /> Login
+          </Link>
+          <Link to="/register" className="flex items-center gap-1 hover:text-blue-600">
+            <UserPlus size={18} /> Register
+          </Link>
+          <Link to="/orders" className="hover:text-blue-600">Orders</Link>
+          
+          {/* My Account Dropdown */}
+          <div className="relative group">
+            <button className="flex items-center gap-1 hover:text-blue-600">
+              My Account <ChevronDown size={16} />
+            </button>
+            <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-md opacity-0 group-hover:opacity-100 transition-all">
+              <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100">Profile</Link>
+              <Link to="/logout" className="block px-4 py-2 hover:bg-gray-100">Logout</Link>
+            </div>
+          </div>
 
-      {/* Mobile Menu (Animated Dropdown) */}
-      <div className={`absolute top-0 left-0 w-full bg-blue-700 transition-transform duration-300 ${isMenuOpen ? "translate-y-0" : "-translate-y-full"} md:hidden`}>
-        <nav className="flex flex-col items-center space-y-4 p-6 text-lg font-medium">
-          <Link to="/" className="flex items-center gap-2 hover:text-gray-300 transition">
-            <LayoutDashboard size={24} /> Dashboard
-          </Link>
-          <Link to="/cart" className="flex items-center gap-2 hover:text-gray-300 transition">
-            <ShoppingCart size={24} /> Cart
-          </Link>
-          <Link to="/transactions" className="flex items-center gap-2 hover:text-gray-300 transition">
-            <CreditCard size={24} /> Transactions
-          </Link>
-          <Link to="/profile" className="flex items-center gap-2 hover:text-gray-300 transition">
-            <User size={24} /> Profile
-          </Link>
-          <Link to="/register" className="flex items-center gap-2 bg-green-500 px-4 py-2 rounded-lg text-white hover:bg-green-600 transition">
-            <UserPlus size={24} /> Register
-          </Link>
-          <Link to="/login" className="flex items-center gap-2 bg-yellow-500 px-4 py-2 rounded-lg text-white hover:bg-yellow-600 transition">
-            <LogIn size={24} /> Login
-          </Link>
-          <button onClick={handleLogout} className="flex items-center gap-2 text-red-300 hover:text-red-500 transition">
-            <LogOut size={24} /> Logout
+          {/* Wishlist & Cart */}
+          <button className="relative hover:text-red-500">
+            <Heart size={20} className="text-red-500" />
+          </button>
+          <button className="relative flex items-center bg-green-500 text-white px-2 py-1 rounded-full">
+            <ShoppingCart size={20} />
+            <span className="ml-1">0</span>
           </button>
         </nav>
       </div>
