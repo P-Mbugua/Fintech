@@ -24,7 +24,7 @@ function Home() {
   return (
     <div className="flex justify-center items-center p-2 bg-blue-600">
       {/* Container */}
-      <div className="w-[1400px] bg-white rounded-lg shadow-md">
+      <div className="w-full bg-white rounded-lg shadow-md">
         {/* Top Section */}
         <div className="flex items-center border-b border-gray-300 p-2">
           {/* Dropdown Menu */}
