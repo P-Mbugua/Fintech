@@ -15,7 +15,7 @@ function Header() {
           <span className="text-gray-800">Fintech</span>
           <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-bold">com</span>
           
-          <div className=" ml-20 text-gray-700 text-sm display-none md:flex items-center space-x-4">
+          <div className=" ml-20 text-gray-700 text-sm display-none md:flex items-center space-x-4 font-semi-bold">
           <Link to="/login" className="flex items-center gap-1 hover:text-blue-600">
               Help Centre
           </Link>
