@@ -63,7 +63,7 @@ function Header() {
               <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100">Profile</Link>
               <Link to="/Returns" className="block px-4 py-2 hover:bg-gray-100">Returns</Link>
               <Link to="/Track Orders" className="block px-4 py-2 hover:bg-gray-100">Track Orders</Link>
-              <Link to="/logout" className="block px-4 py-2 hover:bg-gray-100">Logout</Link>
+              <Link to="/Invoices" className="block px-4 py-2 hover:bg-gray-100">Invoices</Link>
             </div>
           </div>
 
