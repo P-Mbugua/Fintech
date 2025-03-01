@@ -4,9 +4,9 @@ import { IoMdArrowDropdown } from "react-icons/io"; // Dropdown icon
 
 function Home() {
   return (
-    <div className="bg-blue-600  flex justify-center items-center p-4">
+    <div className="flex justify-center items-center p-4 bg-blue-600">
       {/* Container */}
-      <div className="w-full max-w-5xl bg-white rounded-lg shadow-md">
+      <div className="w-[900px] bg-white rounded-lg shadow-md">
         {/* Top Section */}
         <div className="flex items-center border-b border-gray-300 p-2">
           {/* Dropdown Menu */}
@@ -15,17 +15,6 @@ function Home() {
               Shop by Department
               <IoMdArrowDropdown className="ml-2" />
             </button>
-            {/* Dropdown Content */}
-            <div className="absolute left-0 mt-2 w-56 bg-white shadow-lg border rounded-md hidden">
-              <ul className="text-gray-700">
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  Virtual Shopping Assistants
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  Appliances
-                </li>
-              </ul>
-            </div>
           </div>
 
           {/* Search Bar */}
