@@ -73,28 +73,29 @@ function Header() {
 
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white shadow-md p-4 space-y-4">
-            <Link to="/login" className="flex items-center gap-2 text-gray-700">
-              <UserCheck size={18} /> Login
-            </Link>
-            <Link to="/register" className="flex items-center gap-2 text-gray-700">
-              <UserRoundPlus size={18} /> Register
-            </Link>
-            <Link to="/orders" className="block text-gray-700">Orders</Link>
-            <Link to="/profile" className="block text-gray-700">My Account</Link>
-            <Link to="/logout" className="block text-gray-700">Logout</Link>
-
-            {/* Wishlist & Cart */}
-            <div className="flex items-center justify-between">
-              <button className="hover:text-red-500">
-                <Heart size={20} className="text-red-500" />
-              </button>
-              <button className="flex items-center bg-green-500 text-white px-3 py-1 rounded-full">
-                <ShoppingCart size={20} />
-                <span className="ml-1">0</span>
-              </button>
-            </div>
+          <div className="md:hidden bg-white shadow-md p-4 space-y-4 font-sans">
+          <Link to="/login" className="flex items-center gap-2 text-gray-700 pb-2 border-b border-gray-200">
+            <UserCheck size={18} /> Login
+          </Link>
+          <Link to="/register" className="flex items-center gap-2 text-gray-700 pb-2 border-b border-gray-200">
+            <UserRoundPlus size={18} /> Register
+          </Link>
+          <Link to="/orders" className="block text-gray-700 pb-2 border-b border-gray-200">Orders</Link>
+          <Link to="/profile" className="block text-gray-700 pb-2 border-b border-gray-200">My Account</Link>
+          <Link to="/logout" className="block text-gray-700 pb-2 border-b border-gray-200">Logout</Link>
+        
+          {/* Wishlist & Cart */}
+          <div className="flex items-center justify-between pt-2">
+            <button className="hover:text-red-500">
+              <Heart size={20} className="text-red-500" />
+            </button>
+            <button className="flex items-center bg-green-500 text-white px-3 py-1 rounded-full">
+              <ShoppingCart size={20} />
+              <span className="ml-1">0</span>
+            </button>
           </div>
+        </div>
+        
         )}
       </header>
 
