@@ -21,7 +21,7 @@ function Header() {
           </Link>
 
           <Link to="/login" className="flex items-center gap-1 hover:text-blue-600">
-              Help Centre
+              Sell on Fintech
           </Link>
           </div>
 
