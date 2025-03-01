@@ -20,6 +20,8 @@ function Header() {
               Help Centre
           </Link>
 
+              <div className="w-px h-8 bg-gray-200"></div>
+
           <Link to="/login" className="flex items-center gap-1 hover:text-blue-600">
               Sell on Fintech
           </Link>
@@ -27,7 +29,7 @@ function Header() {
 
         </div>
 
-        <div className="w-px h-8 bg-gray-300"></div>
+       
 
 
         {/* Desktop Navigation */}
