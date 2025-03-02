@@ -54,7 +54,7 @@ function Home() {
   }, [debouncedSearchQuery]);
 
   return (
-    <div className="flex justify-center items-center p-4 bg-gradient-to-r from-blue-600 to-teal-600 relative">
+    <div className="flex justify-center items-center p-4 bg-blue-600 relative">
       <div className="w-full max-w-6xl bg-white rounded-lg shadow-lg p-4 relative z-20">
         {/* Top Section */}
         <div className="flex flex-col sm:flex-row items-center border-b border-gray-300 p-2 gap-4">
