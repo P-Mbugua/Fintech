@@ -8,6 +8,7 @@ function Home() {
   const [scrollIndex, setScrollIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredDepartments, setFilteredDepartments] = useState([]);
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
 
   const departments = [
     { name: "Electronics", subLinks: ["Phones", "Laptops", "Accessories"], icon: "📱" },
@@ -15,28 +16,34 @@ function Home() {
     { name: "Home & Kitchen", subLinks: ["Furniture", "Appliances", "Decor"], icon: "🏡" },
   ];
 
+  // Debouncing the search input for better performance
   useEffect(() => {
-    const interval = setInterval(() => {
-      setScrollIndex((prevIndex) => (prevIndex + 1) % departments.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+    const timeoutId = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery]);
 
   useEffect(() => {
-    if (searchQuery.trim() === "") {
+    if (debouncedSearchQuery.trim() === "") {
       setFilteredDepartments([]);
     } else {
       const filtered = departments
         .map((dept) => ({
           ...dept,
           subLinks: dept.subLinks.filter((sub) =>
-            sub.toLowerCase().includes(searchQuery.toLowerCase())
+            sub.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
           ),
         }))
-        .filter((dept) => dept.name.toLowerCase().includes(searchQuery.toLowerCase()) || dept.subLinks.length > 0);
+        .filter(
+          (dept) =>
+            dept.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+            dept.subLinks.length > 0
+        );
       setFilteredDepartments(filtered);
     }
-  }, [searchQuery]);
+  }, [debouncedSearchQuery]);
 
   return (
     <div className="flex justify-center items-center p-1 bg-blue-600 relative">
@@ -93,7 +100,7 @@ function Home() {
             />
             <FaSearch className="absolute right-3 top-3 text-gray-500" />
 
-            {searchQuery && (
+            {debouncedSearchQuery && (
               <div className="absolute left-0 w-full bg-white border border-gray-300 rounded-md mt-1 shadow-lg z-50">
                 {filteredDepartments.length > 0 ? (
                   filteredDepartments.map((dept, index) => (
