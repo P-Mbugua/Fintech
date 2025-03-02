@@ -17,12 +17,12 @@ function Home() {
       {/* Main Container */}
       <div className="w-full max-w-6xl bg-white rounded-lg shadow-md">
         {/* Top Section */}
-        <div className="flex flex-wrap items-center border-b border-gray-300 p-2">
+        <div className="flex flex-col sm:flex-row items-center border-b border-gray-300 p-2 gap-2 sm:gap-4">
           {/* Dropdown Menu */}
-          <div className="relative">
+          <div className="relative w-full sm:w-auto">
             <button
               onClick={() => setDropdownOpen(!isDropdownOpen)}
-              className="bg-gray-800 text-white px-4 py-2 flex items-center rounded-md"
+              className="bg-gray-800 text-white w-full sm:w-auto px-4 py-2 flex items-center justify-between rounded-md"
             >
               Shop by Department
               <IoMdArrowDropdown className="ml-2" />
@@ -30,12 +30,11 @@ function Home() {
 
             {/* Dropdown Content */}
             {isDropdownOpen && (
-              <div className="absolute left-0 mt-2 w-56 bg-white border border-gray-300 rounded-md shadow-lg z-10">
+              <div className="absolute left-0 sm:left-auto sm:right-0 mt-2 w-full sm:w-56 bg-white border border-gray-300 rounded-md shadow-lg z-10">
                 {departments.map((dept, index) => (
                   <div key={index} className="relative group">
                     <button
-                      onMouseEnter={() => setOpenSubMenu(index)}
-                      onMouseLeave={() => setOpenSubMenu(null)}
+                      onClick={() => setOpenSubMenu(openSubMenu === index ? null : index)}
                       className="w-full text-left px-4 py-2 hover:bg-gray-200 flex justify-between items-center"
                     >
                       {dept.name}
@@ -44,7 +43,7 @@ function Home() {
 
                     {/* Submenu */}
                     {openSubMenu === index && (
-                      <div className="absolute md:left-full left-0 top-0 mt-0 w-48 bg-white border border-gray-300 rounded-md shadow-lg z-20">
+                      <div className="bg-gray-100 rounded-md mt-1">
                         {dept.subLinks.map((subLink, subIndex) => (
                           <a
                             key={subIndex}
@@ -63,7 +62,7 @@ function Home() {
           </div>
 
           {/* Search Bar */}
-          <div className="flex-grow mx-4 w-full sm:w-auto mt-2 sm:mt-0">
+          <div className="w-full">
             <div className="relative">
               <input
                 type="text"
@@ -75,8 +74,8 @@ function Home() {
           </div>
         </div>
 
-        {/* Navigation Tabs */}
-        <div className="flex flex-wrap bg-gray-200">
+        {/* Navigation Tabs (Scrollable on Mobile) */}
+        <div className="overflow-x-auto flex bg-gray-200 whitespace-nowrap">
           {[
             "ALOT For Less",
             "New Arrivals",
@@ -88,7 +87,7 @@ function Home() {
           ].map((item, index) => (
             <button
               key={index}
-              className={`flex-1 px-4 py-2 text-center text-sm font-medium ${
+              className={`px-4 py-2 text-center text-sm font-medium ${
                 item === "Fire Sale"
                   ? "bg-red-600 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-300"
