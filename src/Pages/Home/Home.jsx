@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { Link } from "react-router-dom"; // Import Link from React Router
 
 function Home() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -44,11 +45,6 @@ function Home() {
     }
   }, [debouncedSearchQuery]);
 
-  const handleSearchResultClick = (result) => {
-    // Here you can add your logic to navigate to the appropriate section
-    alert(`You clicked on ${result}`);
-  };
-
   return (
     <div className="flex justify-center items-center p-1 bg-blue-600 relative">
       <div className="w-full max-w-6xl bg-white rounded-lg shadow-md relative z-20">
@@ -78,13 +74,13 @@ function Home() {
                     {openSubMenu === index && (
                       <div className="absolute top-0 left-full ml-2 bg-gray-200 rounded-md mt-1 p-2 shadow-md w-40 z-50">
                         {dept.subLinks.map((subLink, subIndex) => (
-                          <a
+                          <Link
                             key={subIndex}
-                            href={`#${subLink.toLowerCase()}`}
+                            to={`#${subLink.toLowerCase()}`} // Make sure the paths match your routing
                             className="block px-4 py-2 text-sm hover:bg-blue-300 rounded-md"
                           >
                             {subLink}
-                          </a>
+                          </Link>
                         ))}
                       </div>
                     )}
@@ -111,13 +107,13 @@ function Home() {
                     <div key={index} className="px-4 py-2 border-b last:border-b-0">
                       <p className="font-semibold">{dept.name}</p>
                       {dept.subLinks.map((subLink, subIndex) => (
-                        <button
+                        <Link
                           key={subIndex}
-                          onClick={() => handleSearchResultClick(subLink)}
+                          to={`#${subLink.toLowerCase()}`} // Ensure this matches the link target
                           className="block text-sm text-gray-700 hover:text-blue-500"
                         >
                           {subLink}
-                        </button>
+                        </Link>
                       ))}
                     </div>
                   ))
