@@ -1,32 +1,23 @@
 import React, { useState } from "react";
-import { FaSearch } from "react-icons/fa"; // Import search icon
-import { IoMdArrowDropdown } from "react-icons/io"; // Dropdown icon
+import { FaSearch } from "react-icons/fa";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 function Home() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [openSubMenu, setOpenSubMenu] = useState(null);
 
   const departments = [
-    { 
-      name: "Electronics", 
-      subLinks: ["Phones", "Laptops", "Accessories"] 
-    },
-    { 
-      name: "Clothing", 
-      subLinks: ["Men", "Women", "Kids"] 
-    },
-    { 
-      name: "Home & Kitchen", 
-      subLinks: ["Furniture", "Appliances", "Decor"] 
-    }
+    { name: "Electronics", subLinks: ["Phones", "Laptops", "Accessories"] },
+    { name: "Clothing", subLinks: ["Men", "Women", "Kids"] },
+    { name: "Home & Kitchen", subLinks: ["Furniture", "Appliances", "Decor"] },
   ];
 
   return (
-    <div className="flex justify-center items-center p-2 bg-blue-600">
-      {/* Container */}
-      <div className="w-full bg-white rounded-lg shadow-md">
+    <div className="flex justify-center items-center p-4 bg-blue-600">
+      {/* Main Container */}
+      <div className="w-full max-w-6xl bg-white rounded-lg shadow-md">
         {/* Top Section */}
-        <div className="flex items-center border-b border-gray-300 p-2">
+        <div className="flex flex-wrap items-center border-b border-gray-300 p-2">
           {/* Dropdown Menu */}
           <div className="relative">
             <button
@@ -53,7 +44,7 @@ function Home() {
 
                     {/* Submenu */}
                     {openSubMenu === index && (
-                      <div className="absolute left-full top-0 mt-0 w-48 bg-white border border-gray-300 rounded-md shadow-lg z-20">
+                      <div className="absolute md:left-full left-0 top-0 mt-0 w-48 bg-white border border-gray-300 rounded-md shadow-lg z-20">
                         {dept.subLinks.map((subLink, subIndex) => (
                           <a
                             key={subIndex}
@@ -72,7 +63,7 @@ function Home() {
           </div>
 
           {/* Search Bar */}
-          <div className="flex-grow mx-4">
+          <div className="flex-grow mx-4 w-full sm:w-auto mt-2 sm:mt-0">
             <div className="relative">
               <input
                 type="text"
@@ -85,7 +76,7 @@ function Home() {
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex bg-gray-200">
+        <div className="flex flex-wrap bg-gray-200">
           {[
             "ALOT For Less",
             "New Arrivals",
