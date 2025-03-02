@@ -6,6 +6,7 @@ function Home() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [openSubMenu, setOpenSubMenu] = useState(null);
   const [scrollIndex, setScrollIndex] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const departments = [
     { name: "Electronics", subLinks: ["Phones", "Laptops", "Accessories"], icon: "📱" },
@@ -70,6 +71,8 @@ function Home() {
               <input
                 type="text"
                 placeholder="Search for products, brands..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none"
               />
               <FaSearch className="absolute right-3 top-3 text-gray-500" />
