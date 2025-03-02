@@ -6,6 +6,8 @@ function Home() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [openSubMenu, setOpenSubMenu] = useState(null);
   const [scrollIndex, setScrollIndex] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredDepartments, setFilteredDepartments] = useState([]);
 
   const departments = [
     { name: "Electronics", subLinks: ["Phones", "Laptops", "Accessories"], icon: "📱" },
@@ -19,6 +21,22 @@ function Home() {
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      setFilteredDepartments([]);
+    } else {
+      const filtered = departments
+        .map((dept) => ({
+          ...dept,
+          subLinks: dept.subLinks.filter((sub) =>
+            sub.toLowerCase().includes(searchQuery.toLowerCase())
+          ),
+        }))
+        .filter((dept) => dept.name.toLowerCase().includes(searchQuery.toLowerCase()) || dept.subLinks.length > 0);
+      setFilteredDepartments(filtered);
+    }
+  }, [searchQuery]);
 
   return (
     <div className="flex justify-center items-center p-1 bg-blue-600 relative">
@@ -65,15 +83,38 @@ function Home() {
             )}
           </div>
 
-          <div className="w-full">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search for products, brands..."
-                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none"
-              />
-              <FaSearch className="absolute right-3 top-3 text-gray-500" />
-            </div>
+          <div className="w-full relative">
+            <input
+              type="text"
+              placeholder="Search for products, brands..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none"
+            />
+            <FaSearch className="absolute right-3 top-3 text-gray-500" />
+
+            {searchQuery && (
+              <div className="absolute left-0 w-full bg-white border border-gray-300 rounded-md mt-1 shadow-lg z-50">
+                {filteredDepartments.length > 0 ? (
+                  filteredDepartments.map((dept, index) => (
+                    <div key={index} className="px-4 py-2 border-b last:border-b-0">
+                      <p className="font-semibold">{dept.name}</p>
+                      {dept.subLinks.map((subLink, subIndex) => (
+                        <a
+                          key={subIndex}
+                          href={`#${subLink.toLowerCase()}`}
+                          className="block text-sm text-gray-700 hover:text-blue-500"
+                        >
+                          {subLink}
+                        </a>
+                      ))}
+                    </div>
+                  ))
+                ) : (
+                  <p className="p-2 text-gray-500">No results found</p>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
