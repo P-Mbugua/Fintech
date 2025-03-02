@@ -21,7 +21,7 @@ function Home() {
   }, []);
 
   return (
-    <div className="flex justify-center items-center p-4 bg-blue-600 relative">
+    <div className="flex justify-center items-center p-1 bg-blue-600 relative">
       <div className="w-full max-w-6xl bg-white rounded-lg shadow-md relative z-20">
         {/* Top Section - Hidden in Mobile */}
         <div className="hidden sm:flex flex-col sm:flex-row items-center border-b border-gray-300 p-2 gap-2 sm:gap-4">
