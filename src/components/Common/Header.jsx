@@ -100,7 +100,7 @@ function Header() {
       </header>
 
       {/* Add padding to avoid content getting hidden behind the fixed header */}
-      <div className="pt-20"></div>
+      <div className=""></div>
     </>
   );
 }
