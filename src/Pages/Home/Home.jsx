@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
 function Home() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -12,8 +13,13 @@ function Home() {
     { name: "Home & Kitchen", subLinks: ["Furniture", "Appliances", "Decor"] },
   ];
 
+  const categories = [
+    { name: "Back To Varsity", icon: "/varsity-icon.png" },
+    { name: "New Arrivals", icon: "/new-arrivals-icon.png" },
+  ];
+
   return (
-    <div className="flex justify-center items-center p-4 bg-blue-600">
+    <div className="flex flex-col items-center p-4 bg-blue-600">
       {/* Main Container */}
       <div className="w-full max-w-6xl bg-white rounded-lg shadow-md">
         {/* Top Section */}
@@ -74,17 +80,33 @@ function Home() {
           </div>
         </div>
 
+        {/* Featured Categories (Mobile Friendly) */}
+        <div className="p-4">
+          <h2 className="text-lg font-semibold mb-2">Featured Categories</h2>
+          <div className="relative flex items-center">
+            {/* Left Scroll Button */}
+            <button className="absolute left-0 z-10 bg-white p-1 shadow-md rounded-full">
+              <IoIosArrowBack size={20} />
+            </button>
+            {/* Categories Container */}
+            <div className="flex overflow-x-auto space-x-4 mx-8 scrollbar-hide">
+              {categories.map((category, index) => (
+                <div key={index} className="flex flex-col items-center min-w-[100px]">
+                  <img src={category.icon} alt={category.name} className="w-16 h-16" />
+                  <p className="text-sm text-center mt-1">{category.name}</p>
+                </div>
+              ))}
+            </div>
+            {/* Right Scroll Button */}
+            <button className="absolute right-0 z-10 bg-white p-1 shadow-md rounded-full">
+              <IoIosArrowForward size={20} />
+            </button>
+          </div>
+        </div>
+
         {/* Navigation Tabs (Scrollable on Mobile) */}
         <div className="overflow-x-auto flex bg-gray-200 whitespace-nowrap">
-          {[
-            "ALOT For Less",
-            "New Arrivals",
-            "Summer",
-            "Fire Sale",
-            "Small Local Sellers",
-            "Brands Store",
-            "Clearance",
-          ].map((item, index) => (
+          {["ALOT For Less", "New Arrivals", "Summer", "Fire Sale", "Small Local Sellers", "Brands Store", "Clearance"].map((item, index) => (
             <button
               key={index}
               className={`px-4 py-2 text-center text-sm font-medium ${
