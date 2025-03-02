@@ -6,8 +6,6 @@ function Home() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [openSubMenu, setOpenSubMenu] = useState(null);
   const [scrollIndex, setScrollIndex] = useState(0);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredResults, setFilteredResults] = useState([]);
 
   const departments = [
     { name: "Electronics", subLinks: ["Phones", "Laptops", "Accessories"], icon: "📱" },
@@ -21,23 +19,6 @@ function Home() {
     }, 3000);
     return () => clearInterval(interval);
   }, []);
-
-  // Handle Search
-  useEffect(() => {
-    if (searchQuery.trim() === "") {
-      setFilteredResults([]);
-      return;
-    }
-
-    const results = departments
-      .flatMap((dept) => [
-        dept.name,
-        ...dept.subLinks.map((sub) => `${dept.name} > ${sub}`),
-      ])
-      .filter((item) => item.toLowerCase().includes(searchQuery.toLowerCase()));
-
-    setFilteredResults(results);
-  }, [searchQuery]);
 
   return (
     <div className="flex justify-center items-center p-1 bg-blue-600 relative">
@@ -84,31 +65,15 @@ function Home() {
             )}
           </div>
 
-          {/* Search Box */}
-          <div className="w-full relative">
-            <input
-              type="text"
-              placeholder="Search for products, brands..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none"
-            />
-            <FaSearch className="absolute right-3 top-3 text-gray-500" />
-
-            {/* Search Results */}
-            {filteredResults.length > 0 && (
-              <div className="absolute left-0 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg z-50 max-h-40 overflow-y-auto">
-                {filteredResults.map((result, index) => (
-                  <div
-                    key={index}
-                    className="px-4 py-2 text-sm hover:bg-gray-200 cursor-pointer"
-                    onClick={() => setSearchQuery(result)}
-                  >
-                    {result}
-                  </div>
-                ))}
-              </div>
-            )}
+          <div className="w-full">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search for products, brands..."
+                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none"
+              />
+              <FaSearch className="absolute right-3 top-3 text-gray-500" />
+            </div>
           </div>
         </div>
 
