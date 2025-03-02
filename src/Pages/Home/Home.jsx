@@ -5,7 +5,6 @@ import { IoMdArrowDropdown } from "react-icons/io";
 function Home() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [openSubMenu, setOpenSubMenu] = useState(null);
-  const [scrollIndex, setScrollIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredDepartments, setFilteredDepartments] = useState([]);
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
@@ -44,6 +43,11 @@ function Home() {
       setFilteredDepartments(filtered);
     }
   }, [debouncedSearchQuery]);
+
+  const handleSearchResultClick = (result) => {
+    // Here you can add your logic to navigate to the appropriate section
+    alert(`You clicked on ${result}`);
+  };
 
   return (
     <div className="flex justify-center items-center p-1 bg-blue-600 relative">
@@ -107,13 +111,13 @@ function Home() {
                     <div key={index} className="px-4 py-2 border-b last:border-b-0">
                       <p className="font-semibold">{dept.name}</p>
                       {dept.subLinks.map((subLink, subIndex) => (
-                        <a
+                        <button
                           key={subIndex}
-                          href={`#${subLink.toLowerCase()}`}
+                          onClick={() => handleSearchResultClick(subLink)}
                           className="block text-sm text-gray-700 hover:text-blue-500"
                         >
                           {subLink}
-                        </a>
+                        </button>
                       ))}
                     </div>
                   ))
@@ -130,7 +134,7 @@ function Home() {
           <h2 className="text-lg font-bold mb-2">Featured Categories</h2>
           <div className="flex overflow-x-auto space-x-4 scrollbar-hide">
             {departments.map((dept, index) => (
-              <div key={index} className={`flex-none w-24 text-center transition-all duration-500 ${scrollIndex === index ? "opacity-100" : "opacity-50"}`}>
+              <div key={index} className={`flex-none w-24 text-center transition-all duration-500`}>
                 <button className="flex flex-col items-center p-2 bg-gray-100 rounded-lg shadow-md hover:bg-gray-300">
                   <span className="text-2xl">{dept.icon}</span>
                   <span className="text-sm mt-1">{dept.name}</span>
