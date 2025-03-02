@@ -55,7 +55,7 @@ function Home() {
 
   return (
     <div className="flex justify-center items-center p-1 bg-blue-600 relative">
-      <div className="w-full max-w-6xl bg-white rounded-lg shadow-lg p-4 relative z-20">
+      <div className="w-full max-w-6xl bg-white rounded-lg shadow-lg p-1 relative z-20">
         {/* Top Section */}
         <div className="flex flex-col sm:flex-row items-center border-b border-gray-300 p-2 gap-4">
           {/* Dropdown for Departments */}
