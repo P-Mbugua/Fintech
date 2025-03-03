@@ -60,7 +60,7 @@ function Footer() {
               <ul className="space-y-2">
                 <li className="hover:text-blue-500 cursor-pointer">About Us</li>
                 <li className="hover:text-blue-500 cursor-pointer">Careers</li>
-                <li className="hover:text-blue-500 cursor-pointer">Sell on MbuguaPeter</li>
+                <li className="hover:text-blue-500 cursor-pointer">Sell on Fintech</li>
                 <li className="hover:text-blue-500 cursor-pointer">Press & News</li>
               </ul>
             </div>
@@ -108,7 +108,7 @@ function Footer() {
 
       {/* Bottom Section */}
       <div className="bg-blue-900 border-t border-gray-600 text-center py-6 text-sm">
-        <p>&copy; {new Date().getFullYear()} MbuguaPeter. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Fintech. All rights reserved.</p>
         <div className="flex justify-center space-x-4 mt-3">
           <FaCcVisa className="text-2xl text-white hover:text-gray-300" />
           <FaCcMastercard className="text-2xl text-white hover:text-gray-300" />
