@@ -19,9 +19,9 @@ function Footer() {
           {/* Mask effect */}
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white opacity-10"></div>
 
-          {/* Grid Layout */}
+          
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 text-sm relative z-10">
-            {/* Column 1 - Shop */}
+           
             <div>
               <h4 className="font-semibold mb-4 text-gray-900">Shop</h4>
               <ul className="space-y-2">
