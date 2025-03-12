@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 
 function Register() {
-  const { register } = useAuth();
+  const { register, sendOtp } = useAuth(); // Assume sendOtp function is available in AuthContext
   const [phoneOrEmail, setPhoneOrEmail] = useState("phone");
   const [contact, setContact] = useState("");
   const [otp, setOtp] = useState("");
@@ -12,7 +12,21 @@ function Register() {
   const [usePassword, setUsePassword] = useState(false);
   const [error, setError] = useState("");
   const [agreed, setAgreed] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
   const navigate = useNavigate();
+
+  const handleSendOtp = async () => {
+    if (!contact) {
+      return setError("Please enter your phone number.");
+    }
+    try {
+      setError("");
+      await sendOtp(contact); // Call the function to send OTP
+      setOtpSent(true);
+    } catch (err) {
+      setError("Failed to send OTP. Try again.");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,8 +88,15 @@ function Register() {
                 onChange={(e) => setOtp(e.target.value)}
                 required
                 className="w-2/3 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-900"
+                disabled={!otpSent}
               />
-              <button type="button" className="text-blue-900">Send</button>
+              <button
+                type="button"
+                className="text-blue-900"
+                onClick={handleSendOtp}
+              >
+                {otpSent ? "Resend" : "Send"}
+              </button>
             </div>
           )}
 
