@@ -4,6 +4,7 @@ import {
   ShoppingCart, Heart, ChevronDown, UserCheck, UserRoundPlus, Menu, X 
 } from "lucide-react";
 
+
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 

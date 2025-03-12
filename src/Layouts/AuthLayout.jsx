@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
-function AuthLayout() {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const AuthLayout = ({ children }) => {
+  return <div className="auth-layout">{children}</div>;
+};
 
-export default AuthLayout
+export default AuthLayout;
