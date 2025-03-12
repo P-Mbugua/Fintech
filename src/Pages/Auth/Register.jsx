@@ -1,59 +1,90 @@
 import React, { useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { FaGoogle, FaFacebook } from "react-icons/fa";
 
 function Register() {
   const { register } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [phoneOrEmail, setPhoneOrEmail] = useState("phone");
+  const [contact, setContact] = useState("");
+  const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
+  const [agreed, setAgreed] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      return setError("Passwords do not match");
+    if (!agreed) {
+      return setError("You must agree to the terms and conditions");
     }
     try {
       setError("");
-      await register(email, password);
-      navigate("/dashboard"); // Redirect to dashboard after successful registration
+      await register(contact, otp);
+      navigate("/dashboard");
     } catch (err) {
       setError("Failed to create an account");
     }
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <h2 className="text-2xl font-bold mb-4">Register</h2>
-      {error && <p className="text-red-500">{error}</p>}
-      <form onSubmit={handleSubmit} className="flex flex-col space-y-3">
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-          Register
-        </button>
-      </form>
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="bg-white p-6 rounded-lg shadow-md w-96 text-center">
+        <h2 className="text-2xl font-bold mb-4 text-gray-700">Register</h2>
+        <div className="flex justify-center mb-4">
+          <button 
+            className={`px-4 py-2 ${phoneOrEmail === "phone" ? "border-b-2 border-red-500" : "text-gray-500"}`}
+            onClick={() => setPhoneOrEmail("phone")}
+          >Phone</button>
+          <button 
+            className={`px-4 py-2 ${phoneOrEmail === "email" ? "border-b-2 border-red-500" : "text-gray-500"}`}
+            onClick={() => setPhoneOrEmail("email")}
+          >Email</button>
+        </div>
+        {error && <p className="text-red-500 mb-2">{error}</p>}
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <input
+            type={phoneOrEmail === "phone" ? "tel" : "email"}
+            placeholder={phoneOrEmail === "phone" ? "Phone Number" : "Email"}
+            value={contact}
+            onChange={(e) => setContact(e.target.value)}
+            required
+            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
+          <div className="flex justify-between items-center">
+            <input
+              type="text"
+              placeholder="Enter OTP"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              required
+              className="w-2/3 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+            />
+            <button type="button" className="text-red-500">Send</button>
+          </div>
+          <div className="flex items-center">
+            <input 
+              type="checkbox" 
+              checked={agreed} 
+              onChange={() => setAgreed(!agreed)}
+              className="mr-2"
+            />
+            <span className="text-sm text-gray-600">I agree to the <a href="#" className="text-red-500">Terms & Conditions</a></span>
+          </div>
+          <button 
+            type="submit" 
+            className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600"
+          >Submit</button>
+        </form>
+        <p className="text-sm text-gray-600 my-2 cursor-pointer">Login with password</p>
+        <div className="flex justify-center space-x-4 mt-3">
+          <button className="flex items-center space-x-2 border px-4 py-2 rounded">
+            <FaGoogle className="text-red-500" /> <span>Google</span>
+          </button>
+          <button className="flex items-center space-x-2 border px-4 py-2 rounded">
+            <FaFacebook className="text-blue-600" /> <span>Facebook</span>
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
