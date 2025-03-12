@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { FaGoogle, FaFacebook } from "react-icons/fa";
+// import { auth } from "././firebaseConfig";
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 function Register() {
   const { register } = useAuth();
@@ -12,23 +14,52 @@ function Register() {
   const [usePassword, setUsePassword] = useState(false);
   const [error, setError] = useState("");
   const [agreed, setAgreed] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!agreed) {
-      return setError("You must agree to the terms and conditions");
+  // Function to send OTP
+  const handleSendOTP = async () => {
+    if (!contact) {
+      return setError("Please enter a valid phone number.");
     }
+
     try {
       setError("");
-      if (usePassword) {
-        await register(contact, password);
+
+      // Setup Recaptcha
+      window.recaptchaVerifier = new RecaptchaVerifier(
+        "recaptcha-container",
+        { size: "invisible" },
+        auth
+      );
+
+      const confirmationResult = await signInWithPhoneNumber(auth, contact, window.recaptchaVerifier);
+      window.confirmationResult = confirmationResult;
+      setOtpSent(true);
+      alert("OTP sent successfully!");
+    } catch (err) {
+      setError("Failed to send OTP. Try again.");
+    }
+  };
+
+  // Function to verify OTP and register
+  const handleVerifyOTP = async (e) => {
+    e.preventDefault();
+    if (!agreed) {
+      return setError("You must agree to the terms and conditions.");
+    }
+
+    try {
+      setError("");
+      if (!usePassword) {
+        const result = await window.confirmationResult.confirm(otp);
+        await register(result.user.phoneNumber, "OTP"); // Use phone number as ID
       } else {
-        await register(contact, otp);
+        await register(contact, password);
       }
       navigate("/dashboard");
     } catch (err) {
-      setError("Failed to create an account");
+      setError("Failed to verify OTP or create an account.");
     }
   };
 
@@ -36,12 +67,14 @@ function Register() {
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="bg-white p-6 rounded-lg shadow-md w-96 text-center">
         <h2 className="text-2xl font-bold mb-4 text-gray-700">Register</h2>
+        
         <div className="flex justify-center mb-4">
           <button
             className={`px-4 py-2 ${phoneOrEmail === "phone" ? "border-b-2 border-blue-900" : "text-gray-500"}`}
             onClick={() => {
               setPhoneOrEmail("phone");
               setUsePassword(false);
+              setOtpSent(false);
             }}
           >
             Phone
@@ -53,19 +86,21 @@ function Register() {
             Email
           </button>
         </div>
+
         {error && <p className="text-blue-900 mb-2">{error}</p>}
-        <form onSubmit={handleSubmit} className="space-y-3">
+
+        <form onSubmit={handleVerifyOTP} className="space-y-3">
           <input
             type={phoneOrEmail === "phone" ? "tel" : "email"}
-            placeholder={phoneOrEmail === "phone" ? "Phone Number" : "Email"}
+            placeholder={phoneOrEmail === "phone" ? "Phone Number (+254...)" : "Email"}
             value={contact}
             onChange={(e) => setContact(e.target.value)}
             required
             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-900"
           />
 
-          {/* Show OTP field for phone or when not using password */}
-          {!usePassword && (
+          {/* OTP Section */}
+          {phoneOrEmail === "phone" && !usePassword && otpSent && (
             <div className="flex justify-between items-center">
               <input
                 type="text"
@@ -75,11 +110,17 @@ function Register() {
                 required
                 className="w-2/3 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-900"
               />
-              <button type="button" className="text-blue-900">Send</button>
+              <button type="button" className="text-blue-900" onClick={handleSendOTP}>Resend</button>
             </div>
           )}
 
-          {/* Show password field if email is selected and user wants to log in with a password */}
+          {!otpSent && phoneOrEmail === "phone" && (
+            <button type="button" onClick={handleSendOTP} className="text-blue-900">
+              Send OTP
+            </button>
+          )}
+
+          {/* Password Input for Email */}
           {phoneOrEmail === "email" && usePassword && (
             <input
               type="password"
@@ -107,9 +148,9 @@ function Register() {
           {/* Submit Button */}
           <button 
             type="submit" 
-            className="w-full bg-blue-900 text-white py-2 rounded-lg hover:bg-blue-900"
+            className="w-full bg-blue-900 text-white py-2 rounded-lg hover:bg-blue-800"
           >
-            Submit
+            {usePassword ? "Register with Password" : "Verify OTP"}
           </button>
         </form>
 
@@ -132,6 +173,9 @@ function Register() {
             <FaFacebook className="text-blue-600" /> <span>Facebook</span>
           </button>
         </div>
+
+        {/* Invisible reCAPTCHA */}
+        <div id="recaptcha-container"></div>
       </div>
     </div>
   );
