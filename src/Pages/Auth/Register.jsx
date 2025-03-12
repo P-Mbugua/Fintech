@@ -38,7 +38,7 @@ function Register() {
         <h2 className="text-2xl font-bold mb-4 text-gray-700">Register</h2>
         <div className="flex justify-center mb-4">
           <button
-            className={`px-4 py-2 ${phoneOrEmail === "phone" ? "border-b-2 border-red-500" : "text-gray-500"}`}
+            className={`px-4 py-2 ${phoneOrEmail === "phone" ? "border-b-2 border-blue-900" : "text-gray-500"}`}
             onClick={() => {
               setPhoneOrEmail("phone");
               setUsePassword(false);
@@ -47,13 +47,13 @@ function Register() {
             Phone
           </button>
           <button
-            className={`px-4 py-2 ${phoneOrEmail === "email" ? "border-b-2 border-red-500" : "text-gray-500"}`}
+            className={`px-4 py-2 ${phoneOrEmail === "email" ? "border-b-2 border-blue-900" : "text-gray-500"}`}
             onClick={() => setPhoneOrEmail("email")}
           >
             Email
           </button>
         </div>
-        {error && <p className="text-red-500 mb-2">{error}</p>}
+        {error && <p className="text-blue-900 mb-2">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-3">
           <input
             type={phoneOrEmail === "phone" ? "tel" : "email"}
@@ -61,7 +61,7 @@ function Register() {
             value={contact}
             onChange={(e) => setContact(e.target.value)}
             required
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-900"
           />
 
           {/* Show OTP field for phone or when not using password */}
@@ -73,9 +73,9 @@ function Register() {
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
                 required
-                className="w-2/3 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="w-2/3 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-900"
               />
-              <button type="button" className="text-red-500">Send</button>
+              <button type="button" className="text-blue-900">Send</button>
             </div>
           )}
 
@@ -87,7 +87,7 @@ function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-900"
             />
           )}
 
@@ -100,14 +100,14 @@ function Register() {
               className="mr-2"
             />
             <span className="text-sm text-gray-600">
-              I agree to the <a href="#" className="text-red-500">Terms & Conditions</a>
+              I agree to the <a href="#" className="text-blue-900">Terms & Conditions</a>
             </span>
           </div>
 
           {/* Submit Button */}
           <button 
             type="submit" 
-            className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600"
+            className="w-full bg-blue-900 text-white py-2 rounded-lg hover:bg-blue-900"
           >
             Submit
           </button>
@@ -126,7 +126,7 @@ function Register() {
         {/* Social Logins */}
         <div className="flex justify-center space-x-4 mt-3">
           <button className="flex items-center space-x-2 border px-4 py-2 rounded">
-            <FaGoogle className="text-red-500" /> <span>Google</span>
+            <FaGoogle className="text-blue-900" /> <span>Google</span>
           </button>
           <button className="flex items-center space-x-2 border px-4 py-2 rounded">
             <FaFacebook className="text-blue-600" /> <span>Facebook</span>
