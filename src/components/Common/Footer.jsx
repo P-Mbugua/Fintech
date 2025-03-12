@@ -80,10 +80,10 @@ function Footer() {
 
       {/* Middle Section - Blue Background */}
       <div className="bg-blue-900 text-white py-10">
-        <div className="container mx-auto px-6 flex flex-wrap justify-between items-center">
+        <div className="container mx-auto px-1 flex flex-wrap justify-between items-center">
           {/* App Download Buttons */}
           <div className="mb-6 md:mb-0">
-            <h4 className="font-semibold mb-3">Download Our Apps</h4>
+            <h4 className="font-semibold mb-1">Download Our Apps</h4>
             <div className="flex space-x-3">
               <button className="flex items-center bg-gray-700 px-4 py-2 rounded-lg hover:bg-gray-600 transition">
                 <FaApple className="text-2xl mr-2" /> App Store
@@ -96,7 +96,7 @@ function Footer() {
 
           {/* Social Media Links */}
           <div>
-            <h4 className="font-semibold mb-3">Follow Us</h4>
+            <h4 className="font-semibold mb-1">Follow Us</h4>
             <div className="flex space-x-4">
               <FaFacebookF className="text-xl cursor-pointer hover:text-blue-400" />
               <FaTwitter className="text-xl cursor-pointer hover:text-blue-300" />
@@ -109,7 +109,7 @@ function Footer() {
       {/* Bottom Section */}
       <div className="bg-blue-900 border-t border-gray-600 text-center py-6 text-sm">
         <p>&copy; {new Date().getFullYear()} Fintech. All rights reserved.</p>
-        <div className="flex justify-center space-x-4 mt-3">
+        <div className="flex justify-center space-x-4 mt-1">
           <FaCcVisa className="text-2xl text-white hover:text-gray-300" />
           <FaCcMastercard className="text-2xl text-white hover:text-gray-300" />
           <FaCcPaypal className="text-2xl text-white hover:text-gray-300" />

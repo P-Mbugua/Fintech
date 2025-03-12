@@ -55,14 +55,14 @@ function Home() {
 
   return (
     <div className="flex justify-center items-center p-1 bg-blue-600 relative">
-      <div className="w-full max-w-6xl bg-white rounded-lg shadow-lg p-1 relative z-20">
+      <div className="w-full bg-white rounded-lg shadow-lg p-1 relative z-20">
         {/* Top Section */}
         <div className="flex flex-col sm:flex-row items-center border-b border-gray-300 p-2 gap-4">
           {/* Dropdown for Departments */}
           <div className="relative w-full sm:w-auto">
             <button
               onClick={() => setDropdownOpen(!isDropdownOpen)}
-              className="bg-gray-800 text-white w-full sm:w-auto px-4 py-2 flex items-center justify-between rounded-lg transition-all hover:bg-gray-700 focus:outline-none"
+              className="bg-gray-800 text-white sm:w-auto px-4  flex items-center justify-between rounded-lg transition-all hover:bg-gray-700 focus:outline-none"
             >
               Shop by Department
               <IoMdArrowDropdown className="ml-2" />
@@ -159,7 +159,7 @@ function Home() {
         </div>
 
         {/* Navigation Tabs */}
-        <div className="overflow-x-auto flex bg-gray-200 whitespace-nowrap mt-4 rounded-lg">
+        <div className="overflow-x-auto flex bg-gray-200 whitespace-nowrap mt-1 rounded-lg text-centre">
           {["ALOT For Less", "New Arrivals", "Summer", "Fire Sale", "Small Local Sellers", "Brands Store", "Clearance"].map((item, index) => (
             <button
               key={index}
