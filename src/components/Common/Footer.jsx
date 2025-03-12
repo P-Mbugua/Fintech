@@ -80,7 +80,7 @@ function Footer() {
 
       {/* Middle Section - Blue Background */}
       <div className="bg-blue-900 text-white">
-        <div className="container mx-auto px-1 flex flex-wrap justify-between items-center">
+        <div className="container mx-auto px-1 flex flex-wrap justify-between items-center pb-2">
           {/* App Download Buttons */}
           <div className="mb-6 md:mb-0">
             <h4 className="font-semibold mb-1">Download Our Apps</h4>
