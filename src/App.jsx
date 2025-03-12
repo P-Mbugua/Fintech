@@ -23,6 +23,7 @@ import Footer from "./components/Common/Footer";
 
 // Public Pages
 import Home from "./Pages/Home/Home";
+import HotSales from "./Pages/Home/HotSales";
 import Cart from "./Pages/Cart/Cart";
 
 // Order Pages (Protected)
@@ -54,6 +55,7 @@ function App() {
             <Routes>
               {/* Public Routes (No authentication required) */}
               <Route path="/" element={<MainLayout><Home /></MainLayout>} />
+              <Route path="/hot-sales" element={<MainLayout><HotSales /></MainLayout>} />
               <Route path="/cart" element={<MainLayout><Cart /></MainLayout>} />
               <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
               <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
