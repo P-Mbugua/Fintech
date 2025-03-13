@@ -9,30 +9,39 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
+  const [password, setPassword] = useState(""); // New state for password
   const [error, setError] = useState("");
   const [tab, setTab] = useState("email");
   const [loading, setLoading] = useState(false);
   const [codeSent, setCodeSent] = useState(false);
+  const [isPasswordLogin, setIsPasswordLogin] = useState(false); // New state for password login mode
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (tab === "email" && !email.includes("@")) {
-      setError("Please enter a valid email.");
-      return;
-    }
-    if (tab === "phone" && phone.length < 10) {
-      setError("Enter a valid phone number.");
-      return;
-    }
-    if (code.length < 4) {
-      setError("Invalid verification code.");
-      return;
+    if (isPasswordLogin) {
+      if (!email || !password) {
+        setError("Please enter both email and password.");
+        return;
+      }
+    } else {
+      if (tab === "email" && !email.includes("@")) {
+        setError("Please enter a valid email.");
+        return;
+      }
+      if (tab === "phone" && phone.length < 10) {
+        setError("Enter a valid phone number.");
+        return;
+      }
+      if (code.length < 4) {
+        setError("Invalid verification code.");
+        return;
+      }
     }
 
     try {
       setLoading(true);
-      await login(tab === "email" ? email : phone, code);
+      await login(isPasswordLogin ? email : tab === "email" ? email : phone, isPasswordLogin ? password : code);
       navigate("/dashboard");
     } catch (err) {
       setError("Login failed. Please try again.");
@@ -60,62 +69,88 @@ const Login = () => {
         <h2 className="text-xl font-bold text-center mb-2 text-gray-700">Login with Verification Code</h2>
 
         {/* Tabs for Email/Phone Login */}
-        <div className="flex justify-center mb-4">
-          <button
-            className={`px-4 py-2 ${tab === "phone" ? "border-b-2 border-red-500 text-red-500" : "text-gray-500"}`}
-            onClick={() => setTab("phone")}
-          >
-            Phone No.
-          </button>
-          <button
-            className={`px-4 py-2 ${tab === "email" ? "border-b-2 border-red-500 text-red-500" : "text-gray-500"}`}
-            onClick={() => setTab("email")}
-          >
-            Email
-          </button>
-        </div>
+        {!isPasswordLogin && (
+          <div className="flex justify-center mb-4">
+            <button
+              className={`px-4 py-2 ${tab === "phone" ? "border-b-2 border-red-500 text-red-500" : "text-gray-500"}`}
+              onClick={() => setTab("phone")}
+            >
+              Phone No.
+            </button>
+            <button
+              className={`px-4 py-2 ${tab === "email" ? "border-b-2 border-red-500 text-red-500" : "text-gray-500"}`}
+              onClick={() => setTab("email")}
+            >
+              Email
+            </button>
+          </div>
+        )}
 
         {error && <p className="text-red-500 text-sm">{error}</p>}
 
         <form onSubmit={handleLogin} className="space-y-3">
-          {tab === "email" ? (
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
-            />
+          {/* Render Email and Password Fields if Login with Password */}
+          {isPasswordLogin ? (
+            <>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+              />
+              <input
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+              />
+            </>
           ) : (
-            <input
-              type="tel"
-              placeholder="Enter your phone number"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-              className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
-            />
-          )}
+            <>
+              {tab === "email" ? (
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+                />
+              ) : (
+                <input
+                  type="tel"
+                  placeholder="Enter your phone number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                  className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+                />
+              )}
 
-          <div className="flex justify-between items-center">
-            <input
-              type="text"
-              placeholder="Enter verification code"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              required
-              className="w-3/4 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
-            />
-            <button
-              type="button"
-              className={`text-red-500 text-sm ${codeSent ? "opacity-50 cursor-not-allowed" : ""}`}
-              onClick={sendCode}
-              disabled={codeSent}
-            >
-              {codeSent ? "Code Sent" : "Send Code"}
-            </button>
-          </div>
+              <div className="flex justify-between items-center">
+                <input
+                  type="text"
+                  placeholder="Enter verification code"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  required
+                  className="w-3/4 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+                />
+                <button
+                  type="button"
+                  className={`text-red-500 text-sm ${codeSent ? "opacity-50 cursor-not-allowed" : ""}`}
+                  onClick={sendCode}
+                  disabled={codeSent}
+                >
+                  {codeSent ? "Code Sent" : "Send Code"}
+                </button>
+              </div>
+            </>
+          )}
 
           <button
             type="submit"
@@ -126,9 +161,18 @@ const Login = () => {
           </button>
         </form>
 
-        <p className="text-center mt-4">
-          <a href="/password-login" className="text-red-500 hover:underline">Login with password</a>
-        </p>
+        {/* Login with Password Link */}
+        {!isPasswordLogin && (
+          <p className="text-center mt-4">
+            <a
+              href="#"
+              onClick={() => setIsPasswordLogin(true)}
+              className="text-red-500 hover:underline"
+            >
+              Login with password
+            </a>
+          </p>
+        )}
 
         {/* Social Login Options */}
         <div className="flex flex-col space-y-3 mt-4">
