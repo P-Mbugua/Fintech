@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import { Menu, Smartphone, Star, Gift, ShoppingBag } from "lucide-react";
 
 const categories = [
-  { name: "Phones & Accessories", icon: <Smartphone size={20} /> },
-  { name: "Home & Accessories", icon: <ShoppingBag size={20} /> },
-  { name: "Health & Beauty", icon: <Star size={20} /> },
-  { name: "Gifts & Fashion", icon: <Gift size={20} /> },
+  { name: "Phones & Accessories", icon: <Smartphone size={18} /> },
+  { name: "Home & Accessories", icon: <ShoppingBag size={18} /> },
+  { name: "Health & Beauty", icon: <Star size={18} /> },
+  { name: "Gifts & Fashion", icon: <Gift size={18} /> },
 ];
 
 const products = [
@@ -14,11 +14,6 @@ const products = [
   { title: "Baby Oil 100ml", price: "KSh 409", img: "/oil.png" },
   { title: "Beauty Starter Kit", price: "KSh 2,438", img: "/oil.png" },
   { title: "TECNO Spark 30C", price: "KSh 11,599", img: "/phone.png" },
-];
-
-const promotions = [
-  { text: "Flash Sale - Up to 70% Off!", color: "bg-red-500", direction: "left" },
-  { text: "Exclusive Deals on Electronics!", color: "bg-green-500", direction: "right" },
 ];
 
 const HomePage = () => {
@@ -35,7 +30,7 @@ const HomePage = () => {
               key={index}
               whileHover={{ scale: 1.05, x: 5 }}
               transition={{ type: "spring", stiffness: 200 }}
-              className="flex items-center p-3 mb-2 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer"
+              className="flex items-center p-2 mb-2 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer text-sm"
             >
               {category.icon}
               <span className="ml-2">{category.name}</span>
@@ -45,55 +40,50 @@ const HomePage = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6 bg-gray-100">
-        {/* Hero Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="relative w-full h-64 bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-center text-white p-6 rounded-lg"
-        >
-          <h2 className="text-3xl font-bold">Tech Week - Up to 60% Off!</h2>
-        </motion.div>
-
+      <main className="flex-1 p-4 bg-gray-100">
         {/* Promotion Banners */}
-        <div className="mt-6 space-y-4">
-          {promotions.map((promo, index) => (
-            <motion.div
-              key={index}
-              initial={{ x: promo.direction === "left" ? -300 : 300, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              className={`p-4 text-white text-lg font-bold ${promo.color} rounded-lg text-center`}
-            >
-              {promo.text}
-            </motion.div>
-          ))}
+        <div className="relative w-full flex space-x-4 overflow-hidden mb-4">
+          <motion.div
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="flex-1 h-32 bg-red-500 text-white flex items-center justify-center text-md font-bold rounded-lg p-3 shadow-lg"
+          >
+            Flash Sale! Up to 70% Off
+          </motion.div>
+          <motion.div
+            initial={{ x: 100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="flex-1 h-32 bg-green-500 text-white flex items-center justify-center text-md font-bold rounded-lg p-3 shadow-lg"
+          >
+            Free Shipping on Orders Over KSh 5,000
+          </motion.div>
         </div>
 
         {/* Product Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {products.map((product, index) => (
             <motion.div
               key={index}
-              whileHover={{ scale: 1.05 }}
-              className="bg-white shadow-lg rounded-lg p-4 flex flex-col items-center hover:shadow-2xl transition"
+              whileHover={{ scale: 1.04 }}
+              className="bg-white shadow-md rounded-lg p-3 flex flex-col items-center hover:shadow-lg transition"
             >
               <img
                 src={product.img}
                 alt={product.title}
-                className="w-32 h-32 object-contain"
+                className="w-24 h-24 object-contain"
               />
-              <h3 className="text-lg font-semibold text-center mt-3">
+              <h3 className="text-sm font-semibold text-center mt-2">
                 {product.title}
               </h3>
-              <p className="text-green-600 font-bold">{product.price}</p>
+              <p className="text-green-600 font-bold text-sm">{product.price}</p>
               <div className="mt-2 flex space-x-2">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center">
-                  <ShoppingBag className="w-5 h-5 mr-2" /> Add to Cart
+                <button className="bg-blue-500 text-white text-xs px-3 py-1 rounded-lg flex items-center">
+                  <ShoppingBag className="w-4 h-4 mr-1" /> Add
                 </button>
-                <button className="bg-green-500 text-white px-4 py-2 rounded-lg">
-                  Order Now
+                <button className="bg-green-500 text-white text-xs px-3 py-1 rounded-lg">
+                  Order
                 </button>
               </div>
             </motion.div>
