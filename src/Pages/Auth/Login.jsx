@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
 
 const Login = () => {
   const { login } = useAuth();
@@ -43,7 +45,7 @@ const Login = () => {
     if ((tab === "email" && email.includes("@")) || (tab === "phone" && phone.length >= 10)) {
       setCodeSent(true);
       setError("");
-      setTimeout(() => setCodeSent(false), 60000); // Resets after 1 min
+      setTimeout(() => setCodeSent(false), 60000);
     } else {
       setError("Enter a valid email or phone.");
     }
@@ -131,11 +133,11 @@ const Login = () => {
         {/* Social Login Options */}
         <div className="flex flex-col space-y-3 mt-4">
           <button className="w-full flex items-center justify-center border border-gray-300 rounded py-2 hover:bg-gray-200">
-            <img src="/google-icon.png" alt="Google" className="h-5 mr-2" />
+            <FcGoogle className="h-5 w-5 mr-2" />
             Login Via Google
           </button>
-          <button className="w-full flex items-center justify-center border border-gray-300 rounded py-2 hover:bg-gray-200">
-            <img src="/facebook-icon.png" alt="Facebook" className="h-5 mr-2" />
+          <button className="w-full flex items-center justify-center border border-gray-300 rounded py-2 hover:bg-gray-200 text-blue-600">
+            <FaFacebook className="h-5 w-5 mr-2" />
             Login Via Facebook
           </button>
         </div>
