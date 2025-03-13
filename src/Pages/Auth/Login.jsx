@@ -2,27 +2,22 @@ import React, { useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-const Register = () => {
-  const { register } = useAuth();
+const Login = () => {
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [tab, setTab] = useState("email");
-  const [agreed, setAgreed] = useState(false);
   const navigate = useNavigate();
 
-  const handleRegister = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (!agreed) {
-      setError("You must agree to the terms and conditions.");
-      return;
-    }
     try {
-      await register(tab === "email" ? email : phone, code);
+      await login(tab === "email" ? email : phone, code);
       navigate("/dashboard");
     } catch (err) {
-      setError("Registration failed");
+      setError("Login failed. Please check your credentials.");
     }
   };
 
@@ -32,9 +27,9 @@ const Register = () => {
         <div className="flex justify-center mb-4">
           <img src="/logo.png" alt="Logo" className="h-12" />
         </div>
-        <h2 className="text-xl font-bold text-center mb-2">Register with Verification Code</h2>
+        <h2 className="text-xl font-bold text-center mb-2">Login with Verification Code</h2>
         
-        {/* Tabs */}
+        {/* Tabs for Email/Phone Login */}
         <div className="flex justify-center mb-4">
           <button
             className={`px-4 py-2 ${tab === "phone" ? "border-b-2 border-red-500 text-red-500" : "text-gray-500"}`}
@@ -52,7 +47,7 @@ const Register = () => {
 
         {error && <p className="text-red-500 text-sm">{error}</p>}
 
-        <form onSubmit={handleRegister} className="space-y-3">
+        <form onSubmit={handleLogin} className="space-y-3">
           {tab === "email" ? (
             <input
               type="email"
@@ -82,29 +77,17 @@ const Register = () => {
               required
               className="w-3/4 p-2 border border-gray-300 rounded"
             />
-            <button type="button" className="text-red-500 text-sm">Send</button>
+            <button type="button" className="text-red-500 text-sm">Send Code</button>
           </div>
 
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              checked={agreed}
-              onChange={() => setAgreed(!agreed)}
-              className="mr-2"
-            />
-            <label className="text-sm">
-              I agree to <a href="/terms" className="text-blue-500">Terms & Conditions</a> and <a href="/privacy" className="text-blue-500">Privacy Policy</a>
-            </label>
-          </div>
-
-          <button type="submit" className="w-full bg-red-500 text-white py-2 rounded">Submit</button>
+          <button type="submit" className="w-full bg-red-500 text-white py-2 rounded">Login</button>
         </form>
 
         <p className="text-center mt-4">
-          <a href="/login" className="text-red-500">Login with password</a>
+          <a href="/password-login" className="text-red-500">Login with password</a>
         </p>
 
-        {/* Social Logins */}
+        {/* Social Login Options */}
         <div className="flex flex-col space-y-3 mt-4">
           <button className="w-full flex items-center justify-center border border-gray-300 rounded py-2">
             <img src="/google-icon.png" alt="Google" className="h-5 mr-2" />
@@ -120,4 +103,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
