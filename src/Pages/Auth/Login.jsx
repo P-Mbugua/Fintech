@@ -9,30 +9,31 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [tab, setTab] = useState("email");
   const [loading, setLoading] = useState(false);
   const [codeSent, setCodeSent] = useState(false);
+  const [usePassword, setUsePassword] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (tab === "email" && !email.includes("@")) {
+    if (!email.includes("@")) {
       setError("Please enter a valid email.");
       return;
     }
-    if (tab === "phone" && phone.length < 10) {
-      setError("Enter a valid phone number.");
+    if (usePassword && password.length < 6) {
+      setError("Password must be at least 6 characters.");
       return;
     }
-    if (code.length < 4) {
+    if (!usePassword && code.length < 4) {
       setError("Invalid verification code.");
       return;
     }
-
     try {
       setLoading(true);
-      await login(tab === "email" ? email : phone, code);
+      await login(email, usePassword ? password : code);
       navigate("/dashboard");
     } catch (err) {
       setError("Login failed. Please try again.");
@@ -42,12 +43,12 @@ const Login = () => {
   };
 
   const sendCode = () => {
-    if ((tab === "email" && email.includes("@")) || (tab === "phone" && phone.length >= 10)) {
+    if (email.includes("@")) {
       setCodeSent(true);
       setError("");
       setTimeout(() => setCodeSent(false), 60000);
     } else {
-      setError("Enter a valid email or phone.");
+      setError("Enter a valid email.");
     }
   };
 
@@ -57,65 +58,51 @@ const Login = () => {
         <div className="flex justify-center mb-4">
           <img src="https://img.kilimall.com/c/h5/login_bg.png?x-image-process=image/format,webp/resize,w_600" alt="Logo" className="h-12" />
         </div>
-        <h2 className="text-xl font-bold text-center mb-2 text-gray-700">Login with Verification Code</h2>
-
-        {/* Tabs for Email/Phone Login */}
-        <div className="flex justify-center mb-4">
-          <button
-            className={`px-4 py-2 ${tab === "phone" ? "border-b-2 border-red-500 text-red-500" : "text-gray-500"}`}
-            onClick={() => setTab("phone")}
-          >
-            Phone No.
-          </button>
-          <button
-            className={`px-4 py-2 ${tab === "email" ? "border-b-2 border-red-500 text-red-500" : "text-gray-500"}`}
-            onClick={() => setTab("email")}
-          >
-            Email
-          </button>
-        </div>
+        <h2 className="text-xl font-bold text-center mb-2 text-gray-700">
+          {usePassword ? "Login with Password" : "Login with Verification Code"}
+        </h2>
 
         {error && <p className="text-red-500 text-sm">{error}</p>}
 
         <form onSubmit={handleLogin} className="space-y-3">
-          {tab === "email" ? (
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+          />
+
+          {usePassword ? (
             <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
               className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
             />
           ) : (
-            <input
-              type="tel"
-              placeholder="Enter your phone number"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-              className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
-            />
+            <div className="flex justify-between items-center">
+              <input
+                type="text"
+                placeholder="Enter verification code"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                required
+                className="w-3/4 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+              />
+              <button
+                type="button"
+                className={`text-red-500 text-sm ${codeSent ? "opacity-50 cursor-not-allowed" : ""}`}
+                onClick={sendCode}
+                disabled={codeSent}
+              >
+                {codeSent ? "Code Sent" : "Send Code"}
+              </button>
+            </div>
           )}
-
-          <div className="flex justify-between items-center">
-            <input
-              type="text"
-              placeholder="Enter verification code"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              required
-              className="w-3/4 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
-            />
-            <button
-              type="button"
-              className={`text-red-500 text-sm ${codeSent ? "opacity-50 cursor-not-allowed" : ""}`}
-              onClick={sendCode}
-              disabled={codeSent}
-            >
-              {codeSent ? "Code Sent" : "Send Code"}
-            </button>
-          </div>
 
           <button
             type="submit"
@@ -127,7 +114,12 @@ const Login = () => {
         </form>
 
         <p className="text-center mt-4">
-          <a href="/password-login" className="text-red-500 hover:underline">Login with password</a>
+          <button
+            className="text-red-500 hover:underline"
+            onClick={() => setUsePassword(!usePassword)}
+          >
+            {usePassword ? "Login with verification code" : "Login with password"}
+          </button>
         </p>
 
         {/* Social Login Options */}
