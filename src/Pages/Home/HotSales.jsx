@@ -57,7 +57,12 @@ function HotSales() {
           <span className="mr-1 ">⚡</span> Flash Sales | Live Now
         </h2>
         <p className="text-lg font-semibold">Time Left: <span className="font-bold">{formatTime(timeLeft)}</span></p>
-        <a href="#" className="underline">See All</a>
+        import { ChevronRight } from "lucide-react"; // Import the professional arrow icon
+
+<a href="#" className="flex items-center text-white font-semibold hover:opacity-80">
+  See All <ChevronRight className="ml-1 w-5 h-5" />
+</a>
+
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-4">
         {salesData.map((item) => (
