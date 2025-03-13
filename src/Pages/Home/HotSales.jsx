@@ -76,7 +76,7 @@ function HotSales() {
                 style={{ width: `${(item.stock / 100) * 100}%` }}
               ></div>
             </div>
-            <button className="mt-3 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+            <button className="mt-3 w-full bg-blue-600 text-white py-2 rounded-lg hover:curser-pointer hover:bg-blue-700 transition">
               Order Now
             </button>
           </div>
