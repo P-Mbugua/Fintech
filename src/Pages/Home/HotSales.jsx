@@ -10,24 +10,35 @@ const hotSalesData = [
 ];
 
 function HotSales() {
-  const [timeLeft, setTimeLeft] = useState(7200); // 2 hours in seconds
+  const [timeLeft, setTimeLeft] = useState(0);
   const [salesData, setSalesData] = useState(hotSalesData);
 
   useEffect(() => {
+    const updateTimer = () => {
+      const now = new Date();
+      const currentHour = now.getHours();
+      const nextSlotHour = currentHour % 2 === 0 ? currentHour + 2 : currentHour + 1;
+      const nextSlot = new Date(now.getFullYear(), now.getMonth(), now.getDate(), nextSlotHour, 0, 0);
+      const diff = Math.floor((nextSlot - now) / 1000);
+      setTimeLeft(diff);
+    };
+
+    updateTimer();
     const interval = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
+          updateTimer();
           refreshSales();
-          return 7200;
+          return prev;
         }
         return prev - 1;
       });
     }, 1000);
+
     return () => clearInterval(interval);
   }, []);
 
   const refreshSales = () => {
-    // Simulate fetching new sales data (can be replaced with API call)
     const shuffledData = [...hotSalesData].sort(() => Math.random() - 0.5);
     setSalesData(shuffledData);
   };
@@ -40,7 +51,7 @@ function HotSales() {
   };
 
   return (
-    <div className="bg-red-600 text-white p-4 rounded-lg shadow-lg">
+    <div className="bg-red-600 text-white p-4  shadow-lg">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-bold flex items-center">
           <span className="mr-2">⚡</span> Flash Sales | Live Now
@@ -65,6 +76,9 @@ function HotSales() {
                 style={{ width: `${(item.stock / 100) * 100}%` }}
               ></div>
             </div>
+            <button className="mt-3 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+              Order Now
+            </button>
           </div>
         ))}
       </div>
