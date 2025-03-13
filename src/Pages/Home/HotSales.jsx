@@ -10,15 +10,34 @@ const hotSalesData = [
 ];
 
 function HotSales() {
-  const [timeLeft, setTimeLeft] = useState("03h : 09m : 06s");
+  const [timeLeft, setTimeLeft] = useState(7200); // 2 hours in seconds
+  const [salesData, setSalesData] = useState(hotSalesData);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // Simulate countdown (in real-world, calculate from actual time)
-      setTimeLeft((prev) => prev);
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          refreshSales();
+          return 7200;
+        }
+        return prev - 1;
+      });
     }, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  const refreshSales = () => {
+    // Simulate fetching new sales data (can be replaced with API call)
+    const shuffledData = [...hotSalesData].sort(() => Math.random() - 0.5);
+    setSalesData(shuffledData);
+  };
+
+  const formatTime = (seconds) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${hours.toString().padStart(2, "0")}h : ${minutes.toString().padStart(2, "0")}m : ${secs.toString().padStart(2, "0")}s`;
+  };
 
   return (
     <div className="bg-red-600 text-white p-4 rounded-lg shadow-lg">
@@ -26,11 +45,11 @@ function HotSales() {
         <h2 className="text-xl font-bold flex items-center">
           <span className="mr-2">⚡</span> Flash Sales | Live Now
         </h2>
-        <p className="text-lg font-semibold">Time Left: {timeLeft}</p>
+        <p className="text-lg font-semibold">Time Left: {formatTime(timeLeft)}</p>
         <a href="#" className="underline">See All</a>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-4">
-        {hotSalesData.map((item) => (
+        {salesData.map((item) => (
           <div key={item.id} className="bg-white text-black p-3 rounded-lg shadow-md relative">
             <span className="absolute top-2 left-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-lg">
               -{item.discount}%
@@ -53,4 +72,4 @@ function HotSales() {
   );
 }
 
-export default HotSales;1
+export default HotSales;
