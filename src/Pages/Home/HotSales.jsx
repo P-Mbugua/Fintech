@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { ChevronRight } from "lucide-react"; 
 
 const hotSalesData = [
   { id: 1, name: "NIVEA UV Face Shine Control", price: 899, oldPrice: 1300, discount: 31, stock: 100, image: "nivea.png" },
@@ -57,11 +58,11 @@ function HotSales() {
           <span className="mr-1 ">⚡</span> Flash Sales | Live Now
         </h2>
         <p className="text-lg font-semibold">Time Left: <span className="font-bold">{formatTime(timeLeft)}</span></p>
-        import { ChevronRight } from "lucide-react"; // Import the professional arrow icon
+      
 
-<a href="#" className="flex items-center text-white font-semibold hover:opacity-80">
-  See All <ChevronRight className="ml-1 w-5 h-5" />
-</a>
+          <a href="#" className="flex items-center text-white font-semibold hover:opacity-80">
+            See All <ChevronRight className="ml-1 w-5 h-5" />
+          </a>
 
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-4">
