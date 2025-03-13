@@ -54,7 +54,7 @@ function HotSales() {
     <div className="bg-red-600 text-white p-4  shadow-lg">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-bold flex items-center">
-          <span className="mr-2">⚡</span> Flash Sales | Live Now
+          <span className="mr-1 ">⚡</span> Flash Sales | Live Now
         </h2>
         <p className="text-lg font-semibold">Time Left: <span className="font-bold">{formatTime(timeLeft)}</span></p>
         <a href="#" className="underline">See All</a>
