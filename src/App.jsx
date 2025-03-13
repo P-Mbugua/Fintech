@@ -25,6 +25,7 @@ import Footer from "./components/Common/Footer";
 import Home from "./Pages/Home/Home";
 import HotSales from "./Pages/Home/HotSales";
 import Cart from "./Pages/Cart/Cart";
+import Banner from "./Pages/Home/Banner";
 
 // Order Pages (Protected)
 import OrderHistory from "./Pages/Orders/OrderHistory";
@@ -55,6 +56,7 @@ function App() {
             <Routes>
               {/* Public Routes (No authentication required) */}
               <Route path="/" element={<MainLayout><Home /></MainLayout>} />
+              <Route path="/banner" element={<MainLayout><Banner /></MainLayout>} />
               <Route path="/hot-sales" element={<MainLayout><HotSales /></MainLayout>} />
               <Route path="/cart" element={<MainLayout><Cart /></MainLayout>} />
               <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
