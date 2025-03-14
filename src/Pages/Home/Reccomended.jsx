@@ -69,9 +69,10 @@ function Recommended() {
         {/* Product List */}
         <div className="flex gap-4 overflow-x-auto scrollbar-hide">
           {recommendedItems.map((item) => (
-            <div
+            <a
               key={item.id}
-              className="w-40 bg-gray-100 p-3 rounded-md shadow-md hover:shadow-lg transition duration-300"
+              href={`/product/${item.id}`} // Dynamic navigation link
+              className="w-40 bg-gray-100 p-3 rounded-md shadow-md hover:shadow-lg transition duration-300 cursor-pointer focus:ring focus:ring-orange-300"
             >
               <img
                 src={item.image}
@@ -95,7 +96,7 @@ function Recommended() {
                   <Star className="w-4 h-4 text-gray-400" />
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
