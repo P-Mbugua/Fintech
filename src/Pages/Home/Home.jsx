@@ -70,7 +70,7 @@ function Home() {
 
             {/* Dropdown Menu */}
             {isDropdownOpen && (
-              <div className="absolute left-0 sm:left-auto sm:right-0 mt-2 w-full sm:w-56 bg-white border border-gray-300 rounded-md shadow-lg z-50 transition-transform duration-300 ease-in-out transform">
+              <div className="absolute  left-0 sm:left-auto sm:right-0 mt-2 w-full sm:w-56 bg-white border border-gray-300 rounded-md shadow-lg z-50 transition-transform duration-300 ease-in-out transform">
                 {departments.map((dept, index) => (
                   <div key={index} className="relative group">
                     <button
