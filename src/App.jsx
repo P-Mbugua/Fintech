@@ -60,6 +60,7 @@ function App() {
               <Route path="/banner" element={<MainLayout><Banner /></MainLayout>} />
               <Route path="/hot-sales" element={<MainLayout><HotSales /></MainLayout>} />
               <Route path="/cart" element={<MainLayout><Cart /></MainLayout>} />
+              <Route path= "/recommended" element={<MainLayout><Reccomended /></MainLayout>} />
               <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
               <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
               <Route path="/forgot-password" element={<AuthLayout><ForgotPassword /></AuthLayout>} />

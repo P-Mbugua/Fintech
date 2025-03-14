@@ -3,6 +3,7 @@ import Header from "../components/Common/Header";
 import Footer from "../components/Common/Footer";
 import HotSales from "../Pages/Home/HotSales";
 import Banner from "../Pages/Home/Banner";
+import Reccomended from "../Pages/Home/Reccomended";
 
 function MainLayout({ children }) {
   return (
@@ -11,6 +12,7 @@ function MainLayout({ children }) {
       <main>{children}</main>
       <Banner></Banner>
       <HotSales></HotSales>
+      <Reccomended></Reccomended>
       <Footer />
     </div>
   );
