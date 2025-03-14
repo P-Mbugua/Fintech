@@ -26,6 +26,7 @@ import Home from "./Pages/Home/Home";
 import HotSales from "./Pages/Home/HotSales";
 import Cart from "./Pages/Cart/Cart";
 import Banner from "./Pages/Home/Banner";
+import Reccomended from "./Pages/Home/Reccomended";
 
 // Order Pages (Protected)
 import OrderHistory from "./Pages/Orders/OrderHistory";
