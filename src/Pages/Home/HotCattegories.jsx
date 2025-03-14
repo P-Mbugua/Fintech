@@ -25,7 +25,7 @@ const categories = [
 
 const HotCategories = () => {
   return (
-    <div className="bg-blue-200 p-4 rounded-lg">
+    <div className="bg-red-600 p-4 rounded-lg">
       <h2 className="text-xl font-bold mb-4">Hot Category</h2>
       <div className="grid grid-cols-5 gap-4">
         {categories.map((category, index) => (
