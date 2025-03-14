@@ -1,4 +1,5 @@
 import React from "react";
+import { ArrowRight, Star, ShoppingBag } from "lucide-react";
 
 const recommendedItems = [
   {
@@ -53,33 +54,47 @@ const recommendedItems = [
 
 function Recommended() {
   return (
-    <div className="bg-blue-500 p-4">
-      <div className="bg-white p-4 rounded-md shadow-md">
-        <div className="flex justify-between items-center">
-          <h2 className="text-lg font-semibold">Recommended for you</h2>
-          <a href="#" className="text-orange-500 text-sm">
-            See All &gt;
+    <div className="bg-blue-500 p-6">
+      <div className="bg-white p-5 rounded-lg shadow-lg">
+        {/* Header Section */}
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-semibold flex items-center gap-2">
+            <ShoppingBag className="text-orange-500 w-6 h-6" /> Recommended for you
+          </h2>
+          <a href="#" className="text-orange-500 text-sm flex items-center">
+            See All <ArrowRight className="w-4 h-4 ml-1" />
           </a>
         </div>
-        <div className="flex gap-4 overflow-x-auto scrollbar-hide mt-4">
+
+        {/* Product List */}
+        <div className="flex gap-4 overflow-x-auto scrollbar-hide">
           {recommendedItems.map((item) => (
             <div
               key={item.id}
-              className="w-40 bg-gray-100 p-2 rounded-md shadow-sm"
+              className="w-40 bg-gray-100 p-3 rounded-md shadow-md hover:shadow-lg transition duration-300"
             >
               <img
                 src={item.image}
                 alt={item.title}
                 className="w-full h-24 object-cover rounded-md"
               />
-              <p className="text-sm mt-1">{item.title}</p>
-              <p className="text-lg font-bold">{item.price}</p>
-              <p className="text-gray-400 line-through text-xs">
-                {item.oldPrice}
-              </p>
-              <span className="text-red-500 text-xs font-semibold">
-                {item.discount}
-              </span>
+              <p className="text-sm mt-2 font-medium">{item.title}</p>
+              <p className="text-lg font-bold text-gray-800">{item.price}</p>
+              <p className="text-gray-500 line-through text-xs">{item.oldPrice}</p>
+
+              {/* Discount & Star Rating */}
+              <div className="flex items-center justify-between mt-2">
+                <span className="text-red-500 text-xs font-semibold bg-red-100 px-2 py-1 rounded-md">
+                  {item.discount}
+                </span>
+                <div className="flex text-yellow-500">
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 text-gray-400" />
+                </div>
+              </div>
             </div>
           ))}
         </div>
