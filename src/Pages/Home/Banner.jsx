@@ -10,15 +10,15 @@ const categories = [
 ];
 
 const products = [
-  { title: "Portable Wardrobe", price: "KSh 4,500", img: "/wardrobe.png" },
-  { title: "Baby Oil 100ml", price: "KSh 409", img: "/oil.png" },
-  { title: "Beauty Starter Kit", price: "KSh 2,438", img: "/oil.png" },
-  { title: "TECNO Spark 30C", price: "KSh 11,599", img: "/phone.png" },
+  { title: "Portable Wardrobe", price: "KSh 4,500", img: "https://img.kilimall.com/c/public/store/11337/goods/image/101468730.jpg?x-image-process=image/format,webp/resize,w_720#" },
+  { title: "Baby Oil 100ml", price: "KSh 409", img: "https://img.kilimall.com/c/obs/seller/10541/goods_image/250123175708_0c62b8c8042fd169755eee95ddd76bf1.jpg?x-image-process=image/format,webp/resize,w_720#" },
+  { title: "Beauty Starter Kit", price: "KSh 2,438", img: "https://image.kilimall.com/kenya/shop/store/goods/8048/2023/04/16809012720888085599ebad041a1a5dcff599d812981.jpg?x-image-process=image/format,webp/resize,w_720#" },
+  { title: "TECNO Spark 30C", price: "KSh 11,599", img: "https://img.kilimall.com/c/obs/seller/2096/goods_image/240920161548_8167912c9fc1bb684477ff2aa31c3d4e.png?x-image-process=image/format,webp/resize,w_720#" },
 ];
 
 const HomePage = () => {
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
+    <div className="flex flex-col md:flex-row ">
       {/* Sidebar Menu */}
       <aside className="w-1/4 bg-white p-4 shadow-lg hidden md:block">
         <h2 className="text-lg font-semibold mb-4 flex items-center">
@@ -47,7 +47,7 @@ const HomePage = () => {
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="flex-1 h-32 bg-red-500 text-white flex items-center justify-center text-md font-bold rounded-lg p-3 shadow-lg"
+            className="flex-1 h-32 bg-red-600 text-white flex items-center justify-center text-md font-bold rounded-lg p-3 shadow-lg"
           >
             Flash Sale! Up to 70% Off
           </motion.div>
