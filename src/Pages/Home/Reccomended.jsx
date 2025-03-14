@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { ArrowRight, Star, ShoppingBag } from "lucide-react";
 
 const recommendedItems = [
@@ -29,21 +30,13 @@ const recommendedItems = [
   {
     id: 4,
     image: "https://via.placeholder.com/150",
-    title: "Fashion Lady Square Bag",
-    price: "KSh 399",
-    oldPrice: "KSh 609",
-    discount: "-34%",
-  },
-  {
-    id: 5,
-    image: "https://via.placeholder.com/150",
     title: "Fashion Women's Small Bag",
     price: "KSh 450",
     oldPrice: "KSh 809",
     discount: "-44%",
   },
   {
-    id: 6,
+    id: 5,
     image: "https://via.placeholder.com/150",
     title: "STY Women Small Cross Bag",
     price: "KSh 469",
@@ -69,9 +62,10 @@ function Recommended() {
         {/* Product List */}
         <div className="flex gap-4 overflow-x-auto scrollbar-hide">
           {recommendedItems.map((item) => (
-            <div
+            <Link
+              to={`/product/${item.id}`}
               key={item.id}
-              className="w-40 bg-gray-100 p-3 rounded-md shadow-md hover:shadow-lg transition duration-300"
+              className="w-40 bg-gray-100 p-3 rounded-md shadow-md hover:shadow-xl hover:scale-105 transition duration-300 cursor-pointer"
             >
               <img
                 src={item.image}
@@ -95,7 +89,7 @@ function Recommended() {
                   <Star className="w-4 h-4 text-gray-400" />
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
