@@ -4,6 +4,7 @@ import Footer from "../components/Common/Footer";
 import HotSales from "../Pages/Home/HotSales";
 import Banner from "../Pages/Home/Banner";
 import Reccomended from "../Pages/Home/Reccomended";
+import HotCattegories from "../Pages/Home/HotCattegories";
 
 function MainLayout({ children }) {
   return (
@@ -13,6 +14,7 @@ function MainLayout({ children }) {
       <Banner></Banner>
       <HotSales></HotSales>
       <Reccomended></Reccomended>
+      <HotCattegories></HotCattegories>
       <Footer />
     </div>
   );

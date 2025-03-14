@@ -24,6 +24,7 @@ import Footer from "./components/Common/Footer";
 // Public Pages
 import Home from "./Pages/Home/Home";
 import HotSales from "./Pages/Home/HotSales";
+import HotCattegories from "./Pages/Home/HotCattegories";
 import Cart from "./Pages/Cart/Cart";
 import Banner from "./Pages/Home/Banner";
 import Reccomended from "./Pages/Home/Reccomended";
@@ -61,6 +62,7 @@ function App() {
               <Route path="/hot-sales" element={<MainLayout><HotSales /></MainLayout>} />
               <Route path="/cart" element={<MainLayout><Cart /></MainLayout>} />
               <Route path= "/recommended" element={<MainLayout><Reccomended /></MainLayout>} />
+              <Route path="/hot-cattegories" element={<MainLayout><HotCattegories /></MainLayout>} />
               <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
               <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
               <Route path="/forgot-password" element={<AuthLayout><ForgotPassword /></AuthLayout>} />
