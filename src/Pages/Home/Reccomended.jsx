@@ -50,6 +50,14 @@ const recommendedItems = [
     oldPrice: "KSh 799",
     discount: "-41%",
   },
+  {
+    id: 7,
+    image: "https://ke.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/14/2983552/1.jpg?0779",
+    title: "STY Women Small Cross Bag",
+    price: "KSh 469",
+    oldPrice: "KSh 799",
+    discount: "-41%",
+  },
 ];
 
 function Recommended() {
