@@ -1,26 +1,26 @@
 import React from "react";
 
 const categories = [
-  { name: "TVs", img: "tv-image-url" },
-  { name: "Appliances", img: "appliances-image-url" },
-  { name: "Kitchen", img: "kitchen-image-url" },
-  { name: "Home", img: "home-image-url" },
-  { name: "Phones", img: "phones-image-url" },
-  { name: "Refurbished Phones", img: "refurbished-phones-image-url" },
-  { name: "Smartwatches", img: "smartwatches-image-url" },
-  { name: "Personal Care", img: "personal-care-image-url" },
-  { name: "Beauty", img: "beauty-image-url" },
-  { name: "Health Care", img: "health-care-image-url" },
-  { name: "Wigs and Tools", img: "wigs-tools-image-url" },
-  { name: "Men Shoes", img: "men-shoes-image-url" },
-  { name: "Women Shoes", img: "women-shoes-image-url" },
-  { name: "Kids Shoes", img: "kids-shoes-image-url" },
-  { name: "Women Accessories", img: "women-accessories-image-url" },
-  { name: "Men Accessories", img: "men-accessories-image-url" },
-  { name: "Women Clothes", img: "women-clothes-image-url" },
-  { name: "Men Clothes", img: "men-clothes-image-url" },
-  { name: "Women Bags", img: "women-bags-image-url" },
-  { name: "Men Bags", img: "men-bags-image-url" },
+  { name: "TVs", img: "https://img.kilimall.com/c/common/category-icon/100001632.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Appliances", img: "appliances-image-url", link: "https://img.kilimall.com/c/common/category-icon/100001633.jpg?x-image-process=image/format,webp/resize,w_240#" },
+  { name: "Kitchen", img: "kitchen-image-url", link: "https://img.kilimall.com/c/common/category-icon/100001631.jpg?x-image-process=image/format,webp/resize,w_240#" },
+  { name: "Home", img: "home-image-url", link: "https://img.kilimall.com/c/common/category-icon/100001628.jpg?x-image-process=image/format,webp/resize,w_240#" },
+  { name: "Phones", img: "phones-image-url", link: "https://img.kilimall.com/c/common/category-icon/100001637.jpg?x-image-process=image/format,webp/resize,w_240#" },
+  { name: "Refurbished Phones", img: "https://img.kilimall.com/c/common/category-icon/100001636.png?x-image-process=image/format,webp/resize,w_240#", link: "" },
+  { name: "Smartwatches", img: "https://img.kilimall.com/c/common/category-icon/100000676.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Personal Care", img: "https://img.kilimall.com/c/common/category-icon/100000614.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Beauty", img: "https://img.kilimall.com/c/common/category-icon/100000537.png?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Health Care", img: "https://img.kilimall.com/c/common/category-icon/100001155.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Wigs and Tools", img: "https://img.kilimall.com/c/common/category-icon/100000308.png?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Men Shoes", img: "https://img.kilimall.com/c/common/category-icon/100000166.jpeg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Women Shoes", img: "https://img.kilimall.com/c/common/category-icon/100000513.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Kids Shoes", img: "https://img.kilimall.com/c/common/category-icon/100000165.jpeg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Women Accessories", img: "https://img.kilimall.com/c/common/category-icon/100001726.png?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Men Accessories", img: "https://img.kilimall.com/c/common/category-icon/100000487.png?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Women Clothes", img: "https://img.kilimall.com/c/common/category-icon/100000490.png?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Men Clothes", img: "https://img.kilimall.com/c/common/category-icon/100000488.png?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Women Bags", img: "https://img.kilimall.com/c/common/category-icon/100000615.png?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Men Bags", img: "https://img.kilimall.com/c/common/category-icon/100000507.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
 ];
 
 const HotCategories = () => {
@@ -29,10 +29,14 @@ const HotCategories = () => {
       <h2 className="text-xl font-bold mb-4">Hot Category</h2>
       <div className="grid grid-cols-5 gap-4">
         {categories.map((category, index) => (
-          <div key={index} className="flex flex-col items-center p-2 bg-white rounded-lg shadow-md hover:shadow-lg">
+          <a
+            key={index}
+            href={category.link}
+            className="flex flex-col items-center p-2 bg-white rounded-lg shadow-md hover:shadow-lg hover:bg-blue-100 transition-transform transform hover:scale-105"
+          >
             <img src={category.img} alt={category.name} className="w-16 h-16 object-contain" />
             <p className="text-sm mt-2 font-medium">{category.name}</p>
-          </div>
+          </a>
         ))}
       </div>
     </div>
