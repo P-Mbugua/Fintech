@@ -4,7 +4,7 @@ import { ArrowRight, Star, ShoppingBag } from "lucide-react";
 const recommendedItems = [
   {
     id: 1,
-    image: "https://via.placeholder.com/150",
+    image: "https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/14/2983552/1.jpg?0779",
     title: "Fashion Lady Square Bag",
     price: "KSh 429",
     oldPrice: "KSh 609",
@@ -12,7 +12,7 @@ const recommendedItems = [
   },
   {
     id: 2,
-    image: "https://via.placeholder.com/150",
+    image: "https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/69/3383252/1.jpg?7808",
     title: "Fashion Lady Square Bag",
     price: "KSh 399",
     oldPrice: "KSh 609",
@@ -20,7 +20,7 @@ const recommendedItems = [
   },
   {
     id: 3,
-    image: "https://via.placeholder.com/150",
+    image: "https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/77/1390251/1.jpg?0577",
     title: "STY Women Purse Mini",
     price: "KSh 399",
     oldPrice: "KSh 699",
@@ -28,7 +28,7 @@ const recommendedItems = [
   },
   {
     id: 4,
-    image: "https://via.placeholder.com/150",
+    image: "https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/13/7463552/1.jpg?9016",
     title: "Fashion Lady Square Bag",
     price: "KSh 399",
     oldPrice: "KSh 609",
@@ -36,7 +36,7 @@ const recommendedItems = [
   },
   {
     id: 5,
-    image: "https://via.placeholder.com/150",
+    image: "https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/77/8961962/1.jpg?8559",
     title: "Fashion Women's Small Bag",
     price: "KSh 450",
     oldPrice: "KSh 809",
@@ -44,7 +44,7 @@ const recommendedItems = [
   },
   {
     id: 6,
-    image: "https://via.placeholder.com/150",
+    image: "https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/78/0170251/1.jpg?0964",
     title: "STY Women Small Cross Bag",
     price: "KSh 469",
     oldPrice: "KSh 799",
@@ -54,7 +54,7 @@ const recommendedItems = [
 
 function Recommended() {
   return (
-    <div className="bg-blue-500 p-6">
+    <div className="bg-blue-600 p-6">
       <div className="bg-white p-5 rounded-lg shadow-lg">
         {/* Header Section */}
         <div className="flex justify-between items-center mb-4">
