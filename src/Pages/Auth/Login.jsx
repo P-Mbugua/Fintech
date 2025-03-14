@@ -72,13 +72,13 @@ const Login = () => {
         {!isPasswordLogin && (
           <div className="flex justify-center mb-4">
             <button
-              className={`px-4 py-2 ${tab === "phone" ? "border-b-2 border-red-500 text-red-500" : "text-gray-500"}`}
+              className={`px-4 py-2 ${tab === "phone" ? "border-b-2 border-red-500 text-red-500 hover:cursor-pointer" : "text-gray-500 hover:cursor-pointer"}`}
               onClick={() => setTab("phone")}
             >
               Phone No.
             </button>
             <button
-              className={`px-4 py-2 ${tab === "email" ? "border-b-2 border-red-500 text-red-500" : "text-gray-500"}`}
+              className={`px-4 py-2 ${tab === "email" ? "border-b-2 border-red-500 text-red-500 hover:cursor-pointer" : "text-gray-500 hover:cursor-pointer"}`}
               onClick={() => setTab("email")}
             >
               Email
@@ -142,7 +142,7 @@ const Login = () => {
                 />
                 <button
                   type="button"
-                  className={`text-red-500 text-sm ${codeSent ? "opacity-50 cursor-not-allowed" : ""}`}
+                  className={`text-red-500 hover:cursor-pointer text-sm ${codeSent ? "opacity-50 cursor-not-allowed" : ""}`}
                   onClick={sendCode}
                   disabled={codeSent}
                 >
@@ -154,7 +154,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600 transition"
+            className="w-full bg-red-500 text-white hover:cursor-pointer py-2 rounded hover:bg-red-600 transition"
             disabled={loading}
           >
             {loading ? "Logging in..." : "Login"}
@@ -176,11 +176,11 @@ const Login = () => {
 
         {/* Social Login Options */}
         <div className="flex flex-col space-y-3 mt-4">
-          <button className="w-full flex items-center justify-center border border-gray-300 rounded py-2 hover:bg-gray-200">
+          <button className="w-full flex items-center justify-center hover:cursor-pointer border border-gray-300 rounded py-2 hover:bg-gray-200">
             <FcGoogle className="h-5 w-5 mr-2" />
             Login Via Google
           </button>
-          <button className="w-full flex items-center justify-center border border-gray-300 rounded py-2 hover:bg-gray-200 text-blue-600">
+          <button className="w-full flex items-center hover:cursor-pointer justify-center border border-gray-300 rounded py-2 hover:bg-gray-200 text-blue-600">
             <FaFacebook className="h-5 w-5 mr-2" />
             Login Via Facebook
           </button>
