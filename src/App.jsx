@@ -28,6 +28,7 @@ import HotCattegories from "./Pages/Home/HotCattegories";
 import Cart from "./Pages/Cart/Cart";
 import Banner from "./Pages/Home/Banner";
 import Reccomended from "./Pages/Home/Reccomended";
+import ProductsPage from "./Pages/Home/ProductsPage";
 
 // Order Pages (Protected)
 import OrderHistory from "./Pages/Orders/OrderHistory";
@@ -60,6 +61,7 @@ function App() {
               <Route path="/" element={<MainLayout><Home /></MainLayout>} />
               <Route path="/banner" element={<MainLayout><Banner /></MainLayout>} />
               <Route path="/hot-sales" element={<MainLayout><HotSales /></MainLayout>} />
+              <Route path="/products" element={<MainLayout><ProductsPage /></MainLayout>} />
               <Route path="/cart" element={<MainLayout><Cart /></MainLayout>} />
               <Route path= "/recommended" element={<MainLayout><Reccomended /></MainLayout>} />
               <Route path="/hot-cattegories" element={<MainLayout><HotCattegories /></MainLayout>} />
