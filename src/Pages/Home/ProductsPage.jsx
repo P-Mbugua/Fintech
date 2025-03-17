@@ -7,6 +7,7 @@ const products = [
     price: "KSh 19,399",
     image: "https://via.placeholder.com/150",
     rating: 4,
+    stock: 10,
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ const products = [
     price: "KSh 10,999",
     image: "https://via.placeholder.com/150",
     rating: 4.5,
+    stock: 5,
   },
   {
     id: 3,
@@ -21,13 +23,15 @@ const products = [
     price: "KSh 4,299",
     image: "https://via.placeholder.com/150",
     rating: 4,
+    stock: 8,
   },
   {
     id: 4,
     name: "Infinix Hot 50i 128GB + 12(6+6)GB RAM",
     price: "KSh 11,999",
-    image: "https://via.placeholder.com/150",
+    image: "https://img.kilimall.com/c/obs/seller/5238/goods_image/241031162047_605620c4e396a77e6c4e873df45fffa9.jpg?x-image-process=image/format,webp/resize,w_360#",
     rating: 4.5,
+    stock: 15,
   },
   {
     id: 5,
@@ -35,6 +39,7 @@ const products = [
     price: "KSh 17,599",
     image: "https://via.placeholder.com/150",
     rating: 4.8,
+    stock: 3,
   },
   {
     id: 6,
@@ -42,6 +47,7 @@ const products = [
     price: "KSh 13,495",
     image: "https://via.placeholder.com/150",
     rating: 4.7,
+    stock: 12,
   },
 ];
 
@@ -64,6 +70,7 @@ function ProductsPage() {
             <h2 className="text-md font-semibold mb-1 text-gray-800">{product.name}</h2>
             <p className="text-red-500 font-bold text-md">{product.price}</p>
             <p className="text-yellow-400 text-md">{"★".repeat(Math.round(product.rating))}</p>
+            <p className="text-gray-600 text-sm">Stock: {product.stock}</p>
           </a>
         ))}
       </div>
