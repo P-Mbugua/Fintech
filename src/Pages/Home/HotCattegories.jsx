@@ -2,11 +2,11 @@ import React from "react";
 
 const categories = [
   { name: "TVs", img: "https://img.kilimall.com/c/common/category-icon/100001632.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
-  { name: "Appliances", img: "appliances-image-url", link: "https://img.kilimall.com/c/common/category-icon/100001633.jpg?x-image-process=image/format,webp/resize,w_240#" },
-  { name: "Kitchen", img: "kitchen-image-url", link: "https://img.kilimall.com/c/common/category-icon/100001631.jpg?x-image-process=image/format,webp/resize,w_240#" },
-  { name: "Home", img: "home-image-url", link: "https://img.kilimall.com/c/common/category-icon/100001628.jpg?x-image-process=image/format,webp/resize,w_240#" },
-  { name: "Phones", img: "phones-image-url", link: "https://img.kilimall.com/c/common/category-icon/100001637.jpg?x-image-process=image/format,webp/resize,w_240#" },
-  { name: "Refurbished Phones", img: "https://img.kilimall.com/c/common/category-icon/100001636.png?x-image-process=image/format,webp/resize,w_240#", link: "" },
+  { name: "Appliances", img: "https://img.kilimall.com/c/common/category-icon/100001633.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Kitchen", img: "https://img.kilimall.com/c/common/category-icon/100001631.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Home", img: "https://img.kilimall.com/c/common/category-icon/100001628.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Phones", img: "https://img.kilimall.com/c/common/category-icon/100001637.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Refurbished Phones", img: "https://img.kilimall.com/c/common/category-icon/100001636.png?x-image-process=image/format,webp/resize,w_240#", link: "#" },
   { name: "Smartwatches", img: "https://img.kilimall.com/c/common/category-icon/100000676.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
   { name: "Personal Care", img: "https://img.kilimall.com/c/common/category-icon/100000614.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
   { name: "Beauty", img: "https://img.kilimall.com/c/common/category-icon/100000537.png?x-image-process=image/format,webp/resize,w_240#", link: "#" },
@@ -25,17 +25,17 @@ const categories = [
 
 const HotCategories = () => {
   return (
-    <div className="bg-blue-600 p-4 ">
-      <h2 className="text-xl font-bold mb-4">Hot Category</h2>
-      <div className="grid grid-cols-5 gap-4">
+    <div className="bg-blue-600 p-6">
+      <h2 className="text-2xl font-bold text-white text-center mb-6">Hot Categories</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {categories.map((category, index) => (
           <a
             key={index}
             href={category.link}
-            className="flex flex-col items-center p-2 bg-white rounded-lg shadow-md hover:shadow-lg hover:bg-blue-100 transition-transform transform hover:scale-105"
+            className="flex flex-col items-center p-3 bg-white rounded-lg shadow-md hover:shadow-lg hover:bg-blue-100 transition-transform transform hover:scale-105"
           >
-            <img src={category.img} alt={category.name} className="w-16 h-16 object-contain" />
-            <p className="text-sm mt-2 font-medium">{category.name}</p>
+            <img src={category.img} alt={category.name} className="w-20 h-20 object-contain" />
+            <p className="text-sm mt-2 font-semibold text-gray-800 text-center">{category.name}</p>
           </a>
         ))}
       </div>
