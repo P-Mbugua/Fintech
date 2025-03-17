@@ -29,7 +29,7 @@ const products = [
     id: 4,
     name: "Infinix Hot 50i 128GB + 12(6+6)GB RAM",
     price: "KSh 11,999",
-    image: "https://img.kilimall.com/c/obs/seller/5238/goods_image/241031162047_605620c4e396a77e6c4e873df45fffa9.jpg?x-image-process=image/format,webp/resize,w_360#",
+    image: "https://via.placeholder.com/150",
     rating: 4.5,
     stock: 15,
   },
@@ -53,9 +53,9 @@ const products = [
 
 function ProductsPage() {
   return (
-    <div className="p-6 bg-red-600 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-center text-white">Featured Products</h1>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="p-4 bg-red-600 min-h-screen flex flex-col items-center">
+      <h1 className="text-2xl md:text-3xl font-bold mb-6 text-center text-white">Featured Products</h1>
+      <div className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map((product) => (
           <a
             key={product.id}
