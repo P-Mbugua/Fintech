@@ -47,23 +47,23 @@ const products = [
 
 function ProductsPage() {
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-center">Featured Products</h1>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div className="p-6 bg-red-600 min-h-screen">
+      <h1 className="text-3xl font-bold mb-6 text-center text-white">Featured Products</h1>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map((product) => (
           <a
             key={product.id}
             href="#"
-            className="block bg-white p-4 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:shadow-xl"
+            className="block bg-white p-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:shadow-xl"
           >
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-48 object-cover rounded-md mb-4"
+              className="w-full h-40 object-cover rounded-md mb-3"
             />
-            <h2 className="text-lg font-semibold mb-2 text-gray-800">{product.name}</h2>
-            <p className="text-red-500 font-bold text-lg">{product.price}</p>
-            <p className="text-yellow-400 text-lg">{"★".repeat(Math.round(product.rating))}</p>
+            <h2 className="text-md font-semibold mb-1 text-gray-800">{product.name}</h2>
+            <p className="text-red-500 font-bold text-md">{product.price}</p>
+            <p className="text-yellow-400 text-md">{"★".repeat(Math.round(product.rating))}</p>
           </a>
         ))}
       </div>
