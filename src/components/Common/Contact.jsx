@@ -39,7 +39,7 @@ function Contact() {
         </div>
 
         {/* Image */}
-        <div className="w-48 h-48 bg-orange-200 rounded-lg flex items-center justify-center shadow-lg">
+        <div className="w-48 h-48 bg-gray-100 rounded-lg flex items-center justify-center shadow-lg">
           <img
             src="https://ke.jumia.is/cms/2023/W08/CTO/CallCenter_Lady.png"
             alt="Customer Support"
@@ -52,7 +52,7 @@ function Contact() {
       <div className="text-center py-10 bg-gray-50">
         <h2 className="text-2xl font-bold text-gray-800">Our Online Services</h2>
         <div className="mt-6 flex justify-center">
-          <button className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-orange-600 transition">
+          <button className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-red-700 transition">
             🛒 How to track your order?
           </button>
         </div>
