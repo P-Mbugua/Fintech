@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Context Providers
@@ -15,8 +15,6 @@ import MainLayout from "./Layouts/MainLayout";
 import Login from "./Pages/Auth/Login";
 import Register from "./Pages/Auth/Register";
 import ForgotPassword from "./Pages/Auth/ForgotPassword";
-
-
 
 // Common pages
 import Header from "./components/Common/Header";
@@ -37,13 +35,11 @@ import ProductsPage from "./Pages/Home/ProductsPage";
 // Phone and Accessories 
 import PhoneandAccessories from "./Pages/Phoneand Accessories/PhoneandAccessories";
 
-
 // Order Pages (Protected)
 import OrderHistory from "./Pages/Orders/OrderHistory";
 import OrderDetails from "./Pages/Orders/OrderDetails";
 
 // Payment Pages (Protected)
-// Done
 import Checkout from "./Pages/Payments/Checkout";
 import Payments from "./Pages/Payments/Payments";
 import Success from "./Pages/Payments/Success";
@@ -58,7 +54,23 @@ import Dashboard from "./components/Dashboard/Dashboard";
 // Route Protection
 import ProtectedRoute from "./Routes/ProtectedRoute";
 
+// Loader Component
+import FintechLoader from "./components/Common/FintechLoader";
+
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulating loading time
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Loader will show for 2 seconds
+  }, []);
+
+  if (loading) {
+    return <FintechLoader />;
+  }
+
   return (
     <AuthProvider>
       <CartProvider>
