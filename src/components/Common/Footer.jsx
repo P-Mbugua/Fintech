@@ -107,7 +107,7 @@ function Footer() {
               <h4 className="font-semibold mb-4 text-gray-900">Company</h4>
               <ul className="space-y-2">
                 <li>
-                  <Link to="/about-us" className="hover:text-blue-500 cursor-pointer">
+                  <Link to="/about" className="hover:text-blue-500 cursor-pointer">
                     About Us
                   </Link>
                 </li>
