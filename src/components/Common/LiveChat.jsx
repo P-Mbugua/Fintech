@@ -17,6 +17,7 @@ const LiveChat = () => {
   const [newMessage, setNewMessage] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
   const [isAgentOnline, setIsAgentOnline] = useState(false);
+  const [isHovered, setIsHovered] = useState(false); // Track hover state
   const chatRef = useRef(null); // Reference for detecting outside clicks
 
   useEffect(() => {
@@ -72,11 +73,20 @@ const LiveChat = () => {
       {/* Floating Chat Icon */}
       <div className="fixed bottom-5 right-5 z-50">
         <button
-          className="bg-green-500 text-white p-3 rounded-full shadow-lg flex items-center"
+          className="bg-green-500 text-white p-3 rounded-full shadow-lg flex items-center relative"
           onClick={() => setChatOpen(!chatOpen)}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
           <FaCommentDots className="text-xl" />
         </button>
+
+        {/* Tooltip */}
+        {isHovered && (
+          <div className="absolute bottom-12 right-1/2 translate-x-1/2 bg-black text-white text-sm px-2 py-1 rounded-md shadow-md">
+            Chat with us!
+          </div>
+        )}
       </div>
 
       {/* Chat Box */}
