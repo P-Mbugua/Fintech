@@ -42,13 +42,35 @@ const products = {
 };
 
 const ProductCard = ({ product }) => {
+  const handleAddToCart = () => {
+    alert(`Added ${product.name} to cart!`);
+  };
+
+  const handleOrderNow = () => {
+    alert(`Ordering ${product.name} now!`);
+  };
+
   return (
-    <div className="bg-white p-3 rounded-lg shadow-md w-40">
-      <img src={product.image} alt={product.name} className="w-full h-24 object-cover" />
+    <div className="bg-white p-3 rounded-lg shadow-md w-40 flex flex-col">
+      <img src={product.image} alt={product.name} className="w-full h-24 object-cover rounded-md" />
       <p className="text-sm font-semibold mt-2">{product.name}</p>
       <p className="text-red-600 font-bold">{product.price}</p>
       <p className="text-gray-400 line-through text-xs">{product.oldPrice}</p>
       <span className="bg-red-500 text-white text-xs px-2 py-1 rounded">{product.discount}</span>
+
+      {/* Add to Cart & Order Now Buttons */}
+      <button
+        className="bg-blue-600 text-white text-xs py-1 mt-2 rounded-md hover:bg-blue-700 transition"
+        onClick={handleAddToCart}
+      >
+        Add to Cart
+      </button>
+      <button
+        className="bg-green-600 text-white text-xs py-1 mt-2 rounded-md hover:bg-green-700 transition"
+        onClick={handleOrderNow}
+      >
+        Order Now
+      </button>
     </div>
   );
 };

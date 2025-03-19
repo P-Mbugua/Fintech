@@ -16,8 +16,7 @@ const products = [
   { title: "TECNO Spark 30C", price: "KSh 11,599", img: "https://img.kilimall.com/c/obs/seller/2096/goods_image/240920161548_8167912c9fc1bb684477ff2aa31c3d4e.png?x-image-process=image/format,webp/resize,w_720#" },
 ];
 
-/*************  ✨ Codeium Command ⭐  *************/
-/**
+
 
 /******  3b5a81f5-b0a4-43ea-9b4c-456bd48bb74b  *******/const HomePage = () => {
   return (
