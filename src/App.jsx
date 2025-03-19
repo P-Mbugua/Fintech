@@ -29,6 +29,7 @@ import Cart from "./Pages/Cart/Cart";
 import Banner from "./Pages/Home/Banner";
 import Reccomended from "./Pages/Home/Reccomended";
 import ProductsPage from "./Pages/Home/ProductsPage";
+import Contact from "./Pages/Home/Contact";
 
 // Order Pages (Protected)
 import OrderHistory from "./Pages/Orders/OrderHistory";
@@ -68,6 +69,7 @@ function App() {
               <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
               <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
               <Route path="/forgot-password" element={<AuthLayout><ForgotPassword /></AuthLayout>} />
+              <Route path="/contact" element={<Contact />} />
               <Route path="/header" element={<Header />} />
               <Route path="/footer" element={<Footer />} />
 
