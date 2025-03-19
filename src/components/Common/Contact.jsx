@@ -48,16 +48,25 @@ function Contact() {
         </div>
       </div>
 
-      {/* Online Services Section */}
-      <div className="text-center py-10 bg-gray-50">
-        <h2 className="text-2xl font-bold text-gray-800">Our Online Services</h2>
-        <div className="mt-6 flex justify-center">
-          <button className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-red-700 transition">
-            🛒 How to track your order?
-          </button>
-        </div>
-      </div>
-    </div>
+     {/* Online Services Section */}
+<div className="text-center py-10 bg-gray-50">
+  <h2 className="text-2xl font-bold text-gray-800">Our Online Services</h2>
+  <div className="mt-6 flex flex-col items-center gap-4">
+    <button className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-red-700 transition">
+      🛒 How to track your order?
+    </button>
+
+    <button className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-red-700 transition">
+      🛒 How to cncel your order?
+    </button>
+
+    <button className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-red-700 transition">
+      🛒 How to return your order?
+    </button>
+  </div>
+</div>
+</div>
+
   );
 }
 
