@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import { Menu, Smartphone, Star, Gift, ShoppingBag } from "lucide-react";
 
 const categories = [
-  { name: "Phones & Accessories", icon: <Smartphone size={18} /> },
-  { name: "Home & Accessories", icon: <ShoppingBag size={18} /> },
-  { name: "Health & Beauty", icon: <Star size={18} /> },
-  { name: "Gifts & Fashion", icon: <Gift size={18} /> },
+  { name: "Phones & Accessories", icon: <Smartphone size={18} />, link: "/PhoneandAccessories" },
+  { name: "Home & Accessories", icon: <ShoppingBag size={18} />, link: "/home-accessories" },
+  { name: "Health & Beauty", icon: <Star size={18} />, link: "/health-beauty" },
+  { name: "Gifts & Fashion", icon: <Gift size={18} />, link: "/gifts-fashion" },
 ];
 
 const products = [
@@ -16,7 +16,10 @@ const products = [
   { title: "TECNO Spark 30C", price: "KSh 11,599", img: "https://img.kilimall.com/c/obs/seller/2096/goods_image/240920161548_8167912c9fc1bb684477ff2aa31c3d4e.png?x-image-process=image/format,webp/resize,w_720#" },
 ];
 
-const HomePage = () => {
+/*************  ✨ Codeium Command ⭐  *************/
+/**
+
+/******  3b5a81f5-b0a4-43ea-9b4c-456bd48bb74b  *******/const HomePage = () => {
   return (
     <div className="flex flex-col md:flex-row ">
       {/* Sidebar Menu */}
@@ -26,15 +29,16 @@ const HomePage = () => {
         </h2>
         <ul>
           {categories.map((category, index) => (
-            <motion.li
-              key={index}
-              whileHover={{ scale: 1.05, x: 5 }}
-              transition={{ type: "spring", stiffness: 200 }}
-              className="flex items-center p-2 mb-2 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer text-sm"
-            >
-              {category.icon}
-              <span className="ml-2">{category.name}</span>
-            </motion.li>
+            <a href={category.link} key={index} className="block">
+              <motion.li
+                whileHover={{ scale: 1.05, x: 5 }}
+                transition={{ type: "spring", stiffness: 200 }}
+                className="flex items-center p-2 mb-2 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer text-sm"
+              >
+                {category.icon}
+                <span className="ml-2">{category.name}</span>
+              </motion.li>
+            </a>
           ))}
         </ul>
       </aside>
