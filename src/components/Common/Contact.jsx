@@ -29,9 +29,9 @@ function Contact() {
         </div>
 
         {/* Image */}
-        <div className="w-64 h-64 bg-orange-200 rounded-lg flex items-center justify-center">
+        <div className="w-42 h-30 bg-orange-200 rounded-lg flex items-center justify-center">
           <img
-            src="https://via.placeholder.com/200" 
+            src="https://ke.jumia.is/cms/2023/W08/CTO/CallCenter_Lady.png" 
             alt="Customer Support"
             className="rounded-lg"
           />
