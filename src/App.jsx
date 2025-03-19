@@ -71,7 +71,7 @@ function App() {
               <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
               <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
               <Route path="/forgot-password" element={<AuthLayout><ForgotPassword /></AuthLayout>} />
-              <Route path="/contact" element={<Contact />} />
+              <Route path="/contact" element={<DashboardLayout><Contact /></DashboardLayout>} />
               <Route path="/header" element={<Header />} />
               <Route path="/footer" element={<Footer />} />
 
