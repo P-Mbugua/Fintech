@@ -3,9 +3,9 @@ import { FaPhoneAlt, FaWhatsapp, FaClock } from "react-icons/fa";
 
 function Contact() {
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white pt-1 ">
       {/* Header Section */}
-      <div className="bg-orange-500 text-white text-center py-10">
+      <div className="bg-blue-600 text-white text-center py-1 w-3/4 mx-auto">
         <h1 className="text-4xl font-extrabold">NEED HELP?</h1>
         <p className="mt-2 text-lg text-gray-200">We're here for you 7 days a week!</p>
       </div>
@@ -23,15 +23,15 @@ function Contact() {
             </p>
             <p className="flex items-center gap-2">
               <FaPhoneAlt className="text-orange-500" />
-              Call us: <a href="tel:+254711011011" className="font-bold hover:underline">+254 711 011 011</a>
+              Call us: <a href="tel:+254103947514" className="font-bold hover:underline">+254 103 947 514</a>
               <span className="text-sm">(Mon - Fri, 9 am - 6 pm)</span>
             </p>
             <p className="flex items-center gap-2">
               <FaWhatsapp className="text-green-500" />
               Order via WhatsApp: 
-              <a href="https://wa.me/254711011011" target="_blank" rel="noopener noreferrer" 
+              <a href="https://wa.me/254701571745" target="_blank" rel="noopener noreferrer" 
                  className="font-bold text-orange-600 hover:underline">
-                +254 711 011 011
+                +254 701 571 745
               </a>
               <span className="text-sm">(Mon - Sun, 8 am - 8 pm)</span>
             </p>
