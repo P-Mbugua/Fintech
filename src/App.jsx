@@ -15,13 +15,15 @@ import MainLayout from "./Layouts/MainLayout";
 import Login from "./Pages/Auth/Login";
 import Register from "./Pages/Auth/Register";
 import ForgotPassword from "./Pages/Auth/ForgotPassword";
-import Contact from "./components/Common/Contact";
-import LiveChat from "./components/Common/LiveChat";
+
 
 
 // Common pages
 import Header from "./components/Common/Header";
 import Footer from "./components/Common/Footer";
+import Contact from "./components/Common/Contact";
+import LiveChat from "./components/Common/LiveChat";
+import AboutUs from "./components/Common/AboutUs";
 
 // Public Pages
 import Home from "./Pages/Home/Home";
@@ -72,6 +74,7 @@ function App() {
               <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
               <Route path="/forgot-password" element={<AuthLayout><ForgotPassword /></AuthLayout>} />
               <Route path="/contact" element={<DashboardLayout><Contact /></DashboardLayout>} />
+              <Route path="/about" element={<DashboardLayout><AboutUs /></DashboardLayout>}/>
               <Route path="/header" element={<Header />} />
               <Route path="/footer" element={<Footer />} />
 
