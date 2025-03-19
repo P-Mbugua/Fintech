@@ -18,11 +18,11 @@ function Contact() {
           </p>
           <div className="mt-6 space-y-4 text-gray-600">
             <p className="flex items-center gap-2">
-              <FaClock className="text-orange-500" />
+              <FaClock className="text-red-600" />
               Available <strong>Monday to Sunday</strong>, <strong>9 am - 6 pm</strong> on Live Chats.
             </p>
             <p className="flex items-center gap-2">
-              <FaPhoneAlt className="text-orange-500" />
+              <FaPhoneAlt className="text-red-600" />
               Call us: <a href="tel:+254103947514" className="font-bold hover:underline">+254 103 947 514</a>
               <span className="text-sm">(Mon - Fri, 9 am - 6 pm)</span>
             </p>
@@ -30,7 +30,7 @@ function Contact() {
               <FaWhatsapp className="text-green-500" />
               Order via WhatsApp: 
               <a href="https://wa.me/254701571745" target="_blank" rel="noopener noreferrer" 
-                 className="font-bold text-orange-600 hover:underline">
+                 className="font-bold text-red-600 hover:underline">
                 +254 701 571 745
               </a>
               <span className="text-sm">(Mon - Sun, 8 am - 8 pm)</span>
@@ -52,7 +52,7 @@ function Contact() {
       <div className="text-center py-10 bg-gray-50">
         <h2 className="text-2xl font-bold text-gray-800">Our Online Services</h2>
         <div className="mt-6 flex justify-center">
-          <button className="bg-orange-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-orange-600 transition">
+          <button className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-orange-600 transition">
             🛒 How to track your order?
           </button>
         </div>
