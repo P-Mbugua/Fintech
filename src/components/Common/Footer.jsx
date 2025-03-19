@@ -85,7 +85,7 @@ function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/contact-us" className="hover:text-blue-500 cursor-pointer">
+                  <Link to="/contact" className="hover:text-blue-500 cursor-pointer">
                     Contact Us
                   </Link>
                 </li>
