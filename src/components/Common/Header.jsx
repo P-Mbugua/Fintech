@@ -14,7 +14,7 @@ function Header() {
         <div className="container mx-auto flex justify-between items-center p-4">
           {/* Logo */}
           <div className="flex items-center space-x-2 text-4xl font-bold">
-            <a href="#" className="flex items-center gap-1 text-gray-800">
+            <a href="/" className="flex items-center gap-1 text-gray-800">
               <span className="font-bold text-base text-4xl">Fintech</span>
               <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-extrabold flex items-center justify-center leading-none">com</span>
             </a>
