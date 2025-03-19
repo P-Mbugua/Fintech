@@ -29,7 +29,7 @@ import Cart from "./Pages/Cart/Cart";
 import Banner from "./Pages/Home/Banner";
 import Reccomended from "./Pages/Home/Reccomended";
 import ProductsPage from "./Pages/Home/ProductsPage";
-import Contact from "./Pages/Home/Contact";
+import Contact from "./components/Common/Contact";
 
 // Order Pages (Protected)
 import OrderHistory from "./Pages/Orders/OrderHistory";

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   FaFacebookF,
   FaTwitter,
@@ -19,16 +20,31 @@ function Footer() {
           {/* Mask effect */}
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white opacity-10"></div>
 
-          
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 text-sm relative z-10">
-           
+            {/* Column 1 - Shop */}
             <div>
               <h4 className="font-semibold mb-4 text-gray-900">Shop</h4>
               <ul className="space-y-2">
-                <li className="hover:text-blue-500 cursor-pointer">Daily Deals</li>
-                <li className="hover:text-blue-500 cursor-pointer">App Only Deals</li>
-                <li className="hover:text-blue-500 cursor-pointer">Clearance Sale</li>
-                <li className="hover:text-blue-500 cursor-pointer">Gift Vouchers</li>
+                <li>
+                  <Link to="/daily-deals" className="hover:text-blue-500 cursor-pointer">
+                    Daily Deals
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/app-deals" className="hover:text-blue-500 cursor-pointer">
+                    App Only Deals
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/clearance-sale" className="hover:text-blue-500 cursor-pointer">
+                    Clearance Sale
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/gift-vouchers" className="hover:text-blue-500 cursor-pointer">
+                    Gift Vouchers
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -36,10 +52,26 @@ function Footer() {
             <div>
               <h4 className="font-semibold mb-4 text-gray-900">Account</h4>
               <ul className="space-y-2">
-                <li className="hover:text-blue-500 cursor-pointer">My Account</li>
-                <li className="hover:text-blue-500 cursor-pointer">Track Order</li>
-                <li className="hover:text-blue-500 cursor-pointer">Returns</li>
-                <li className="hover:text-blue-500 cursor-pointer">Invoices</li>
+                <li>
+                  <Link to="/my-account" className="hover:text-blue-500 cursor-pointer">
+                    My Account
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/track-order" className="hover:text-blue-500 cursor-pointer">
+                    Track Order
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/returns" className="hover:text-blue-500 cursor-pointer">
+                    Returns
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/invoices" className="hover:text-blue-500 cursor-pointer">
+                    Invoices
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -47,10 +79,26 @@ function Footer() {
             <div>
               <h4 className="font-semibold mb-4 text-gray-900">Help</h4>
               <ul className="space-y-2">
-                <li className="hover:text-blue-500 cursor-pointer">Help Centre</li>
-                <li className="hover:text-blue-500 cursor-pointer">Contact Us</li>
-                <li className="hover:text-blue-500 cursor-pointer">Shipping & Delivery</li>
-                <li className="hover:text-blue-500 cursor-pointer">Returns</li>
+                <li>
+                  <Link to="/help-center" className="hover:text-blue-500 cursor-pointer">
+                    Help Centre
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/contact-us" className="hover:text-blue-500 cursor-pointer">
+                    Contact Us
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/shipping-delivery" className="hover:text-blue-500 cursor-pointer">
+                    Shipping & Delivery
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/returns" className="hover:text-blue-500 cursor-pointer">
+                    Returns
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -58,10 +106,26 @@ function Footer() {
             <div>
               <h4 className="font-semibold mb-4 text-gray-900">Company</h4>
               <ul className="space-y-2">
-                <li className="hover:text-blue-500 cursor-pointer">About Us</li>
-                <li className="hover:text-blue-500 cursor-pointer">Careers</li>
-                <li className="hover:text-blue-500 cursor-pointer">Sell on Fintech</li>
-                <li className="hover:text-blue-500 cursor-pointer">Press & News</li>
+                <li>
+                  <Link to="/about-us" className="hover:text-blue-500 cursor-pointer">
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/careers" className="hover:text-blue-500 cursor-pointer">
+                    Careers
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/sell" className="hover:text-blue-500 cursor-pointer">
+                    Sell on Fintech
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/press-news" className="hover:text-blue-500 cursor-pointer">
+                    Press & News
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -69,9 +133,21 @@ function Footer() {
             <div>
               <h4 className="font-semibold mb-4 text-gray-900">Policy</h4>
               <ul className="space-y-2">
-                <li className="hover:text-blue-500 cursor-pointer">Returns Policy</li>
-                <li className="hover:text-blue-500 cursor-pointer">Privacy Policy</li>
-                <li className="hover:text-blue-500 cursor-pointer">Terms & Conditions</li>
+                <li>
+                  <Link to="/returns-policy" className="hover:text-blue-500 cursor-pointer">
+                    Returns Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/privacy-policy" className="hover:text-blue-500 cursor-pointer">
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/terms" className="hover:text-blue-500 cursor-pointer">
+                    Terms & Conditions
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
