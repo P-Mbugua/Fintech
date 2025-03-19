@@ -18,7 +18,6 @@ const products = {
       discount: "-38%",
       image: "https://example.com/oppo-a83.jpg",
     },
-    // Add more products...
   ],
   mobileAccessories: [
     {
@@ -37,7 +36,6 @@ const products = {
       discount: "-51%",
       image: "https://example.com/utarudi-gt99.jpg",
     },
-    // Add more products...
   ],
 };
 
@@ -51,26 +49,37 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="bg-white p-3 rounded-lg shadow-md w-40 flex flex-col">
-      <img src={product.image} alt={product.name} className="w-full h-24 object-cover rounded-md" />
-      <p className="text-sm font-semibold mt-2">{product.name}</p>
+    <div className="bg-white p-4 rounded-lg shadow-lg w-48 flex flex-col items-center 
+                    transition-all duration-300 hover:shadow-xl hover:scale-105">
+      <img
+        src={product.image}
+        alt={product.name}
+        className="w-full h-28 object-cover rounded-md"
+      />
+      <p className="text-sm font-semibold mt-2 text-center">{product.name}</p>
       <p className="text-red-600 font-bold">{product.price}</p>
       <p className="text-gray-400 line-through text-xs">{product.oldPrice}</p>
-      <span className="bg-red-500 text-white text-xs px-2 py-1 rounded">{product.discount}</span>
+      <span className="bg-red-500 text-white text-xs px-2 py-1 rounded">
+        {product.discount}
+      </span>
 
-      {/* Add to Cart & Order Now Buttons */}
-      <button
-        className="bg-blue-600 text-white text-xs py-1 mt-2 rounded-md hover:bg-blue-700 transition"
-        onClick={handleAddToCart}
-      >
-        Add to Cart
-      </button>
-      <button
-        className="bg-green-600 text-white text-xs py-1 mt-2 rounded-md hover:bg-green-700 transition"
-        onClick={handleOrderNow}
-      >
-        Order Now
-      </button>
+      {/* Buttons Section */}
+      <div className="flex w-full mt-3 gap-2">
+        <button
+          className="flex-1 bg-blue-600 text-white text-sm py-2 rounded-md 
+                     hover:bg-blue-700 transition-all"
+          onClick={handleAddToCart}
+        >
+          Add to Cart
+        </button>
+        <button
+          className="flex-1 bg-green-600 text-white text-sm py-2 rounded-md 
+                     hover:bg-green-700 transition-all"
+          onClick={handleOrderNow}
+        >
+          Order Now
+        </button>
+      </div>
     </div>
   );
 };
