@@ -15,6 +15,8 @@ import MainLayout from "./Layouts/MainLayout";
 import Login from "./Pages/Auth/Login";
 import Register from "./Pages/Auth/Register";
 import ForgotPassword from "./Pages/Auth/ForgotPassword";
+import Contact from "./components/Common/Contact";
+import LiveChat from "./components/Common/LiveChat";
 
 
 // Common pages
@@ -29,7 +31,7 @@ import Cart from "./Pages/Cart/Cart";
 import Banner from "./Pages/Home/Banner";
 import Reccomended from "./Pages/Home/Reccomended";
 import ProductsPage from "./Pages/Home/ProductsPage";
-import Contact from "./components/Common/Contact";
+
 
 // Order Pages (Protected)
 import OrderHistory from "./Pages/Orders/OrderHistory";
@@ -103,6 +105,7 @@ function App() {
               } />
             </Routes>
           </Router>
+          <LiveChat />
         </ThemeProvider>
       </CartProvider>
     </AuthProvider>
