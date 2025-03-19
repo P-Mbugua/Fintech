@@ -1,13 +1,15 @@
 import React from "react";
-import { FaPhoneAlt, FaWhatsapp, FaClock } from "react-icons/fa";
+import { PhoneCall, MessageCircle, Clock, ShoppingCart } from "lucide-react";
 
 function Contact() {
   return (
-    <div className="bg-white pt-1 ">
+    <div className="bg-white pt-1">
       {/* Header Section */}
       <div className="bg-blue-600 text-white text-center py-1 w-3/4 mx-auto">
         <h1 className="text-4xl font-extrabold">NEED HELP?</h1>
-        <p className="mt-2 text-lg text-gray-200">We're here for you 7 days a week!</p>
+        <p className="mt-2 text-lg text-gray-200">
+          We're here for you 7 days a week!
+        </p>
       </div>
 
       {/* Contact Info Section */}
@@ -18,19 +20,30 @@ function Contact() {
           </p>
           <div className="mt-6 space-y-4 text-gray-600">
             <p className="flex items-center gap-2">
-              <FaClock className="text-red-600" />
-              Available <strong>Monday to Sunday</strong>, <strong>9 am - 6 pm</strong> on Live Chats.
+              <Clock className="text-red-600" />
+              Available <strong>Monday to Sunday</strong>,{" "}
+              <strong>9 am - 6 pm</strong> on Live Chats.
             </p>
             <p className="flex items-center gap-2">
-              <FaPhoneAlt className="text-red-600" />
-              Call us: <a href="tel:+254103947514" className="font-bold hover:underline">+254 103 947 514</a>
+              <PhoneCall className="text-red-600" />
+              Call us:{" "}
+              <a
+                href="tel:+254103947514"
+                className="font-bold hover:underline"
+              >
+                +254 103 947 514
+              </a>
               <span className="text-sm">(Mon - Fri, 9 am - 6 pm)</span>
             </p>
             <p className="flex items-center gap-2">
-              <FaWhatsapp className="text-green-500" />
-              Order via WhatsApp: 
-              <a href="https://wa.me/254701571745" target="_blank" rel="noopener noreferrer" 
-                 className="font-bold text-red-600 hover:underline">
+              <MessageCircle className="text-green-500" />
+              Order via WhatsApp:{" "}
+              <a
+                href="https://wa.me/254701571745"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-red-600 hover:underline"
+              >
                 +254 701 571 745
               </a>
               <span className="text-sm">(Mon - Sun, 8 am - 8 pm)</span>
@@ -48,25 +61,22 @@ function Contact() {
         </div>
       </div>
 
-     {/* Online Services Section */}
-<div className="text-center py-10 bg-gray-50">
-  <h2 className="text-2xl font-bold text-gray-800">Our Online Services</h2>
-  <div className="mt-6 flex flex-col items-center gap-4">
-    <button className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-red-700 transition">
-      🛒 How to track your order?
-    </button>
-
-    <button className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-red-700 transition">
-      🛒 How to cncel your order?
-    </button>
-
-    <button className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-red-700 transition">
-      🛒 How to return your order?
-    </button>
-  </div>
-</div>
-</div>
-
+      {/* Online Services Section */}
+      <div className="text-center py-10 bg-gray-50">
+        <h2 className="text-2xl font-bold text-gray-800">Our Online Services</h2>
+        <div className="mt-6 flex flex-col items-center gap-4">
+          {["How to track your order?", "How to cancel your order?", "How to return your order?"].map((text, index) => (
+            <button
+              key={index}
+              className="flex items-center gap-2 bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-red-700 transition"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              {text}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
