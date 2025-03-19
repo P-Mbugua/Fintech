@@ -34,6 +34,9 @@ import Banner from "./Pages/Home/Banner";
 import Reccomended from "./Pages/Home/Reccomended";
 import ProductsPage from "./Pages/Home/ProductsPage";
 
+// Phone and Accessories 
+import PhoneandAccessories from "./Pages/Phoneand Accessories/PhoneandAccessories";
+
 
 // Order Pages (Protected)
 import OrderHistory from "./Pages/Orders/OrderHistory";
@@ -75,6 +78,7 @@ function App() {
               <Route path="/forgot-password" element={<AuthLayout><ForgotPassword /></AuthLayout>} />
               <Route path="/contact" element={<DashboardLayout><Contact /></DashboardLayout>} />
               <Route path="/about" element={<DashboardLayout><AboutUs /></DashboardLayout>}/>
+              <Route path="/PhoneandAccessories" element={<DashboardLayout><PhoneandAccessories /></DashboardLayout>} />
               <Route path="/header" element={<Header />} />
               <Route path="/footer" element={<Footer />} />
 
