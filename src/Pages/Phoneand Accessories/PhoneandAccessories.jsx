@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const products = {
   refurbishedPhones: [
@@ -40,12 +41,17 @@ const products = {
 };
 
 const ProductCard = ({ product }) => {
+  const navigate = useNavigate();
+
   const handleAddToCart = () => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push(product);
+    localStorage.setItem("cart", JSON.stringify(cart));
     alert(`Added ${product.name} to cart!`);
   };
 
   const handleOrderNow = () => {
-    alert(`Ordering ${product.name} now!`);
+    navigate("/order", { state: { product } });
   };
 
   return (
