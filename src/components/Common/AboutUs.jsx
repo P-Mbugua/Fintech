@@ -40,19 +40,40 @@ function AboutUs() {
       </div>
 
       <div className="mt-16 px-10">
-        <h3 className="text-3xl font-bold mb-4">Our Journey</h3>
-        <p className="text-lg leading-relaxed">Since our inception, we have been committed to transforming e-commerce in Africa. Our journey started with a mission to make online shopping accessible, affordable, and reliable for everyone. Over the years, we have expanded our network, built trust with millions of customers, and partnered with top brands to deliver the best products.</p>
-      </div>
-
-      <div className="mt-12 px-10">
-        <h3 className="text-3xl font-bold mb-4">Why Choose Us?</h3>
-        <ul className="text-lg leading-relaxed list-disc list-inside">
-          <li>Fast and reliable delivery services</li>
-          <li>Secure payment options</li>
-          <li>Wide range of high-quality products</li>
-          <li>Dedicated customer support team</li>
-          <li>Exciting deals and discounts</li>
-        </ul>
+        <h3 className="text-3xl font-bold mb-4">Jumia Today</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="p-4 border rounded-lg shadow-md bg-orange-100">
+            <div className="text-2xl font-bold">5,000,000 Products</div>
+            <p className="mt-2">Jumia offers the widest assortment at an unbeatable price</p>
+          </div>
+          <div className="p-4 border rounded-lg shadow-md bg-orange-100">
+            <div className="text-2xl font-bold">16 African Countries</div>
+            <p className="mt-2">#1 in Kenya online retailer and present in Morocco, Egypt...</p>
+          </div>
+          <div className="p-4 border rounded-lg shadow-md bg-orange-100">
+            <div className="text-2xl font-bold">820 International & National Brands</div>
+            <p className="mt-2">Samsung, Infinix, Innjoo, Vero Moda, Jack & Jones...</p>
+          </div>
+          <div className="p-4 border rounded-lg shadow-md bg-orange-100">
+            <div className="text-2xl font-bold">60% Women Managers</div>
+          </div>
+          <div className="p-4 border rounded-lg shadow-md bg-orange-100">
+            <div className="text-2xl font-bold">1,500,000 Subscribers</div>
+            <p className="mt-2">Across Kenya</p>
+          </div>
+          <div className="p-4 border rounded-lg shadow-md bg-orange-100">
+            <div className="text-2xl font-bold">1200 Employees</div>
+            <p className="mt-2">#1 in Kenya online retailer and present in Morocco, Egypt...</p>
+          </div>
+          <div className="p-4 border rounded-lg shadow-md bg-orange-100">
+            <div className="text-2xl font-bold">15,000,000+ Monthly Visitors</div>
+            <p className="mt-2">Jumia offers the widest assortment at an unbeatable price</p>
+          </div>
+          <div className="p-4 border rounded-lg shadow-md bg-orange-100">
+            <div className="text-2xl font-bold">135,000 Orders</div>
+            <p className="mt-2">During Black Friday 2016</p>
+          </div>
+        </div>
       </div>
     </div>
   );
