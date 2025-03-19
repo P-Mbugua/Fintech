@@ -1,37 +1,47 @@
 import React from "react";
+import { FaPhoneAlt, FaWhatsapp, FaClock } from "react-icons/fa";
 
 function Contact() {
   return (
-    <div className="bg-white">
+    <div className="bg-white min-h-screen">
       {/* Header Section */}
-      <div className="bg-orange-500 text-white text-center py-6">
-        <h1 className="text-3xl font-bold">NEED HELP?</h1>
+      <div className="bg-orange-500 text-white text-center py-10">
+        <h1 className="text-4xl font-extrabold">NEED HELP?</h1>
+        <p className="mt-2 text-lg text-gray-200">We're here for you 7 days a week!</p>
       </div>
 
       {/* Contact Info Section */}
-      <div className="flex flex-col md:flex-row items-center justify-center p-8 gap-8">
+      <div className="flex flex-col md:flex-row items-center justify-center p-10 gap-10">
         <div className="text-center md:text-left max-w-lg">
           <p className="text-gray-700 text-lg">
-            If you have inquiries or need assistance, do not hesitate to chat with us.
+            If you have inquiries or need assistance, feel free to chat with us.
           </p>
-          <p className="mt-4 text-gray-600">
-            We are available from <strong>Monday to Sunday</strong> between 
-            <strong> 9 am to 6 pm</strong> on Live Chats.
-          </p>
-          <p className="mt-2 text-gray-600">
-            For other inquiries, you can reach us at <strong>+254711 011 011</strong> 
-            from <strong>Monday to Friday</strong> between <strong>9 am to 6 pm</strong>.
-          </p>
-          <p className="mt-2 text-gray-600">
-            To place an order, call or WhatsApp us at <strong>+254711 011 011</strong> 
-            from <strong>Monday to Sunday</strong> between <strong>8 am to 8 pm</strong>.
-          </p>
+          <div className="mt-6 space-y-4 text-gray-600">
+            <p className="flex items-center gap-2">
+              <FaClock className="text-orange-500" />
+              Available <strong>Monday to Sunday</strong>, <strong>9 am - 6 pm</strong> on Live Chats.
+            </p>
+            <p className="flex items-center gap-2">
+              <FaPhoneAlt className="text-orange-500" />
+              Call us: <a href="tel:+254711011011" className="font-bold hover:underline">+254 711 011 011</a>
+              <span className="text-sm">(Mon - Fri, 9 am - 6 pm)</span>
+            </p>
+            <p className="flex items-center gap-2">
+              <FaWhatsapp className="text-green-500" />
+              Order via WhatsApp: 
+              <a href="https://wa.me/254711011011" target="_blank" rel="noopener noreferrer" 
+                 className="font-bold text-orange-600 hover:underline">
+                +254 711 011 011
+              </a>
+              <span className="text-sm">(Mon - Sun, 8 am - 8 pm)</span>
+            </p>
+          </div>
         </div>
 
         {/* Image */}
-        <div className="w-42 h-30 bg-orange-200 rounded-lg flex items-center justify-center">
+        <div className="w-48 h-48 bg-orange-200 rounded-lg flex items-center justify-center shadow-lg">
           <img
-            src="https://ke.jumia.is/cms/2023/W08/CTO/CallCenter_Lady.png" 
+            src="https://ke.jumia.is/cms/2023/W08/CTO/CallCenter_Lady.png"
             alt="Customer Support"
             className="rounded-lg"
           />
@@ -39,12 +49,11 @@ function Contact() {
       </div>
 
       {/* Online Services Section */}
-      <div className="text-center py-8">
+      <div className="text-center py-10 bg-gray-50">
         <h2 className="text-2xl font-bold text-gray-800">Our Online Services</h2>
-        <div className="mt-4 flex justify-center">
-          <button className="bg-gray-100 px-6 py-3 rounded-lg shadow flex items-center gap-2">
-            <span role="img" aria-label="cart">🛒</span>
-            <span className="text-orange-500 font-semibold">How to track your order?</span>
+        <div className="mt-6 flex justify-center">
+          <button className="bg-orange-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-orange-600 transition">
+            🛒 How to track your order?
           </button>
         </div>
       </div>
