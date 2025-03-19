@@ -17,9 +17,9 @@ function Contact() {
   ];
 
   return (
-    <div className="bg-gray-100 min-h-screen py-10">
+    <div className="bg-gray-100  py-1">
       {/* Header Section */}
-      <div className="bg-blue-700 text-white text-center py-6 shadow-lg">
+      <div className="bg-blue-700 w-3/4 text-white text-center py-2 shadow-lg items-center mx-auto">
         <h1 className="text-4xl font-extrabold">NEED HELP?</h1>
         <p className="mt-2 text-lg text-gray-200">We're here for you 7 days a week!</p>
       </div>
