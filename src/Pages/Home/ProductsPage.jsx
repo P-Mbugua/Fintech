@@ -53,28 +53,28 @@ const products = [
 
 function ProductsPage() {
   return (
-    <div className="p-4 bg-red-600 min-h-screen flex flex-col items-center">
-      <h1 className="text-2xl md:text-3xl font-bold mb-6 text-center text-white">Featured Products</h1>
-      <div className="w-full max-w-6xl grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+    <div className="p-6 bg-gray-100 min-h-screen flex flex-col items-center">
+      <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-gray-800">Discover Our Best Deals</h1>
+      <div className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.map((product) => (
           <div
             key={product.id}
-            className="bg-white p-2 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:shadow-xl text-center"
+            className="bg-white p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl text-center"
           >
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-28 object-cover rounded-md mb-2"
+              className="w-full h-40 object-cover rounded-md mb-3"
             />
-            <h2 className="text-sm font-semibold mb-1 text-gray-800">{product.name}</h2>
-            <p className="text-red-500 font-bold text-sm">{product.price}</p>
-            <p className="text-yellow-400 text-sm">{"★".repeat(Math.round(product.rating))}</p>
-            <p className={`text-xs ${product.stock > 5 ? "text-gray-600" : "text-red-600 font-bold"}`}>
+            <h2 className="text-lg font-semibold mb-2 text-gray-900">{product.name}</h2>
+            <p className="text-green-600 font-bold text-lg">{product.price}</p>
+            <p className="text-yellow-500 text-md mb-2">{"★".repeat(Math.round(product.rating))}</p>
+            <p className={`text-sm ${product.stock > 5 ? "text-gray-600" : "text-red-600 font-bold"}`}>
               Stock: {product.stock} {product.stock <= 5 && "(Limited)"}
             </p>
-            <div className="flex flex-col gap-2 mt-2">
-              <button className="bg-blue-500 text-white text-xs px-2 py-1 rounded-md hover:bg-blue-700">Add to Cart</button>
-              <button className="bg-green-500 text-white text-xs px-2 py-1 rounded-md hover:bg-green-700">Order Now</button>
+            <div className="flex justify-center gap-3 mt-3">
+              <button className="bg-blue-600 text-white text-sm px-4 py-2 rounded-md hover:bg-blue-800 shadow-md">Add to Cart</button>
+              <button className="bg-green-600 text-white text-sm px-4 py-2 rounded-md hover:bg-green-800 shadow-md">Order Now</button>
             </div>
           </div>
         ))}
