@@ -61,7 +61,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center bg-gray-100 min-h-screen justify-center">
+    <div className="flex flex-col items-center bg-gray-200 min-h-screen justify-center">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
         <div className="flex justify-center mb-4">
           <img src="https://img.kilimall.com/c/h5/login_bg.png?x-image-process=image/format,webp/resize,w_600" alt="Logo" className="h-12" />
