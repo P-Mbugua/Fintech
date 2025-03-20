@@ -47,7 +47,7 @@ function Register() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="flex justify-center items-center h-screen bg-gray-200">
       <div className="bg-white p-6 rounded-lg shadow-md w-96 text-center">
         <h2 className="text-2xl font-bold mb-4 text-gray-700">Register</h2>
         <div className="flex justify-center mb-4">
