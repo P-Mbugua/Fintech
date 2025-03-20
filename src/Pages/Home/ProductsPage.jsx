@@ -55,23 +55,28 @@ function ProductsPage() {
   return (
     <div className="p-4 bg-red-600 min-h-screen flex flex-col items-center">
       <h1 className="text-2xl md:text-3xl font-bold mb-6 text-center text-white">Featured Products</h1>
-      <div className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div className="w-full max-w-6xl grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
         {products.map((product) => (
-          <a
+          <div
             key={product.id}
-            href="#"
-            className="block bg-white p-3 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:shadow-xl"
+            className="bg-white p-2 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:shadow-xl text-center"
           >
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-40 object-cover rounded-md mb-3"
+              className="w-full h-28 object-cover rounded-md mb-2"
             />
-            <h2 className="text-md font-semibold mb-1 text-gray-800">{product.name}</h2>
-            <p className="text-red-500 font-bold text-md">{product.price}</p>
-            <p className="text-yellow-400 text-md">{"★".repeat(Math.round(product.rating))}</p>
-            <p className="text-gray-600 text-sm">Stock: {product.stock}</p>
-          </a>
+            <h2 className="text-sm font-semibold mb-1 text-gray-800">{product.name}</h2>
+            <p className="text-red-500 font-bold text-sm">{product.price}</p>
+            <p className="text-yellow-400 text-sm">{"★".repeat(Math.round(product.rating))}</p>
+            <p className={`text-xs ${product.stock > 5 ? "text-gray-600" : "text-red-600 font-bold"}`}>
+              Stock: {product.stock} {product.stock <= 5 && "(Limited)"}
+            </p>
+            <div className="flex flex-col gap-2 mt-2">
+              <button className="bg-blue-500 text-white text-xs px-2 py-1 rounded-md hover:bg-blue-700">Add to Cart</button>
+              <button className="bg-green-500 text-white text-xs px-2 py-1 rounded-md hover:bg-green-700">Order Now</button>
+            </div>
+          </div>
         ))}
       </div>
     </div>
