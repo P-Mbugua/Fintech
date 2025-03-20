@@ -55,7 +55,7 @@ function ProductsPage() {
   return (
     <div className="p-4 bg-red-600 min-h-screen flex flex-col items-center">
       <h1 className="text-2xl md:text-3xl font-bold mb-6 text-center text-white">Featured Products</h1>
-      <div className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {products.map((product) => (
           <a
             key={product.id}
