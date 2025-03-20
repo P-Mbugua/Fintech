@@ -1,4 +1,5 @@
 import React from "react";
+import { ShoppingCart, Star, CheckCircle, AlertTriangle } from "lucide-react";
 
 const products = [
   {
@@ -54,27 +55,52 @@ const products = [
 function ProductsPage() {
   return (
     <div className="p-6 bg-gray-100 min-h-screen flex flex-col items-center">
-      <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-gray-800">Discover Our Best Deals</h1>
-      <div className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-gray-800">
+        Discover Our Best Deals
+      </h1>
+      <div className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {products.map((product) => (
           <div
             key={product.id}
-            className="bg-white p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl text-center"
+            className="bg-white p-5 rounded-xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl"
           >
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-40 object-cover rounded-md mb-3"
+              className="w-full h-44 object-cover rounded-lg mb-4"
             />
             <h2 className="text-lg font-semibold mb-2 text-gray-900">{product.name}</h2>
-            <p className="text-green-600 font-bold text-lg">{product.price}</p>
-            <p className="text-yellow-500 text-md mb-2">{"★".repeat(Math.round(product.rating))}</p>
-            <p className={`text-sm ${product.stock > 5 ? "text-gray-600" : "text-red-600 font-bold"}`}>
-              Stock: {product.stock} {product.stock <= 5 && "(Limited)"}
-            </p>
+            <div className="flex items-center justify-between text-green-600 font-bold text-lg mb-2">
+              <span className="flex items-center gap-1">
+                <ShoppingCart size={18} /> {product.price}
+              </span>
+            </div>
+            <div className="flex items-center justify-between text-yellow-500 text-md mb-2">
+              {[...Array(Math.round(product.rating))].map((_, i) => (
+                <Star key={i} size={18} />
+              ))}
+            </div>
+            <div className="flex items-center justify-between text-sm mb-4">
+              <span
+                className={`flex items-center gap-1 ${
+                  product.stock > 5 ? "text-gray-600" : "text-red-600 font-bold"
+                }`}
+              >
+                {product.stock > 5 ? (
+                  <CheckCircle size={16} />
+                ) : (
+                  <AlertTriangle size={16} />
+                )}
+                Stock: {product.stock} {product.stock <= 5 && "(Limited)"}
+              </span>
+            </div>
             <div className="flex justify-center gap-3 mt-3">
-              <button className="bg-blue-600 text-white text-sm px-4 py-2 rounded-md hover:bg-blue-800 shadow-md">Add to Cart</button>
-              <button className="bg-green-600 text-white text-sm px-4 py-2 rounded-md hover:bg-green-800 shadow-md">Order Now</button>
+              <button className="bg-blue-600 text-white text-sm px-5 py-2 rounded-md hover:bg-blue-800 shadow-md flex items-center gap-2">
+                Add to Cart
+              </button>
+              <button className="bg-green-600 text-white text-sm px-5 py-2 rounded-md hover:bg-green-800 shadow-md flex items-center gap-2">
+                Order Now
+              </button>
             </div>
           </div>
         ))}
