@@ -57,7 +57,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-lg w-48 flex flex-col items-center 
-                    transition-all duration-300 hover:shadow-xl hover:scale-105">
+                    transition-all duration-300  hover:shadow-xl hover:scale-105">
       <img
         src={product.image}
         alt={product.name}
@@ -77,14 +77,14 @@ const ProductCard = ({ product }) => {
                      hover:bg-blue-700 transition-all"
           onClick={handleAddToCart}
         >
-          <FiShoppingCart className="text-lg" /> Add to Cart
+          <FiShoppingCart className="text-lg" />
         </button>
         <button
           className="flex-1 flex items-center justify-center gap-1 bg-green-600 text-white text-sm py-2 rounded-md 
                      hover:bg-green-700 transition-all"
           onClick={handleOrderNow}
         >
-          <FiShoppingBag className="text-lg" /> Order Now
+          <FiShoppingBag className="text-lg" />
         </button>
       </div>
     </div>
