@@ -118,7 +118,7 @@ function Register() {
               type="checkbox" 
               checked={agreed} 
               onChange={() => setAgreed(!agreed)}
-              className="mr-2"
+              className="mr-2 cursor-pointer "
             />
             <span className="text-sm text-gray-600">
               I agree to the <a href="#" className="text-blue-900">Terms & Conditions</a>
@@ -128,7 +128,7 @@ function Register() {
           {/* Submit Button */}
           <button 
             type="submit" 
-            className="w-full bg-blue-900 text-white py-2 rounded-lg hover:bg-blue-900"
+            className="w-full bg-blue-900 text-white py-2 rounded-lg cursor-pointer hover:bg-blue-900"
           >
             Submit
           </button>
@@ -146,10 +146,10 @@ function Register() {
 
         {/* Social Logins */}
         <div className="flex justify-center space-x-4 mt-3">
-          <button className="flex items-center space-x-2 border px-4 py-2 rounded">
+          <button className="flex items-center space-x-2 border px-4 py-2 rounded cursor-pointer">
             <FaGoogle className="text-blue-900" /> <span>Google</span>
           </button>
-          <button className="flex items-center space-x-2 border px-4 py-2 rounded">
+          <button className="flex items-center space-x-2 border px-4 py-2 rounded cursor-pointer">
             <FaFacebook className="text-blue-600" /> <span>Facebook</span>
           </button>
         </div>
