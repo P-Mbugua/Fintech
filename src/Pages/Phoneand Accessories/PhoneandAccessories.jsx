@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { FiShoppingCart, FiShoppingBag, FiArrowRight } from "react-icons/fi"; // Import icons
 
 const products = {
   refurbishedPhones: [
@@ -72,18 +73,18 @@ const ProductCard = ({ product }) => {
       {/* Buttons Section */}
       <div className="flex w-full mt-3 gap-2">
         <button
-          className="flex-1 bg-blue-600 text-white text-sm py-2 rounded-md 
+          className="flex-1 flex items-center justify-center gap-1 bg-blue-600 text-white text-sm py-2 rounded-md 
                      hover:bg-blue-700 transition-all"
           onClick={handleAddToCart}
         >
-          Add to Cart
+          <FiShoppingCart className="text-lg" /> Add to Cart
         </button>
         <button
-          className="flex-1 bg-green-600 text-white text-sm py-2 rounded-md 
+          className="flex-1 flex items-center justify-center gap-1 bg-green-600 text-white text-sm py-2 rounded-md 
                      hover:bg-green-700 transition-all"
           onClick={handleOrderNow}
         >
-          Order Now
+          <FiShoppingBag className="text-lg" /> Order Now
         </button>
       </div>
     </div>
@@ -99,7 +100,9 @@ function PhoneandAccessories() {
           <h2 className="text-lg font-bold text-white bg-blue-500 px-4 py-2 rounded-md">
             Refurbished Phones | As Low As 9K
           </h2>
-          <button className="text-blue-600 hover:underline">See All ➤</button>
+          <button className="text-blue-600 hover:underline flex items-center gap-1">
+            See All <FiArrowRight />
+          </button>
         </div>
         <div className="flex space-x-4 overflow-x-auto">
           {products.refurbishedPhones.map((product) => (
@@ -114,7 +117,9 @@ function PhoneandAccessories() {
           <h2 className="text-lg font-bold text-white bg-blue-500 px-4 py-2 rounded-md">
             Mobile Accessories
           </h2>
-          <button className="text-blue-600 hover:underline">See All ➤</button>
+          <button className="text-blue-600 hover:underline flex items-center gap-1">
+            See All <FiArrowRight />
+          </button>
         </div>
         <div className="flex space-x-4 overflow-x-auto">
           {products.mobileAccessories.map((product) => (
