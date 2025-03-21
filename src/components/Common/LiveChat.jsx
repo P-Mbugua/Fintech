@@ -103,7 +103,7 @@ const LiveChat = () => {
       {chatOpen && (
         <div
           ref={chatRef}
-          className="fixed bottom-16 right-5 w-80 bg-white border border-gray-300 shadow-lg rounded-lg transition-opacity duration-300 opacity-100"
+          className="fixed bottom-16 right-5 w-80 bg-gray-400 border border-gray-300 shadow-lg rounded-lg transition-opacity duration-300 opacity-100"
         >
           {/* Chat Header */}
           <div className="p-3 bg-green-600 text-white flex justify-between rounded-t-lg">
