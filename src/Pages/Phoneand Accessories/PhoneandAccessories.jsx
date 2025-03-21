@@ -10,7 +10,7 @@ const products = {
       price: "KSh 7,999",
       oldPrice: "KSh 14,999",
       discount: "-47%",
-      image: "https://example.com/samsung-a2.jpg",
+      image: "https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/51/3464603/1.jpg?0825",
     },
     {
       id: 2,
@@ -18,7 +18,7 @@ const products = {
       price: "KSh 7,888",
       oldPrice: "KSh 12,098",
       discount: "-38%",
-      image: "https://example.com/oppo-a83.jpg",
+      image: "https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/06/5090271/1.jpg?9458",
     },
   ],
   mobileAccessories: [
