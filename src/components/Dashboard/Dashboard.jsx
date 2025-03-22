@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../../firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
+// import { db } from "../../firebaseConfig";
+// import { collection, getDocs } from "firebase/firestore";
 
 function Dashboard() {
   const [transactions, setTransactions] = useState([]);

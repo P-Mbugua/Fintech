@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 
 function Register() {
-  const { register, sendOtp } = useAuth(); // Assume sendOtp function is available in AuthContext
+  const { register, sendOtp } = useAuth();
   const [phoneOrEmail, setPhoneOrEmail] = useState("phone");
   const [contact, setContact] = useState("");
   const [otp, setOtp] = useState("");
@@ -21,7 +21,7 @@ function Register() {
     }
     try {
       setError("");
-      await sendOtp(contact); // Call the function to send OTP
+      await sendOtp(contact);
       setOtpSent(true);
     } catch (err) {
       setError("Failed to send OTP. Try again.");
@@ -31,7 +31,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!agreed) {
-      return setError("You must agree to the terms and conditions");
+      return setError("You must agree to the terms and conditions.");
     }
     try {
       setError("");
@@ -42,7 +42,7 @@ function Register() {
       }
       navigate("/dashboard");
     } catch (err) {
-      setError("Failed to create an account");
+      setError("Failed to create an account.");
     }
   };
 
@@ -78,7 +78,7 @@ function Register() {
             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-900"
           />
 
-          {/* Show OTP field for phone or when not using password */}
+          {/* OTP Field */}
           {!usePassword && (
             <div className="flex justify-between items-center">
               <input
@@ -100,7 +100,7 @@ function Register() {
             </div>
           )}
 
-          {/* Show password field if email is selected and user wants to log in with a password */}
+          {/* Password Field (For Email) */}
           {phoneOrEmail === "email" && usePassword && (
             <input
               type="password"

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { storage } from "../../firebaseConfig";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+// import { storage } from "../../firebaseConfig";
+// import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 function Profile() {
   const [image, setImage] = useState(null);
