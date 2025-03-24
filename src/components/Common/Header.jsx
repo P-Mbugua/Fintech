@@ -1,12 +1,31 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { 
-  ShoppingCart, Heart, ChevronDown, UserCheck, UserRoundPlus, Menu, X 
+  ShoppingCart, Heart, ChevronDown, UserCheck, UserRoundPlus, Menu, X, LogOut
 } from "lucide-react";
-
 
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
+
+  // Check authentication status on page load
+  useEffect(() => {
+    const auth = localStorage.getItem("auth");
+    if (auth) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  // Handle Logout
+  const handleLogout = () => {
+    localStorage.removeItem("auth");
+    setIsAuthenticated(false);
+    toast.success("Logged out successfully");
+    navigate("/login");
+  };
 
   return (
     <>
@@ -15,46 +34,34 @@ function Header() {
           {/* Logo */}
           <div className="flex items-center space-x-2 text-4xl font-bold">
             <a href="/" className="flex items-center gap-1 text-gray-800">
-              <span className="font-bold text-base text-4xl">Fintech</span>
-              <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-extrabold flex items-center justify-center leading-none">com</span>
+              <span className="font-bold text-4xl">Fintech</span>
+              <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-extrabold">
+                com
+              </span>
             </a>
-            
-            <div className="ml-20 text-gray-700 text-sm hidden md:flex items-center space-x-4 font-normal">
-              <Link to="/help" className="flex items-center gap-1 hover:text-blue-600">
-                Help Centre
-              </Link>
-              <div className="w-px h-6 bg-gray-200"></div>
-              <Link to="/sell" className="flex items-center gap-1 hover:text-blue-600">
-                Sell on Fintech
-              </Link>
-            </div>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6 text-gray-700 text-sm">
-            <Link to="/login" className="flex items-center gap-1 hover:text-blue-600">
-              <UserCheck size={18} /> Login
-            </Link>
-            <div className="w-px h-6 bg-gray-200"></div>
-            <Link to="/register" className="flex items-center gap-1 hover:text-blue-600">
-              <UserRoundPlus size={18} /> Register
-            </Link>
+            {!isAuthenticated ? (
+              <>
+                <Link to="/login" className="flex items-center gap-1 hover:text-blue-600">
+                  <UserCheck size={18} /> Login
+                </Link>
+                <div className="w-px h-6 bg-gray-200"></div>
+                <Link to="/register" className="flex items-center gap-1 hover:text-blue-600">
+                  <UserRoundPlus size={18} /> Register
+                </Link>
+              </>
+            ) : (
+              <button onClick={handleLogout} className="flex items-center gap-1 text-red-600">
+                <LogOut size={18} /> Logout
+              </button>
+            )}
+
             <div className="w-px h-6 bg-gray-200"></div>
             <Link to="/orders" className="hover:text-blue-600">Orders</Link>
             <div className="w-px h-6 bg-gray-200"></div>
-
-            {/* My Account Dropdown */}
-            <div className="relative group">
-              <button className="flex items-center gap-1 hover:text-blue-600">
-                My Account <ChevronDown size={16} />
-              </button>
-              <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-md opacity-0 group-hover:opacity-100 transition-all">
-                <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100">Profile</Link>
-                <Link to="/returns" className="block px-4 py-2 hover:bg-gray-100">Returns</Link>
-                <Link to="/track-orders" className="block px-4 py-2 hover:bg-gray-100">Track Orders</Link>
-                <Link to="/invoices" className="block px-4 py-2 hover:bg-gray-100">Invoices</Link>
-              </div>
-            </div>
 
             {/* Wishlist & Cart */}
             <a href="/wishlist" className="relative hover:text-red-500">
@@ -75,32 +82,28 @@ function Header() {
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden bg-white shadow-md p-4 space-y-4 font-sans">
-          <Link to="/login" className="flex items-center gap-2 text-gray-700 pb-2 border-b border-gray-200">
-            <UserCheck size={18} /> Login
-          </Link>
-          <Link to="/register" className="flex items-center gap-2 text-gray-700 pb-2 border-b border-gray-200">
-            <UserRoundPlus size={18} /> Register
-          </Link>
-          <Link to="/orders" className="block text-gray-700 pb-2 border-b border-gray-200">Orders</Link>
-          <Link to="/profile" className="block text-gray-700 pb-2 border-b border-gray-200">My Account</Link>
-          <Link to="/logout" className="block text-gray-700 pb-2 border-b border-gray-200">Logout</Link>
-        
-          {/* Wishlist & Cart */}
-          <div className="flex items-center justify-between pt-2">
-            <button className="hover:text-red-500">
-              <Heart size={20} className="text-red-500" />
-            </button>
-            <button className="flex items-center bg-green-500 text-white px-3 py-1 rounded-full">
-              <ShoppingCart size={20} />
-              <span className="ml-1">0</span>
-            </button>
+            {!isAuthenticated ? (
+              <>
+                <Link to="/login" className="flex items-center gap-2 text-gray-700 pb-2 border-b border-gray-200">
+                  <UserCheck size={18} /> Login
+                </Link>
+                <Link to="/register" className="flex items-center gap-2 text-gray-700 pb-2 border-b border-gray-200">
+                  <UserRoundPlus size={18} /> Register
+                </Link>
+              </>
+            ) : (
+              <button onClick={handleLogout} className="flex items-center gap-2 text-red-600 pb-2 border-b border-gray-200">
+                <LogOut size={18} /> Logout
+              </button>
+            )}
+
+            <Link to="/orders" className="block text-gray-700 pb-2 border-b border-gray-200">Orders</Link>
+            <Link to="/profile" className="block text-gray-700 pb-2 border-b border-gray-200">My Account</Link>
           </div>
-        </div>
-        
         )}
       </header>
 
-      {/* Add padding to avoid content getting hidden behind the fixed header */}
+      {/* Toastify Notifications */}
       <div className="pt-15"></div>
     </>
   );
