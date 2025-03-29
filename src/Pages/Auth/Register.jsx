@@ -1,48 +1,26 @@
 import React, { useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { FaGoogle, FaFacebook } from "react-icons/fa";
 
 function Register() {
-  const { register, sendOtp } = useAuth();
-  const [phoneOrEmail, setPhoneOrEmail] = useState("phone");
-  const [contact, setContact] = useState("");
-  const [otp, setOtp] = useState("");
+  const { register } = useAuth();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [usePassword, setUsePassword] = useState(false);
   const [error, setError] = useState("");
   const [agreed, setAgreed] = useState(false);
-  const [otpSent, setOtpSent] = useState(false);
   const navigate = useNavigate();
-
-  const handleSendOtp = async () => {
-    if (!contact) {
-      return setError("Please enter your phone number.");
-    }
-    try {
-      setError("");
-      await sendOtp(contact);
-      setOtpSent(true);
-    } catch (err) {
-      setError("Failed to send OTP. Try again.");
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!agreed) {
-      return setError("You must agree to the terms and conditions.");
-    }
+    if (!agreed) return setError("You must agree to the terms and conditions.");
     try {
       setError("");
-      if (usePassword) {
-        await register(contact, password);
-      } else {
-        await register(contact, otp);
-      }
+      await register(name, email, phone, password);
       navigate("/dashboard");
     } catch (err) {
-      setError("Failed to create an account.");
+      setError(err.message || "Failed to create an account.");
     }
   };
 
@@ -50,109 +28,18 @@ function Register() {
     <div className="flex justify-center items-center h-screen bg-gray-200">
       <div className="bg-white p-6 rounded-lg shadow-md w-96 text-center">
         <h2 className="text-2xl font-bold mb-4 text-gray-700">Register</h2>
-        <div className="flex justify-center mb-4">
-          <button
-            className={`px-4 py-2 ${phoneOrEmail === "phone" ? "border-b-2 border-blue-900" : "text-gray-500"}`}
-            onClick={() => {
-              setPhoneOrEmail("phone");
-              setUsePassword(false);
-            }}
-          >
-            Phone
-          </button>
-          <button
-            className={`px-4 py-2 ${phoneOrEmail === "email" ? "border-b-2 border-blue-900" : "text-gray-500"}`}
-            onClick={() => setPhoneOrEmail("email")}
-          >
-            Email
-          </button>
-        </div>
-        {error && <p className="text-blue-900 mb-2">{error}</p>}
+        {error && <p className="text-red-600 mb-2">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-3">
-          <input
-            type={phoneOrEmail === "phone" ? "tel" : "email"}
-            placeholder={phoneOrEmail === "phone" ? "Phone Number" : "Email"}
-            value={contact}
-            onChange={(e) => setContact(e.target.value)}
-            required
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-900"
-          />
-
-          {/* OTP Field */}
-          {!usePassword && (
-            <div className="flex justify-between items-center">
-              <input
-                type="text"
-                placeholder="Enter OTP"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                required
-                className="w-2/3 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-900"
-                disabled={!otpSent}
-              />
-              <button
-                type="button"
-                className="text-blue-900"
-                onClick={handleSendOtp}
-              >
-                {otpSent ? "Resend" : "Send"}
-              </button>
-            </div>
-          )}
-
-          {/* Password Field (For Email) */}
-          {phoneOrEmail === "email" && usePassword && (
-            <input
-              type="password"
-              placeholder="Enter Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-900"
-            />
-          )}
-
-          {/* Terms and Conditions */}
+          <input type="text" placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} required className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-900" />
+          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-900" />
+          <input type="tel" placeholder="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} required className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-900" />
+          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-900" />
           <div className="flex items-center">
-            <input 
-              type="checkbox" 
-              checked={agreed} 
-              onChange={() => setAgreed(!agreed)}
-              className="mr-2 cursor-pointer "
-            />
-            <span className="text-sm text-gray-600">
-              I agree to the <a href="#" className="text-blue-900">Terms & Conditions</a>
-            </span>
+            <input type="checkbox" checked={agreed} onChange={() => setAgreed(!agreed)} className="mr-2 cursor-pointer" />
+            <span className="text-sm text-gray-600">I agree to the <a href="#" className="text-blue-900">Terms & Conditions</a></span>
           </div>
-
-          {/* Submit Button */}
-          <button 
-            type="submit" 
-            className="w-full bg-blue-900 text-white py-2 rounded-lg cursor-pointer hover:bg-blue-900"
-          >
-            Submit
-          </button>
+          <button type="submit" className="w-full bg-blue-900 text-white py-2 rounded-lg cursor-pointer hover:bg-blue-800">Register</button>
         </form>
-
-        {/* Toggle OTP and Password Login */}
-        {phoneOrEmail === "email" && (
-          <p 
-            className="text-sm text-gray-600 my-2 cursor-pointer"
-            onClick={() => setUsePassword(!usePassword)}
-          >
-            {usePassword ? "Use OTP instead" : "Login with password"}
-          </p>
-        )}
-
-        {/* Social Logins */}
-        <div className="flex justify-center space-x-4 mt-3">
-          <button className="flex items-center space-x-2 border px-4 py-2 rounded cursor-pointer">
-            <FaGoogle className="text-blue-900" /> <span>Google</span>
-          </button>
-          <button className="flex items-center space-x-2 border px-4 py-2 rounded cursor-pointer">
-            <FaFacebook className="text-blue-600" /> <span>Facebook</span>
-          </button>
-        </div>
       </div>
     </div>
   );
