@@ -42,7 +42,7 @@ function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6 text-gray-700 text-sm">
+          <nav className="hidden md:flex items-center space-x-6 text-gray-700 text-sm ">
             {!isAuthenticated ? (
               <>
                 <Link to="/login" className="flex items-center gap-1 hover:text-blue-600">
