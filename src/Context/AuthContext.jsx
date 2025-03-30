@@ -1,6 +1,6 @@
-// AuthContext.js
+// src/Context/AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { supabase } from "../supabaseClient";
+import { Client, Account, Databases } from "appwrite";
 
 const AuthContext = createContext();
 
@@ -8,41 +8,101 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
+// Initialize Appwrite
+const client = new Client()
+  .setEndpoint("https://cloud.appwrite.io/v1") // Replace with your Appwrite endpoint
+  .setProject("67e83a4b001b39dcc0dc"); // Replace with your Project ID
+
+const account = new Account(client);
+const databases = new Databases(client);
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  // Check user session on load
   useEffect(() => {
     const checkUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      if (data?.user) setUser(data.user);
+      try {
+        const userData = await account.get();
+        setUser(userData);
+      } catch (error) {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
     };
     checkUser();
   }, []);
 
+  // Register Function
   const register = async (name, email, phone, password) => {
-    const { data } = await supabase.from("users").select("email").eq("email", email).single();
-    if (data) throw new Error("Email is already registered.");
+    try {
+      console.log("Registering user...");
+      const newUser = await account.create("unique()", email, password);
 
-    const { data: newUser, error: signUpError } = await supabase.auth.signUp({ email, password });
-    if (signUpError) throw signUpError;
+      // Store user details in the database
+      await databases.createDocument(
+        "67e83c7d003109ed269c",
+        "67e84557002bec656b65",
+        "unique()",
+        { name, email, phone },
+        ["user:" + newUser.$id] // Assign user permissions
+      );
 
-    await supabase.from("users").insert([{ id: newUser.user.id, name, email, phone }]);
+      const userData = await account.get();
+      setUser(userData);
+    } catch (error) {
+      console.error("Registration failed:", error);
+      throw new Error(error.message);
+    }
   };
 
+  // Login Function
   const login = async (email, password) => {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) throw error;
-    setUser(data.user);
+    try {
+      console.log("Attempting login...");
+      
+      // Check for an existing session and log out if necessary
+      try {
+        const currentSession = await account.get();
+        if (currentSession) {
+          console.log("Existing session found. Logging out first...");
+          await account.deleteSession("current");
+        }
+      } catch (error) {
+        console.log("No active session found, proceeding with login.");
+      }
+
+      await account.createEmailPasswordSession(email, password);
+      const userData = await account.get();
+      setUser(userData);
+    } catch (error) {
+      console.error("Login failed:", error);
+      throw new Error(error.message);
+    }
   };
 
+  // Logout Function
   const logout = async () => {
-    await supabase.auth.signOut();
+    await account.deleteSession("current");
     setUser(null);
   };
 
+  // Reset Password Function
+  const resetPassword = async (email) => {
+    try {
+      await account.createRecovery(email, "https://yourwebsite.com/reset-password");
+      console.log("Password reset email sent.");
+    } catch (error) {
+      console.error("Password reset failed:", error);
+      throw new Error(error.message);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, register, login, logout }}>
-      {children}
+    <AuthContext.Provider value={{ user, register, login, logout, resetPassword, loading }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 }
