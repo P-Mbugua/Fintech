@@ -27,6 +27,7 @@ export function AuthProvider({ children }) {
         const userData = await account.get();
         setUser(userData);
       } catch (error) {
+        console.error("Error fetching user session:", error);
         setUser(null);
       } finally {
         setLoading(false);
@@ -43,40 +44,39 @@ export function AuthProvider({ children }) {
 
       // Store user details in the database
       await databases.createDocument(
-        "67e83c7d003109ed269c",
-        "67e84557002bec656b65",
+        "67e83c7d003109ed269c", // Database ID
+        "67e84557002bec656b65", // Collection ID
         "unique()",
-        { name, email, phone },
-        ["user:" + newUser.$id] // Assign user permissions
+        { name, email, phone }
       );
 
       const userData = await account.get();
       setUser(userData);
+      return userData;
     } catch (error) {
       console.error("Registration failed:", error);
       throw new Error(error.message);
     }
   };
 
-  // Login Function
+  // Login Function (Handles existing session before login)
   const login = async (email, password) => {
     try {
       console.log("Attempting login...");
-      
-      // Check for an existing session and log out if necessary
+
+      // Ensure no active session before login
       try {
-        const currentSession = await account.get();
-        if (currentSession) {
-          console.log("Existing session found. Logging out first...");
-          await account.deleteSession("current");
-        }
+        await account.deleteSession("current");
+        console.log("Previous session deleted.");
       } catch (error) {
-        console.log("No active session found, proceeding with login.");
+        console.log("No existing session found, proceeding with login.");
       }
 
+      // Create a new session
       await account.createEmailPasswordSession(email, password);
       const userData = await account.get();
       setUser(userData);
+      return userData;
     } catch (error) {
       console.error("Login failed:", error);
       throw new Error(error.message);
@@ -85,8 +85,14 @@ export function AuthProvider({ children }) {
 
   // Logout Function
   const logout = async () => {
-    await account.deleteSession("current");
-    setUser(null);
+    try {
+      await account.deleteSession("current");
+      setUser(null);
+      console.log("User logged out successfully.");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      throw new Error(error.message);
+    }
   };
 
   // Reset Password Function

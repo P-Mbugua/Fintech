@@ -22,7 +22,7 @@ const Login = () => {
 
     try {
       await login(email, password);
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       setError("Incorrect email or password.");
     } finally {
