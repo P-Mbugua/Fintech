@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Context Providers
 import { AuthProvider } from "./Context/AuthContext";
@@ -124,6 +126,10 @@ function App() {
               } />
             </Routes>
           </Router>
+
+          {/* Toastify Notifications */}
+          <ToastContainer position="top-right" autoClose={1000} />
+
           <LiveChat />
         </ThemeProvider>
       </CartProvider>

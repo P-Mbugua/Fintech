@@ -1,49 +1,44 @@
-// src/pages/Login.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import { FiEye, FiEyeOff } from "react-icons/fi"; // Import eye icons
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // State for password visibility
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState(""); // Success message for reset password
-  const { login, resetPassword } = useAuth(); // Ensure resetPassword is available in context
+  const { login, resetPassword } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
-    setMessage("");
 
     try {
       await login(email, password);
+      toast.success("Login successful!");
       navigate("/");
     } catch (err) {
-      setError("Incorrect email or password.");
+      toast.error("Incorrect email or password.");
     } finally {
       setLoading(false);
     }
   };
 
   const handleResetPassword = async () => {
-    setError("");
-    setMessage("");
-
     if (!email) {
-      setError("Please enter your email to reset the password.");
+      toast.warn("Please enter your email to reset the password.");
       return;
     }
 
     try {
       await resetPassword(email);
-      setMessage("Password reset email sent! Check your inbox.");
+      toast.success("Password reset email sent! Check your inbox.");
     } catch (err) {
-      setError("Failed to send reset email. Try again.");
+      toast.error("Failed to send reset email. Try again.");
     }
   };
 
@@ -51,10 +46,8 @@ const Login = () => {
     <div className="flex flex-col items-center bg-gray-200 min-h-screen justify-center p-4">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-xl font-bold text-center mb-2 text-gray-700">Login</h2>
-        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-        {message && <p className="text-green-500 text-sm text-center">{message}</p>}
-
         <form onSubmit={handleLogin} className="space-y-3">
+          {/* Email Input */}
           <input
             type="email"
             placeholder="Enter your email"
@@ -63,14 +56,25 @@ const Login = () => {
             required
             className="w-full p-2 border border-gray-300 rounded"
           />
-          <input
-            type="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-full p-2 border border-gray-300 rounded"
-          />
+
+          {/* Password Input with Eye Icon */}
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full p-2 border border-gray-300 rounded pr-10"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600"
+            >
+              {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+            </button>
+          </div>
 
           <button type="submit" className="w-full py-2 bg-blue-600 text-white rounded">
             {loading ? "Logging in..." : "Login"}
@@ -84,6 +88,7 @@ const Login = () => {
           </button>
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover draggable />
     </div>
   );
 };

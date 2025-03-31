@@ -1,28 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { 
-  ShoppingCart, Heart, ChevronDown, UserCheck, UserRoundPlus, Menu, X, LogOut
+  ShoppingCart, Heart, UserCheck, UserRoundPlus, Menu, X, LogOut
 } from "lucide-react";
+import { useAuth } from "../../Context/AuthContext";
 
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { user, logout } = useAuth(); // Get user and logout from AuthContext
   const navigate = useNavigate();
 
-  // Check authentication status on page load
-  useEffect(() => {
-    const auth = localStorage.getItem("auth");
-    if (auth) {
-      setIsAuthenticated(true);
-    }
-  }, []);
-
   // Handle Logout
-  const handleLogout = () => {
-    localStorage.removeItem("auth");
-    setIsAuthenticated(false);
+  const handleLogout = async () => {
+    await logout();
     toast.success("Logged out successfully");
     navigate("/login");
   };
@@ -33,17 +25,17 @@ function Header() {
         <div className="container mx-auto flex justify-between items-center p-4">
           {/* Logo */}
           <div className="flex items-center space-x-2 text-4xl font-bold">
-            <a href="/" className="flex items-center gap-1 text-gray-800">
+            <Link to="/" className="flex items-center gap-1 text-gray-800">
               <span className="font-bold text-4xl">Fintech</span>
               <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-sm font-extrabold">
                 com
               </span>
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6 text-gray-700 text-sm ">
-            {!isAuthenticated ? (
+          <nav className="hidden md:flex items-center space-x-6 text-gray-700 text-sm">
+            {!user ? (
               <>
                 <Link to="/login" className="flex items-center gap-1 hover:text-blue-600">
                   <UserCheck size={18} /> Login
@@ -54,7 +46,7 @@ function Header() {
                 </Link>
               </>
             ) : (
-              <button onClick={handleLogout} className="flex items-center gap-1 text-red-600">
+              <button onClick={handleLogout} className="flex items-center gap-1 text-red-600 hover:text-red-800">
                 <LogOut size={18} /> Logout
               </button>
             )}
@@ -64,13 +56,13 @@ function Header() {
             <div className="w-px h-6 bg-gray-200"></div>
 
             {/* Wishlist & Cart */}
-            <a href="/wishlist" className="relative hover:text-red-500">
+            <Link to="/wishlist" className="relative hover:text-red-500">
               <Heart size={20} className="text-red-500" />
-            </a>
-            <a href="/cart" className="relative flex items-center bg-green-500 text-white px-2 py-1 rounded-full">
+            </Link>
+            <Link to="/cart" className="relative flex items-center bg-green-500 text-white px-2 py-1 rounded-full">
               <ShoppingCart size={20} />
               <span className="ml-1">0</span>
-            </a>
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -82,7 +74,7 @@ function Header() {
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden bg-white shadow-md p-4 space-y-4 font-sans">
-            {!isAuthenticated ? (
+            {!user ? (
               <>
                 <Link to="/login" className="flex items-center gap-2 text-gray-700 pb-2 border-b border-gray-200">
                   <UserCheck size={18} /> Login

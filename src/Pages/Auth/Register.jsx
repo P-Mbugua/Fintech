@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -9,7 +11,6 @@ const Register = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
   const { register } = useAuth();
   const navigate = useNavigate();
 
@@ -17,9 +18,10 @@ const Register = () => {
     e.preventDefault();
     try {
       await register(name, email, phone, password);
+      toast.success("Registration successful! 🎉");
       navigate("/dashboard");
     } catch (err) {
-      setError("Registration failed.");
+      toast.error("Registration failed. Please try again.");
     }
   };
 
@@ -27,7 +29,6 @@ const Register = () => {
     <div className="flex flex-col items-center bg-gray-200 min-h-screen justify-center p-4">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-xl font-bold text-center mb-2 text-gray-700">Register</h2>
-        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
         <form onSubmit={handleRegister} className="space-y-3">
           <input
@@ -54,7 +55,7 @@ const Register = () => {
             required
             className="w-full p-2 border rounded"
           />
-          
+
           {/* Password Field with Eye Icon */}
           <div className="relative w-full">
             <input

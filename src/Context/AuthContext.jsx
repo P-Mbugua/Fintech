@@ -1,4 +1,3 @@
-// src/Context/AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { Client, Account, Databases } from "appwrite";
 
@@ -95,19 +94,8 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // Reset Password Function
-  const resetPassword = async (email) => {
-    try {
-      await account.createRecovery(email, "https://yourwebsite.com/reset-password");
-      console.log("Password reset email sent.");
-    } catch (error) {
-      console.error("Password reset failed:", error);
-      throw new Error(error.message);
-    }
-  };
-
   return (
-    <AuthContext.Provider value={{ user, register, login, logout, resetPassword, loading }}>
+    <AuthContext.Provider value={{ user, register, login, logout, loading }}>
       {!loading && children}
     </AuthContext.Provider>
   );
