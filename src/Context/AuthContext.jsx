@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { Client, Account, Databases } from "appwrite";
+import { Client, Account, Databases, ID, Permission, Role } from "appwrite";
 
 const AuthContext = createContext();
 
@@ -23,7 +23,9 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const checkUser = async () => {
       try {
+        console.log("Checking user session...");
         const userData = await account.get();
+        console.log("User session found:", userData);
         setUser(userData);
       } catch (error) {
         console.error("Error fetching user session:", error);
@@ -39,18 +41,33 @@ export function AuthProvider({ children }) {
   const register = async (name, email, phone, password) => {
     try {
       console.log("Registering user...");
-      const newUser = await account.create("unique()", email, password);
+      const newUser = await account.create(ID.unique(), email, password);
+      console.log("User registered successfully:", newUser);
 
-      // Store user details in the database
+      // Ensure session is created before fetching user details
+      await account.createEmailPasswordSession(email, password);
+      const userData = await account.get();
+      setUser(userData);
+      console.log("User session created:", userData);
+
+      console.log("Attempting to store user in database...");
+      console.log("Database ID:", "67e83c7d003109ed269c");
+      console.log("Collection ID:", "67e84557002bec656b65");
+      console.log("User ID:", userData.$id);
+
+      // Store user details in the database with proper permissions
       await databases.createDocument(
         "67e83c7d003109ed269c", // Database ID
         "67e84557002bec656b65", // Collection ID
-        "unique()",
-        { name, email, phone }
+        ID.unique(),
+        { name, email, phone },
+        [
+          Permission.read(Role.user(userData.$id)),
+          Permission.update(Role.user(userData.$id)),
+          Permission.delete(Role.user(userData.$id)),
+        ]
       );
-
-      const userData = await account.get();
-      setUser(userData);
+      console.log("User added to database successfully!");
       return userData;
     } catch (error) {
       console.error("Registration failed:", error);
@@ -75,6 +92,7 @@ export function AuthProvider({ children }) {
       await account.createEmailPasswordSession(email, password);
       const userData = await account.get();
       setUser(userData);
+      console.log("User logged in successfully:", userData);
       return userData;
     } catch (error) {
       console.error("Login failed:", error);
@@ -100,3 +118,4 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
+

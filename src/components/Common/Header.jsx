@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { 
-  ShoppingCart, Heart, UserCheck, UserRoundPlus, Menu, X, LogOut
+  ShoppingCart, Heart, UserCheck, UserRoundPlus, Menu, X, LogOut, User
 } from "lucide-react";
 import { useAuth } from "../../Context/AuthContext";
 
@@ -46,9 +46,14 @@ function Header() {
                 </Link>
               </>
             ) : (
-              <button onClick={handleLogout} className="flex items-center gap-1 text-red-600 hover:text-red-800">
-                <LogOut size={18} /> Logout
-              </button>
+              <>
+                <Link to="/profile" className="flex items-center gap-1 hover:text-blue-600">
+                  <User size={18} /> {user.displayName || "Profile"}
+                </Link>
+                <button onClick={handleLogout} className="flex items-center gap-1 text-red-600 hover:text-red-800">
+                  <LogOut size={18} /> Logout
+                </button>
+              </>
             )}
 
             <div className="w-px h-6 bg-gray-200"></div>
@@ -84,13 +89,17 @@ function Header() {
                 </Link>
               </>
             ) : (
-              <button onClick={handleLogout} className="flex items-center gap-2 text-red-600 pb-2 border-b border-gray-200">
-                <LogOut size={18} /> Logout
-              </button>
+              <>
+                <Link to="/profile" className="flex items-center gap-2 text-gray-700 pb-2 border-b border-gray-200">
+                  <User size={18} /> {user.displayName || "Profile"}
+                </Link>
+                <button onClick={handleLogout} className="flex items-center gap-2 text-red-600 pb-2 border-b border-gray-200">
+                  <LogOut size={18} /> Logout
+                </button>
+              </>
             )}
 
             <Link to="/orders" className="block text-gray-700 pb-2 border-b border-gray-200">Orders</Link>
-            <Link to="/profile" className="block text-gray-700 pb-2 border-b border-gray-200">My Account</Link>
           </div>
         )}
       </header>
