@@ -68,7 +68,7 @@ function Profile() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gray-200">
       <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-semibold text-center text-gray-700">User Profile</h2>
 

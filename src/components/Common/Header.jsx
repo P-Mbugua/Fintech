@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { Client, Account, Databases, Query } from "appwrite";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,10 +8,45 @@ import {
 } from "lucide-react";
 import { useAuth } from "../../Context/AuthContext";
 
+// Appwrite setup
+const client = new Client()
+  .setEndpoint("https://cloud.appwrite.io/v1")
+  .setProject("67e83a4b001b39dcc0dc");
+
+const account = new Account(client);
+const databases = new Databases(client);
+
+const databaseId = "67e83c7d003109ed269c";
+const collectionId = "67e84557002bec656b65";
+
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { user, logout } = useAuth(); // Get user and logout from AuthContext
+  const { user, logout } = useAuth(); // Auth Context
   const navigate = useNavigate();
+  const [userName, setUserName] = useState("My Account");
+
+  useEffect(() => {
+    const fetchUserName = async () => {
+      try {
+        const userData = await account.get(); // Get logged-in user
+        const email = userData.email;
+
+        const response = await databases.listDocuments(databaseId, collectionId, [
+          Query.equal("email", email) // Fetch user by email
+        ]);
+
+        if (response.documents.length > 0) {
+          setUserName(response.documents[0].name); // Set user's name
+        }
+      } catch (error) {
+        console.error("Error fetching user name:", error);
+      }
+    };
+
+    if (user) {
+      fetchUserName();
+    }
+  }, [user]);
 
   // Handle Logout
   const handleLogout = async () => {
@@ -47,9 +83,6 @@ function Header() {
               </>
             ) : (
               <>
-                <Link to="/profile" className="flex items-center gap-1 hover:text-blue-600">
-                  <User size={18} /> {user.displayName || "Profile"}
-                </Link>
                 <button onClick={handleLogout} className="flex items-center gap-1 text-red-600 hover:text-red-800">
                   <LogOut size={18} /> Logout
                 </button>
@@ -59,6 +92,10 @@ function Header() {
             <div className="w-px h-6 bg-gray-200"></div>
             <Link to="/orders" className="hover:text-blue-600">Orders</Link>
             <div className="w-px h-6 bg-gray-200"></div>
+
+            <Link to="/profile" className="flex items-center gap-1 hover:text-blue-600">
+              <User size={18} /> {user ? userName : "My Account"}
+            </Link>
 
             {/* Wishlist & Cart */}
             <Link to="/wishlist" className="relative hover:text-red-500">
@@ -91,7 +128,7 @@ function Header() {
             ) : (
               <>
                 <Link to="/profile" className="flex items-center gap-2 text-gray-700 pb-2 border-b border-gray-200">
-                  <User size={18} /> {user.displayName || "Profile"}
+                  <User size={18} /> {user ? userName : "Profile"}
                 </Link>
                 <button onClick={handleLogout} className="flex items-center gap-2 text-red-600 pb-2 border-b border-gray-200">
                   <LogOut size={18} /> Logout
