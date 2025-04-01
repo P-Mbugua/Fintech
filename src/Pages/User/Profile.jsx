@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Client, Account, Databases, Query } from "appwrite";
+import { CheckCircle, XCircle, Pencil, Loader2 } from "lucide-react";
+import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 
 const client = new Client()
   .setEndpoint("https://cloud.appwrite.io/v1")
@@ -12,6 +14,7 @@ function Profile() {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const [formData, setFormData] = useState({ name: "", phone: "", email: "" });
 
   const databaseId = "67e83c7d003109ed269c";
@@ -21,8 +24,6 @@ function Profile() {
     async function fetchUserData() {
       try {
         const user = await account.get();
-        console.log("Logged-in User:", user);
-
         const response = await databases.listDocuments(databaseId, collectionId, [
           Query.equal("email", user.email),
         ]);
@@ -34,8 +35,6 @@ function Profile() {
             phone: response.documents[0].phone,
             email: response.documents[0].email,
           });
-        } else {
-          console.log("No user document found.");
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -49,10 +48,7 @@ function Profile() {
 
   async function updateUserDetails() {
     if (!userData) return;
-
     try {
-      console.log("Updating user:", userData.$id);
-
       const updatedDoc = await databases.updateDocument(
         databaseId,
         collectionId,
@@ -63,10 +59,9 @@ function Profile() {
           email: formData.email,
         }
       );
-
-      console.log("User updated successfully:", updatedDoc);
       setUserData(updatedDoc);
       setEditing(false);
+      setOpenDialog(false);
     } catch (error) {
       console.error("Error updating user details:", error);
     }
@@ -78,7 +73,9 @@ function Profile() {
         <h2 className="text-2xl font-semibold text-center text-gray-700">User Profile</h2>
 
         {loading ? (
-          <p className="text-center text-gray-500 mt-4">Loading...</p>
+          <div className="flex justify-center mt-4">
+            <Loader2 className="animate-spin text-gray-500" size={24} />
+          </div>
         ) : userData ? (
           <div className="mt-4">
             {editing ? (
@@ -92,7 +89,6 @@ function Profile() {
                     className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                   />
                 </div>
-
                 <div className="mb-3">
                   <label className="block text-gray-600">Phone</label>
                   <input
@@ -102,7 +98,6 @@ function Profile() {
                     className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                   />
                 </div>
-
                 <div className="mb-4">
                   <label className="block text-gray-600">Email</label>
                   <input
@@ -112,19 +107,18 @@ function Profile() {
                     className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                   />
                 </div>
-
                 <div className="flex justify-between">
                   <button
-                    onClick={updateUserDetails}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+                    onClick={() => setOpenDialog(true)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center gap-2"
                   >
-                    Save
+                    <CheckCircle size={18} /> Save
                   </button>
                   <button
                     onClick={() => setEditing(false)}
-                    className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition"
+                    className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 flex items-center gap-2"
                   >
-                    Cancel
+                    <XCircle size={18} /> Cancel
                   </button>
                 </div>
               </>
@@ -133,12 +127,11 @@ function Profile() {
                 <p className="text-gray-700"><strong>Name:</strong> {userData.name}</p>
                 <p className="text-gray-700"><strong>Phone:</strong> {userData.phone}</p>
                 <p className="text-gray-700"><strong>Email:</strong> {userData.email}</p>
-
                 <button
                   onClick={() => setEditing(true)}
-                  className="mt-4 w-full bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
+                  className="mt-4 w-full bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 flex items-center justify-center gap-2"
                 >
-                  Edit
+                  <Pencil size={18} /> Edit
                 </button>
               </>
             )}
@@ -147,6 +140,28 @@ function Profile() {
           <p className="text-center text-red-500 mt-4">No user data found.</p>
         )}
       </div>
+
+      {/* Confirmation Dialog */}
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        <DialogTitle>Confirm Update</DialogTitle>
+        <DialogContent>
+          Are you sure you want to update your profile details?
+        </DialogContent>
+        <DialogActions>
+          <button
+            onClick={updateUserDetails}
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+          >
+            Confirm
+          </button>
+          <button
+            onClick={() => setOpenDialog(false)}
+            className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
+          >
+            Cancel
+          </button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
