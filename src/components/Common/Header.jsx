@@ -67,7 +67,17 @@ function Header() {
                 com
               </span>
             </Link>
+
+
+            
+          <div className="flex text-sm font-semibold pl-10 space-x-4">
+                <Link to="/orders" className="block text-gray-700">Help Centre</Link>
+                <div className="w-px h-6 bg-gray-200"></div>
+                <Link to="/orders" className="block text-gray-700 ">Sell on Fintech</Link>
           </div>
+          </div>
+
+          
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6 text-gray-700 text-sm">
@@ -83,7 +93,7 @@ function Header() {
               </>
             ) : (
               <>
-                <button onClick={handleLogout} className="flex items-center gap-1 text-red-600 hover:text-red-800">
+                <button onClick={handleLogout} className="flex items-center gap-1 text-red-600 hover:text-red-800 cursor-pointer">
                   <LogOut size={18} /> Logout
                 </button>
               </>
@@ -127,10 +137,10 @@ function Header() {
               </>
             ) : (
               <>
-                <Link to="/profile" className="flex items-center gap-2 text-gray-700 pb-2 border-b border-gray-200">
+                <Link to="/profile" className="flex items-center gap-2 text-gray-700 pb-2 border-b border-gray-200 cursor-pointer">
                   <User size={18} /> {user ? userName : "Profile"}
                 </Link>
-                <button onClick={handleLogout} className="flex items-center gap-2 text-red-600 pb-2 border-b border-gray-200">
+                <button onClick={handleLogout} className="flex items-center gap-2 text-red-600 pb-2 border-b border-gray-200 cursor-pointer">
                   <LogOut size={18} /> Logout
                 </button>
               </>

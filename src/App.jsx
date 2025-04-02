@@ -84,7 +84,7 @@ function App() {
               <Route path="/banner" element={<MainLayout><Banner /></MainLayout>} />
               <Route path="/hot-sales" element={<MainLayout><HotSales /></MainLayout>} />
               <Route path="/products" element={<MainLayout><ProductsPage /></MainLayout>} />
-              <Route path="/cart" element={<MainLayout><Cart /></MainLayout>} />
+              <Route path="/cart" element={<DashboardLayout><Cart /></DashboardLayout>} />
               <Route path= "/recommended" element={<MainLayout><Reccomended /></MainLayout>} />
               <Route path="/hot-cattegories" element={<MainLayout><HotCattegories /></MainLayout>} />
               <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
@@ -100,7 +100,7 @@ function App() {
               <Route path="/orders" element={
                 <ProtectedRoute><DashboardLayout><OrderHistory /></DashboardLayout></ProtectedRoute>
               } />
-              <Route path="/orders/:id" element={
+              <Route path="/order-details" element={
                 <ProtectedRoute><DashboardLayout><OrderDetails /></DashboardLayout></ProtectedRoute>
               } />
 

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { ChevronRight } from "lucide-react"; 
+import { ChevronRight } from "lucide-react";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for routing
+import OrderButton from "../../components/Buttons/OrderButton";
 
 const hotSalesData = [
   { id: 1, name: "NIVEA UV Face Shine Control", price: 899, oldPrice: 1300, discount: 31, stock: 100, image: "https://www.masoko.com/_next/image?url=https%3A%2F%2Fassets.os.masoko.com%2Fmedia%2Fcatalog%2Fproduct%2Fs%2Fa%2Fsamsung_galaxy_a16_black.png&w=1920&q=75" },
@@ -13,6 +15,7 @@ const hotSalesData = [
 function HotSales() {
   const [timeLeft, setTimeLeft] = useState(0);
   const [salesData, setSalesData] = useState(hotSalesData);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const updateTimer = () => {
@@ -52,18 +55,16 @@ function HotSales() {
   };
 
   return (
-    <div className="bg-red-600 text-white p-4  shadow-lg">
+    <div className="bg-red-600 text-white p-4 shadow-lg">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-bold flex items-center">
-          <span className="mr-1 ">⚡</span> Flash Sales | Live Now
+          <span className="mr-1">⚡</span> Flash Sales | Live Now
         </h2>
         <p className="text-lg font-semibold">Time Left: <span className="font-bold">{formatTime(timeLeft)}</span></p>
-      
 
-          <a href="#" className="flex items-center text-white font-semibold hover:opacity-80">
-            See All <ChevronRight className="ml-1 w-5 h-5" />
-          </a>
-
+        <a href="#" className="flex items-center text-white font-semibold hover:opacity-80">
+          See All <ChevronRight className="ml-1 w-5 h-5" />
+        </a>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-4">
         {salesData.map((item) => (
@@ -75,16 +76,15 @@ function HotSales() {
             <h3 className="text-sm font-medium truncate">{item.name}</h3>
             <p className="text-red-600 font-bold">KSh {item.price.toLocaleString()}</p>
             <p className="text-gray-500 line-through text-sm">KSh {item.oldPrice.toLocaleString()}</p>
-            <p className="text-xs mt-1 ">{item.stock} items left</p>
+            <p className="text-xs mt-1">{item.stock} items left</p>
             <div className="w-full h-2 bg-gray-200 rounded-full mt-1">
               <div
                 className="h-2 bg-orange-500 rounded-full"
                 style={{ width: `${(item.stock / 100) * 100}%` }}
               ></div>
             </div>
-            <button className="mt-3 w-full bg-blue-600 text-white py-1 rounded-lg hover:cursor-pointer hover:bg-blue-500 transition">
-              Order Now
-            </button>
+            {/* Use the OrderButton component here */}
+            <OrderButton productDetails={item} />
           </div>
         ))}
       </div>
