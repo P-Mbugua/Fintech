@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import AddToCartButton from '../../components/Buttons/AddToCartButton';
 
 function OrderDetails() {
   const location = useLocation();
@@ -10,22 +11,13 @@ function OrderDetails() {
     return <div className="text-center py-10 text-xl font-semibold">No product data available.</div>;
   }
 
-  // Add product to cart function
-  const addToCart = () => {
-    // Assuming you have a cart state or global state to manage cart items
-    // For now, we'll just log it as a placeholder
-    console.log('Added to cart:', product);
-
-    // You can implement logic to add the product to your cart here, e.g., using context or redux.
-  };
-
   // Navigate to checkout page
   const handleBuyNow = () => {
     navigate('/checkout', { state: { product } });
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen p-6">
+    <div className="bg-gray-50  p-6">
       <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Order Details</h1>
 
@@ -57,13 +49,8 @@ function OrderDetails() {
                 Buy Now
               </button>
 
-              {/* Add to Cart Button */}
-              <button 
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none transition duration-300"
-                onClick={addToCart}
-              >
-                Add to Cart
-              </button>
+              {/* Add to Cart Button - Use the AddToCartButton component here */}
+              <AddToCartButton product={product} />
             </div>
           </div>
         </div>
