@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from "../../Context/CartContext"; // Ensure correct path
 import { Client, Account, Databases, Query } from "appwrite";
+import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 
 // Initialize Appwrite client
 const client = new Client()
@@ -13,6 +14,7 @@ const databases = new Databases(client);
 function Cart() {
   const { cart, setCart } = useCart(); // Ensure useCart is correctly providing setCart
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate(); // Initialize the navigate function
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -122,6 +124,11 @@ function Cart() {
     return <p>Loading...</p>; // Loading state while fetching data
   }
 
+  // Proceed to Checkout
+  const proceedToCheckout = () => {
+    navigate("/checkout", { state: { cart } }); // Navigate to Checkout and pass the cart data
+  };
+
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
@@ -169,7 +176,10 @@ function Cart() {
               Total: KSh{" "}
               {cart.reduce((acc, item) => acc + item.price01 * item.quantity, 0)}
             </p>
-            <button className="px-6 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700">
+            <button 
+              onClick={proceedToCheckout}
+              className="px-6 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700"
+            >
               Proceed to Checkout
             </button>
           </div>

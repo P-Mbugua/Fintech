@@ -1,46 +1,170 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Client, Databases } from 'appwrite';
+import ShippingInformation from '../Shipping Information/ShippingInformation';
+
+
+// Initialize Appwrite client
+const client = new Client()
+  .setEndpoint("https://cloud.appwrite.io/v1") // Replace with your endpoint
+  .setProject("67e83a4b001b39dcc0dc"); // Replace with your project ID
+const databases = new Databases(client);
 
 function Checkout() {
-  const location = useLocation();
-  const { product } = location.state || {}; // Retrieve the product passed from the OrderDetails page
+  const { state } = useLocation(); // Get the state passed from Cart
+  const { cart } = state || {}; // Extract cart data
+  const [shippingInfo, setShippingInfo] = useState(null);
+  const [paymentMethods] = useState([
+    { id: '1', name: 'Credit Card' },
+    { id: '2', name: 'M-Pesa' },
+    { id: '3', name: 'PayPal' },
+  ]);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+  const [isOrderPlaced, setIsOrderPlaced] = useState(false);
+  const [isEditingShipping, setIsEditingShipping] = useState(false); // State for editing shipping info
 
-  if (!product) {
-    return <div className="text-center py-10 text-xl font-semibold">No product data available.</div>;
-  }
+  // Fetch shipping info from the database
+  useEffect(() => {
+    const fetchShippingInfo = async () => {
+      try {
+        const response = await databases.listDocuments('[YOUR_DATABASE_ID]', '[YOUR_SHIPPING_COLLECTION]');
+        setShippingInfo(response.documents[0]); // Assuming there's one document
+      } catch (error) {
+        console.error('Error fetching shipping information', error);
+      }
+    };
+
+    fetchShippingInfo();
+  }, []);
+
+  const handlePlaceOrder = async () => {
+    // Assume we have a genuine payment method validation
+    const paymentMethod = paymentMethods.find(method => method.id === selectedPaymentMethod);
+    if (!paymentMethod) {
+      alert('Please select a valid payment method!');
+      return;
+    }
+
+    try {
+      // Add the order to the orders collection
+      await databases.createDocument(
+        '[YOUR_DATABASE_ID]',
+        '[YOUR_ORDERS_COLLECTION]',
+        'unique()', // Unique order ID
+        {
+          cart,
+          shippingInfo,
+          paymentMethod: paymentMethod.name,
+          totalAmount: cart.reduce((acc, item) => acc + item.price01 * item.quantity, 0) + 199, // Total with shipping
+          status: 'pending',
+        }
+      );
+      setIsOrderPlaced(true); // Set order placed status
+    } catch (error) {
+      console.error('Error placing the order', error);
+    }
+  };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Checkout</h1>
+    <div className="checkout-container bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
+      <h1 className="text-3xl font-semibold mb-6 text-center">Checkout</h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Product Image */}
-          <div className="flex justify-center md:justify-start">
-            <img 
-              src={product.image} 
-              alt={product.name} 
-              className="w-full md:w-80 h-80 object-contain border rounded-lg shadow-md" 
-            />
-          </div>
-
-          {/* Product Details */}
-          <div className="flex flex-col justify-between space-y-4">
-            <h2 className="text-2xl font-semibold text-gray-800">{product.name}</h2>
-            <p className="text-lg text-gray-700">Price: <span className="font-bold text-red-600">KSh {product.price.toLocaleString()}</span></p>
-            <p className="text-sm text-gray-500 line-through">Old Price: KSh {product.oldPrice.toLocaleString()}</p>
-            <p className="text-sm text-gray-600">{product.stock} items left in stock</p>
-            <p className="text-red-600 text-sm">Discount: {product.discount}% off</p>
-
-            {/* Checkout Form (Placeholder) */}
-            <button 
-              className="mt-6 px-6 py-3 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 focus:outline-none transition duration-300"
+      {/* Shipping Information Section */}
+      <section className="mb-6">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-semibold">Shipping Information</h2>
+          {/* Button to Edit Shipping Information */}
+          {shippingInfo && (
+            <button
+              className="bg-blue-500 text-white py-2 px-4 rounded"
+              onClick={() => setIsEditingShipping(true)} // Open ShippingInformation component
             >
-              Proceed to Payment
+              Edit Shipping Information
             </button>
-          </div>
+          )}
         </div>
+
+        {/* Shipping Info Details */}
+        <div>
+          {shippingInfo ? (
+            <div>
+              <p><strong>Name:</strong> {shippingInfo.name}</p>
+              <p><strong>Address:</strong> {shippingInfo.address}</p>
+              <p><strong>Phone:</strong> {shippingInfo.phone}</p>
+            </div>
+          ) : (
+            <p>No shipping information available.</p>
+          )}
+        </div>
+      </section>
+
+      {/* Payment Method Section */}
+      <section className="mb-6">
+        <h2 className="text-2xl font-semibold mb-4">Payment Method</h2>
+        <div>
+          <select
+            className="border p-2 rounded w-full"
+            onChange={(e) => setSelectedPaymentMethod(e.target.value)}
+            value={selectedPaymentMethod}
+          >
+            <option value="">Select Payment Method</option>
+            {paymentMethods.map((method) => (
+              <option key={method.id} value={method.id}>
+                {method.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </section>
+
+      {/* Product List Summary Section */}
+      <section className="mb-6">
+        <h2 className="text-2xl font-semibold mb-4">Product List Summary</h2>
+        <ul>
+          {cart && cart.length > 0 ? (
+            cart.map((item, index) => (
+              <li key={index} className="flex justify-between p-4 border-b mb-4">
+                <div className="flex-1">
+                  <img src={item.image} alt={item.productName} className="w-16 h-16 object-cover mr-4" />
+                  <span className="font-semibold">{item.productName}</span>
+                </div>
+                <div className="text-right">
+                  <span className="text-sm">Quantity: </span>
+                  <span>{item.quantity}</span>
+                  <p className="text-lg font-bold mt-2">KSh {item.price01 * item.quantity}</p>
+                </div>
+              </li>
+            ))
+          ) : (
+            <p>Your cart is empty.</p>
+          )}
+        </ul>
+      </section>
+
+      {/* Total Section */}
+      <section className="mb-6">
+        <h2 className="text-2xl font-semibold mb-4">Total</h2>
+        <p className="font-semibold">Product Amount: KSh {cart.reduce((acc, item) => acc + item.price01 * item.quantity, 0)}</p>
+        <p className="font-semibold">Shipping Fee: + KSh 199</p>
+        <p className="font-semibold">Payment Amount: KSh {cart.reduce((acc, item) => acc + item.price01 * item.quantity, 0) + 199}</p>
+      </section>
+
+      {/* Place Order Button */}
+      <div className="text-center">
+        <button
+          onClick={handlePlaceOrder}
+          className="bg-blue-500 text-white py-2 px-6 rounded-lg"
+          disabled={isOrderPlaced}
+        >
+          {isOrderPlaced ? 'Order Placed' : 'Place Order'}
+        </button>
       </div>
+
+      {/* Success Message */}
+      {isOrderPlaced && <p className="text-center mt-4 text-green-600">Your order has been placed successfully!</p>}
+
+      {/* Show Shipping Information Editing Form if editing */}
+      {isEditingShipping && <ShippingInformation />}
     </div>
   );
 }
