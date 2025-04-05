@@ -59,6 +59,9 @@ import ProtectedRoute from "./Routes/ProtectedRoute";
 // Loader Component
 import FintechLoader from "./components/Common/FintechLoader";
 
+// Shipping Information (Protected)
+import ShippingInformation from "./Pages/Shipping Information/ShippingInformation";
+
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -109,6 +112,9 @@ function App() {
               } />
               <Route path="/payments" element={
                 <ProtectedRoute><DashboardLayout><Payments /></DashboardLayout></ProtectedRoute>
+              } />
+              <Route path="/shipping" element={
+                <ProtectedRoute><DashboardLayout><ShippingInformation /></DashboardLayout></ProtectedRoute>
               } />
               <Route path="/payment-success" element={
                 <ProtectedRoute><DashboardLayout><Success /></DashboardLayout></ProtectedRoute>

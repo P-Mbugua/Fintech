@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Client, Databases } from 'appwrite';
-import ShippingInformation from '../Shipping Information/ShippingInformation';
-
 
 // Initialize Appwrite client
 const client = new Client()
@@ -11,6 +9,7 @@ const client = new Client()
 const databases = new Databases(client);
 
 function Checkout() {
+  const navigate = useNavigate();
   const { state } = useLocation(); // Get the state passed from Cart
   const { cart } = state || {}; // Extract cart data
   const [shippingInfo, setShippingInfo] = useState(null);
@@ -21,14 +20,24 @@ function Checkout() {
   ]);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
-  const [isEditingShipping, setIsEditingShipping] = useState(false); // State for editing shipping info
 
   // Fetch shipping info from the database
   useEffect(() => {
     const fetchShippingInfo = async () => {
       try {
-        const response = await databases.listDocuments('[YOUR_DATABASE_ID]', '[YOUR_SHIPPING_COLLECTION]');
-        setShippingInfo(response.documents[0]); // Assuming there's one document
+        const response = await databases.listDocuments(
+          "67e83c7d003109ed269c", // Database ID
+          "67f1135f0015843036ee" // Collection ID
+        );
+        // Assuming there's one document for the logged-in user
+        const userShippingInfo = response.documents[0]; // Adjust if necessary to fetch the correct user's data
+        setShippingInfo({
+          firstName: userShippingInfo.firstName,
+          lastName: userShippingInfo.lastName,
+          phone: userShippingInfo.phone,
+          address: userShippingInfo.address,
+          region: userShippingInfo.region,
+        });
       } catch (error) {
         console.error('Error fetching shipping information', error);
       }
@@ -38,7 +47,6 @@ function Checkout() {
   }, []);
 
   const handlePlaceOrder = async () => {
-    // Assume we have a genuine payment method validation
     const paymentMethod = paymentMethods.find(method => method.id === selectedPaymentMethod);
     if (!paymentMethod) {
       alert('Please select a valid payment method!');
@@ -46,16 +54,15 @@ function Checkout() {
     }
 
     try {
-      // Add the order to the orders collection
       await databases.createDocument(
-        '[YOUR_DATABASE_ID]',
-        '[YOUR_ORDERS_COLLECTION]',
+        '67e83c7d003109ed269c', // Database ID
+        '67f1135f0015843036ee', // Orders Collection ID
         'unique()', // Unique order ID
         {
           cart,
           shippingInfo,
           paymentMethod: paymentMethod.name,
-          totalAmount: cart.reduce((acc, item) => acc + item.price01 * item.quantity, 0) + 199, // Total with shipping
+          totalAmount: cart?.reduce((acc, item) => acc + item.price01 * item.quantity, 0) + 199, // Total with shipping
           status: 'pending',
         }
       );
@@ -63,6 +70,11 @@ function Checkout() {
     } catch (error) {
       console.error('Error placing the order', error);
     }
+  };
+
+  // Navigate to the shipping information page for editing
+  const handleEditShipping = () => {
+    navigate('/shipping', { state: { shippingInfo } });
   };
 
   return (
@@ -77,7 +89,7 @@ function Checkout() {
           {shippingInfo && (
             <button
               className="bg-blue-500 text-white py-2 px-4 rounded"
-              onClick={() => setIsEditingShipping(true)} // Open ShippingInformation component
+              onClick={handleEditShipping} // Navigate to the shipping info page
             >
               Edit Shipping Information
             </button>
@@ -88,9 +100,10 @@ function Checkout() {
         <div>
           {shippingInfo ? (
             <div>
-              <p><strong>Name:</strong> {shippingInfo.name}</p>
+              <p><strong>Name:</strong> {shippingInfo.firstName} {shippingInfo.lastName}</p>
               <p><strong>Address:</strong> {shippingInfo.address}</p>
               <p><strong>Phone:</strong> {shippingInfo.phone}</p>
+              <p><strong>Region:</strong> {shippingInfo.region}</p>
             </div>
           ) : (
             <p>No shipping information available.</p>
@@ -144,9 +157,9 @@ function Checkout() {
       {/* Total Section */}
       <section className="mb-6">
         <h2 className="text-2xl font-semibold mb-4">Total</h2>
-        <p className="font-semibold">Product Amount: KSh {cart.reduce((acc, item) => acc + item.price01 * item.quantity, 0)}</p>
+        <p className="font-semibold">Product Amount: KSh {cart?.reduce((acc, item) => acc + item.price01 * item.quantity, 0)}</p>
         <p className="font-semibold">Shipping Fee: + KSh 199</p>
-        <p className="font-semibold">Payment Amount: KSh {cart.reduce((acc, item) => acc + item.price01 * item.quantity, 0) + 199}</p>
+        <p className="font-semibold">Payment Amount: KSh {cart?.reduce((acc, item) => acc + item.price01 * item.quantity, 0) + 199}</p>
       </section>
 
       {/* Place Order Button */}
@@ -162,9 +175,6 @@ function Checkout() {
 
       {/* Success Message */}
       {isOrderPlaced && <p className="text-center mt-4 text-green-600">Your order has been placed successfully!</p>}
-
-      {/* Show Shipping Information Editing Form if editing */}
-      {isEditingShipping && <ShippingInformation />}
     </div>
   );
 }
