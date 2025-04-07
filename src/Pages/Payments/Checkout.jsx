@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Client, Databases } from 'appwrite';
+import Payments from './Payments'; // Import the Payments component
 
 // Initialize Appwrite client
 const client = new Client()
-  .setEndpoint("https://cloud.appwrite.io/v1") // Replace with your endpoint
-  .setProject("67e83a4b001b39dcc0dc"); // Replace with your project ID
+  .setEndpoint("https://cloud.appwrite.io/v1")
+  .setProject("67e83a4b001b39dcc0dc");
 const databases = new Databases(client);
 
 function Checkout() {
   const navigate = useNavigate();
-  const { state } = useLocation(); // Get the state passed from Cart
-  const { cart } = state || {}; // Extract cart data
+  const { state } = useLocation();
+  const { cart } = state || {};
   const [shippingInfo, setShippingInfo] = useState(null);
   const [paymentMethods] = useState([
     { id: '1', name: 'Credit Card' },
@@ -20,17 +21,16 @@ function Checkout() {
   ]);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
-  // Fetch shipping info from the database
   useEffect(() => {
     const fetchShippingInfo = async () => {
       try {
         const response = await databases.listDocuments(
-          "67e83c7d003109ed269c", // Database ID
-          "67f1135f0015843036ee" // Collection ID
+          "67e83c7d003109ed269c",
+          "67f1135f0015843036ee"
         );
-        // Assuming there's one document for the logged-in user
-        const userShippingInfo = response.documents[0]; // Adjust if necessary to fetch the correct user's data
+        const userShippingInfo = response.documents[0];
         setShippingInfo({
           firstName: userShippingInfo.firstName,
           lastName: userShippingInfo.lastName,
@@ -55,49 +55,54 @@ function Checkout() {
 
     try {
       await databases.createDocument(
-        '67e83c7d003109ed269c', // Database ID
-        '67f1135f0015843036ee', // Orders Collection ID
-        'unique()', // Unique order ID
+        '67e83c7d003109ed269c',
+        '67f1135f0015843036ee',
+        'unique()',
         {
           cart,
           shippingInfo,
           paymentMethod: paymentMethod.name,
-          totalAmount: cart?.reduce((acc, item) => acc + item.price01 * item.quantity, 0) + 199, // Total with shipping
+          totalAmount: cart?.reduce((acc, item) => acc + item.price01 * item.quantity, 0) + 199,
           status: 'pending',
         }
       );
-      setIsOrderPlaced(true); // Set order placed status
+      setIsOrderPlaced(true);
     } catch (error) {
       console.error('Error placing the order', error);
     }
   };
 
-  // Navigate to the shipping information page for editing
   const handleEditShipping = () => {
     navigate('/shipping', { state: { shippingInfo } });
   };
 
-  return (
-    <div className="checkout-container bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
-      <h1 className="text-3xl font-semibold mb-6 text-center">Checkout</h1>
+  const handlePaymentChange = (e) => {
+    const selected = e.target.value;
+    setSelectedPaymentMethod(selected);
+    if (selected === '2') {
+      setShowPaymentModal(true); // Show modal if M-Pesa
+    }
+  };
 
-      {/* Shipping Information Section */}
-      <section className="mb-6">
+  return (
+    <div className="checkout-container bg-white p-10 rounded-xl shadow-lg max-w-4xl mx-auto relative">
+      <h1 className="text-4xl font-semibold mb-8 text-center text-indigo-600">Checkout</h1>
+
+      {/* Shipping Information */}
+      <section className="mb-8">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-semibold">Shipping Information</h2>
-          {/* Button to Edit Shipping Information */}
+          <h2 className="text-2xl font-semibold text-gray-800">Shipping Information</h2>
           {shippingInfo && (
             <button
-              className="bg-blue-500 text-white py-2 px-4 rounded"
-              onClick={handleEditShipping} // Navigate to the shipping info page
+              className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition duration-200"
+              onClick={handleEditShipping}
             >
-              Edit Shipping Information
+              Edit Shipping Info
             </button>
           )}
         </div>
 
-        {/* Shipping Info Details */}
-        <div>
+        <div className="space-y-3 text-lg">
           {shippingInfo ? (
             <div>
               <p><strong>Name:</strong> {shippingInfo.firstName} {shippingInfo.lastName}</p>
@@ -106,18 +111,18 @@ function Checkout() {
               <p><strong>Region:</strong> {shippingInfo.region}</p>
             </div>
           ) : (
-            <p>No shipping information available.</p>
+            <p className="text-gray-500">No shipping information available.</p>
           )}
         </div>
       </section>
 
-      {/* Payment Method Section */}
-      <section className="mb-6">
-        <h2 className="text-2xl font-semibold mb-4">Payment Method</h2>
-        <div>
+      {/* Payment Method */}
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Payment Method</h2>
+        <div className="space-y-4">
           <select
-            className="border p-2 rounded w-full"
-            onChange={(e) => setSelectedPaymentMethod(e.target.value)}
+            className="border-2 p-3 rounded-lg w-full text-gray-700 focus:ring-2 focus:ring-indigo-500"
+            onChange={handlePaymentChange}
             value={selectedPaymentMethod}
           >
             <option value="">Select Payment Method</option>
@@ -130,43 +135,43 @@ function Checkout() {
         </div>
       </section>
 
-      {/* Product List Summary Section */}
-      <section className="mb-6">
-        <h2 className="text-2xl font-semibold mb-4">Product List Summary</h2>
-        <ul>
+      {/* Product List Summary */}
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Product List Summary</h2>
+        <ul className="space-y-4">
           {cart && cart.length > 0 ? (
             cart.map((item, index) => (
-              <li key={index} className="flex justify-between p-4 border-b mb-4">
-                <div className="flex-1">
-                  <img src={item.image} alt={item.productName} className="w-16 h-16 object-cover mr-4" />
-                  <span className="font-semibold">{item.productName}</span>
+              <li key={index} className="flex justify-between items-center p-4 bg-gray-50 rounded-lg shadow-sm">
+                <div className="flex items-center">
+                  <img src={item.image} alt={item.productName} className="w-20 h-20 object-cover mr-4 rounded-lg" />
+                  <span className="font-semibold text-gray-800">{item.productName}</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-sm">Quantity: </span>
-                  <span>{item.quantity}</span>
-                  <p className="text-lg font-bold mt-2">KSh {item.price01 * item.quantity}</p>
+                  <span className="text-sm text-gray-600">Quantity: </span>
+                  <span className="font-semibold">{item.quantity}</span>
+                  <p className="text-lg font-bold text-indigo-600 mt-2">KSh {item.price01 * item.quantity}</p>
                 </div>
               </li>
             ))
           ) : (
-            <p>Your cart is empty.</p>
+            <p className="text-gray-500">Your cart is empty.</p>
           )}
         </ul>
       </section>
 
-      {/* Total Section */}
-      <section className="mb-6">
-        <h2 className="text-2xl font-semibold mb-4">Total</h2>
-        <p className="font-semibold">Product Amount: KSh {cart?.reduce((acc, item) => acc + item.price01 * item.quantity, 0)}</p>
-        <p className="font-semibold">Shipping Fee: + KSh 199</p>
-        <p className="font-semibold">Payment Amount: KSh {cart?.reduce((acc, item) => acc + item.price01 * item.quantity, 0) + 199}</p>
+      {/* Total */}
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Total</h2>
+        <p className="font-semibold text-lg">Product Amount: KSh {cart?.reduce((acc, item) => acc + item.price01 * item.quantity, 0)}</p>
+        <p className="font-semibold text-lg">Shipping Fee: + KSh 199</p>
+        <p className="font-semibold text-lg">Total Payment: KSh {cart?.reduce((acc, item) => acc + item.price01 * item.quantity, 0) + 199}</p>
       </section>
 
       {/* Place Order Button */}
       <div className="text-center">
         <button
           onClick={handlePlaceOrder}
-          className="bg-blue-500 text-white py-2 px-6 rounded-lg"
+          className="bg-indigo-600 text-white py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 disabled:opacity-50 transition duration-200"
           disabled={isOrderPlaced}
         >
           {isOrderPlaced ? 'Order Placed' : 'Place Order'}
@@ -175,6 +180,21 @@ function Checkout() {
 
       {/* Success Message */}
       {isOrderPlaced && <p className="text-center mt-4 text-green-600">Your order has been placed successfully!</p>}
+
+      {/* Modal for M-Pesa */}
+      {showPaymentModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-xl shadow-xl max-w-md w-full relative">
+            <button
+              onClick={() => setShowPaymentModal(false)}
+              className="absolute top-2 right-2 text-gray-500 hover:text-black text-lg"
+            >
+              ✕
+            </button>
+            <Payments />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
