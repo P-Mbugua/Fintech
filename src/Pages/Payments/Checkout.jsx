@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Client, Databases } from 'appwrite';
+import { Client, Databases, Query } from 'appwrite';
 import Payments from './Payments'; // Import the Payments component
 
 // Initialize Appwrite client
@@ -26,18 +26,32 @@ function Checkout() {
   useEffect(() => {
     const fetchShippingInfo = async () => {
       try {
+        // Query to fetch the latest document using createdAt field
         const response = await databases.listDocuments(
           "67e83c7d003109ed269c",
-          "67f1135f0015843036ee"
+          "67f1135f0015843036ee",
+          [
+            Query.orderDesc('$createdAt'),  // Orders by the latest createdAt
+            Query.limit(1),  // Fetch only the latest document
+          ]
         );
+        
         const userShippingInfo = response.documents[0];
-        setShippingInfo({
-          firstName: userShippingInfo.firstName,
-          lastName: userShippingInfo.lastName,
-          phone: userShippingInfo.phone,
-          address: userShippingInfo.address,
-          region: userShippingInfo.region,
-        });
+        
+        if (userShippingInfo) {
+          // Ensure we get the shipping details including user ID, email, etc.
+          setShippingInfo({
+            firstName: userShippingInfo.firstName,
+            lastName: userShippingInfo.lastName,
+            phone: userShippingInfo.phone,
+            address: userShippingInfo.address,
+            region: userShippingInfo.region,
+            userId: userShippingInfo.userId,
+            email: userShippingInfo.email,
+          });
+        } else {
+          console.log('No shipping information available.');
+        }
       } catch (error) {
         console.error('Error fetching shipping information', error);
       }
@@ -92,12 +106,19 @@ function Checkout() {
       <section className="mb-8">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold text-gray-800">Shipping Information</h2>
-          {shippingInfo && (
+          {shippingInfo ? (
             <button
               className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition duration-200"
               onClick={handleEditShipping}
             >
               Edit Shipping Info
+            </button>
+          ) : (
+            <button
+              className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition duration-200"
+              onClick={handleEditShipping}
+            >
+              Add Shipping Info
             </button>
           )}
         </div>
@@ -109,6 +130,7 @@ function Checkout() {
               <p><strong>Address:</strong> {shippingInfo.address}</p>
               <p><strong>Phone:</strong> {shippingInfo.phone}</p>
               <p><strong>Region:</strong> {shippingInfo.region}</p>
+              <p><strong>Email:</strong> {shippingInfo.email}</p>
             </div>
           ) : (
             <p className="text-gray-500">No shipping information available.</p>
@@ -137,27 +159,27 @@ function Checkout() {
 
       {/* Product List Summary */}
       <section className="mb-8">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Product List Summary</h2>
-        <ul className="space-y-4">
-          {cart && cart.length > 0 ? (
-            cart.map((item, index) => (
-              <li key={index} className="flex justify-between items-center p-4 bg-gray-50 rounded-lg shadow-sm">
-                <div className="flex items-center">
-                  <img src={item.image} alt={item.productName} className="w-20 h-20 object-cover mr-4 rounded-lg" />
-                  <span className="font-semibold text-gray-800">{item.productName}</span>
-                </div>
-                <div className="text-right">
-                  <span className="text-sm text-gray-600">Quantity: </span>
-                  <span className="font-semibold">{item.quantity}</span>
-                  <p className="text-lg font-bold text-indigo-600 mt-2">KSh {item.price01 * item.quantity}</p>
-                </div>
-              </li>
-            ))
-          ) : (
-            <p className="text-gray-500">Your cart is empty.</p>
-          )}
-        </ul>
-      </section>
+  <h2 className="text-2xl font-semibold text-gray-800 mb-4">Product List Summary</h2>
+  <ul className="space-y-4">
+    {cart && cart.length > 0 ? (
+      cart.map((item, index) => (
+        <li key={index} className="flex justify-between items-center p-4 bg-gray-50 rounded-lg shadow-sm">
+          <div className="flex items-center">
+            <img src={item.image} alt={item.productName} className="w-20 h-20 object-cover mr-4 rounded-lg" />
+            <span className="font-semibold text-gray-800">{item.productName}</span>
+          </div>
+          <div className="text-right">
+            <span className="text-sm text-gray-600">Quantity: </span>
+            <span className="font-semibold">{item.quantity}</span>
+            <p className="text-lg font-bold text-indigo-600 mt-2">KSh {item.price01 * item.quantity}</p>
+          </div>
+        </li>
+      ))
+    ) : (
+      <p className="text-gray-500">Your cart is empty.</p>
+    )}
+  </ul>
+</section>
 
       {/* Total */}
       <section className="mb-8">
@@ -183,8 +205,8 @@ function Checkout() {
 
       {/* Modal for M-Pesa */}
       {showPaymentModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-xl shadow-xl max-w-md w-full relative">
+        <div className="fixed inset-0 bg-transparent bg-black flex items-center justify-center z-50">
+          <div className="bg-gray-300 p-6 rounded-xl shadow-xl max-w-md w-full relative">
             <button
               onClick={() => setShowPaymentModal(false)}
               className="absolute top-2 right-2 text-gray-500 hover:text-black text-lg"

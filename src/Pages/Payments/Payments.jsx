@@ -20,15 +20,15 @@ function Payments({ setPaidAmount, totalAmount }) {
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-4">M-Pesa Payment</h2>
+      <h2 className="text-2xl font-semibold mb-4 ">M-Pesa Payment</h2>
       <form onSubmit={handleSubmit}>
-        <label className="block mb-2 text-gray-700">Enter Phone Number</label>
+        <label className="block mb-2 text-black">Enter Phone Number</label>
         <input
           type="tel"
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
           placeholder="e.g. 07XXXXXXXX"
-          className="border border-gray-300 p-2 rounded w-full mb-4"
+          className="border border-gray-100 p-2 bg-white rounded w-full mb-4"
         />
         <button
           type="submit"

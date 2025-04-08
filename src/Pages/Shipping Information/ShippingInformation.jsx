@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Client, Databases } from "appwrite";
+import { Client, Databases, Account } from 'appwrite';
 
 // Initialize Appwrite client
 const client = new Client()
-  .setEndpoint("https://cloud.appwrite.io/v1")
-  .setProject("67e83a4b001b39dcc0dc");
+  .setEndpoint('https://cloud.appwrite.io/v1')
+  .setProject('67e83a4b001b39dcc0dc');
 const databases = new Databases(client);
+const account = new Account(client);
 
 function ShippingInformation() {
   const navigate = useNavigate();
@@ -19,6 +20,23 @@ function ShippingInformation() {
     address: '',
     region: '',
   });
+  const [userEmail, setUserEmail] = useState(null);
+  const [userId, setUserId] = useState(null);
+
+  // Fetch the current logged-in user's email and userId
+  useEffect(() => {
+    const fetchUserEmail = async () => {
+      try {
+        const user = await account.get();
+        setUserEmail(user.email); // Save the logged-in user's email
+        setUserId(user.$id); // Save the logged-in user's ID
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      }
+    };
+
+    fetchUserEmail();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,13 +44,22 @@ function ShippingInformation() {
   };
 
   const handleSave = async () => {
+    if (!userEmail || !userId) {
+      console.error('User email or user ID is not available.');
+      return;
+    }
+
     try {
-      // Save the form data to Appwrite (adjust the logic as needed)
+      // Save the form data to Appwrite, including the email and userId of the logged-in user
       await databases.createDocument(
-        '67e83c7d003109ed269c',
-        '67f1135f0015843036ee',
-        'unique()',
-        formData
+        '67e83c7d003109ed269c', // Replace with your database ID
+        '67f1135f0015843036ee', // Replace with your collection ID
+        'unique()', // Document ID, you can customize as needed
+        { 
+          ...formData, 
+          email: userEmail,  // Change userEmail to match the expected field name
+          userId  // Ensure userId is included
+        }
       );
 
       navigate('/checkout'); // Redirect back to the checkout page
