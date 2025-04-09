@@ -33,6 +33,9 @@ import Cart from "./Pages/Cart/Cart";
 import Banner from "./Pages/Home/Banner";
 import Reccomended from "./Pages/Home/Reccomended";
 import ProductsPage from "./Pages/Home/ProductsPage";
+import HomeAccessories from "./Pages/HomeAccessories/HomeAccessories";
+import GiftAndFashion from "./Pages/Gift and Fashion/GiftAndFashion";
+import Health from "./Pages/Health/Health";
 
 // Phone and Accessories 
 import PhoneandAccessories from "./Pages/Phoneand Accessories/PhoneandAccessories";
@@ -89,6 +92,9 @@ function App() {
               <Route path="/products" element={<MainLayout><ProductsPage /></MainLayout>} />
               <Route path="/cart" element={<DashboardLayout><Cart /></DashboardLayout>} />
               <Route path= "/recommended" element={<MainLayout><Reccomended /></MainLayout>} />
+              <Route path="/home-accessories" element={<DashboardLayout><HomeAccessories /></DashboardLayout>} />
+              <Route path="/gifts-fashion" element={<DashboardLayout><GiftAndFashion /></DashboardLayout>} />
+              <Route path="/health-beauty" element={<DashboardLayout><Health /></DashboardLayout>} />
               <Route path="/hot-cattegories" element={<MainLayout><HotCattegories /></MainLayout>} />
               <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
               <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
