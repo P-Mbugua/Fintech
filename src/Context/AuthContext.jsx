@@ -21,21 +21,38 @@ export function AuthProvider({ children }) {
 
   // Check user session on load
   useEffect(() => {
-    const checkUser = async () => {
+    const handleSession = async () => {
       try {
-        console.log("Checking user session...");
+        const sessionFlag = sessionStorage.getItem("session-active");
+  
+        if (!sessionFlag) {
+          // No session flag = browser was closed, invalidate session
+          console.log("Browser was closed previously, logging out.");
+          await account.deleteSession("current");
+          setUser(null);
+          setLoading(false);
+          return;
+        }
+  
+        // Try fetching the session
         const userData = await account.get();
-        console.log("User session found:", userData);
         setUser(userData);
+        console.log("Session valid:", userData);
       } catch (error) {
-        console.error("Error fetching user session:", error);
+        console.error("No active session:", error);
         setUser(null);
       } finally {
         setLoading(false);
       }
     };
-    checkUser();
+  
+    handleSession();
+  
+    // Always reset sessionStorage flag on load
+    sessionStorage.setItem("session-active", "true");
+  
   }, []);
+  
 
   // Register Function
   const register = async (name, email, phone, password) => {
@@ -118,4 +135,6 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
+
+
 

@@ -1,13 +1,13 @@
 import React from "react";
 
 const categories = [
-  { name: "TVs", img: "https://img.kilimall.com/c/common/category-icon/100001632.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "TVs", img: "https://img.kilimall.com/c/common/category-icon/100001632.jpg?x-image-process=image/format,webp/resize,w_240#", link: "/tvs" },
   { name: "Appliances", img: "https://img.kilimall.com/c/common/category-icon/100001633.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
   { name: "Kitchen", img: "https://img.kilimall.com/c/common/category-icon/100001631.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
   { name: "Home", img: "https://img.kilimall.com/c/common/category-icon/100001628.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
   { name: "Phones", img: "https://img.kilimall.com/c/common/category-icon/100001637.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
   { name: "Refurbished Phones", img: "https://img.kilimall.com/c/common/category-icon/100001636.png?x-image-process=image/format,webp/resize,w_240#", link: "#" },
-  { name: "Smartwatches", img: "https://img.kilimall.com/c/common/category-icon/100000676.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
+  { name: "Smartwatches", img: "https://img.kilimall.com/c/common/category-icon/100000676.jpg?x-image-process=image/format,webp/resize,w_240#", link: "/watches" },
   { name: "Personal Care", img: "https://img.kilimall.com/c/common/category-icon/100000614.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },
   { name: "Beauty", img: "https://img.kilimall.com/c/common/category-icon/100000537.png?x-image-process=image/format,webp/resize,w_240#", link: "#" },
   { name: "Health Care", img: "https://img.kilimall.com/c/common/category-icon/100001155.jpg?x-image-process=image/format,webp/resize,w_240#", link: "#" },

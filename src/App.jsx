@@ -36,6 +36,13 @@ import ProductsPage from "./Pages/Home/ProductsPage";
 import HomeAccessories from "./Pages/HomeAccessories/HomeAccessories";
 import GiftAndFashion from "./Pages/Gift and Fashion/GiftAndFashion";
 import Health from "./Pages/Health/Health";
+import Watches from "./Pages/Other Products/Watches/watches"; 
+import TVs from "./Pages/Other Products/TVs/TVs";
+
+
+
+// Wishlist (Protected)
+import WishList from "./Pages/WishList/WishList";
 
 // Phone and Accessories 
 import PhoneandAccessories from "./Pages/Phoneand Accessories/PhoneandAccessories";
@@ -95,6 +102,8 @@ function App() {
               <Route path="/home-accessories" element={<DashboardLayout><HomeAccessories /></DashboardLayout>} />
               <Route path="/gifts-fashion" element={<DashboardLayout><GiftAndFashion /></DashboardLayout>} />
               <Route path="/health-beauty" element={<DashboardLayout><Health /></DashboardLayout>} />
+              <Route path="/watches" element={<DashboardLayout><Watches /></DashboardLayout>} />
+              <Route path="/tvs" element={<DashboardLayout><TVs /></DashboardLayout>} />  
               <Route path="/hot-cattegories" element={<MainLayout><HotCattegories /></MainLayout>} />
               <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
               <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
@@ -112,6 +121,9 @@ function App() {
               <Route path="/order-details" element={
                 <ProtectedRoute><DashboardLayout><OrderDetails /></DashboardLayout></ProtectedRoute>
               } />
+              <Route path="/wishlist" element={
+                <ProtectedRoute><DashboardLayout><WishList /></DashboardLayout></ProtectedRoute>  
+              }/>
 
               <Route path="/checkout" element={
                 <ProtectedRoute><DashboardLayout><Checkout /></DashboardLayout></ProtectedRoute>
