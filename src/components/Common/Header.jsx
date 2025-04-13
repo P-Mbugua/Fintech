@@ -147,6 +147,7 @@ function Header() {
             )}
 
             <Link to="/cart" className="block text-gray-700 pb-2 border-b border-gray-200">Cart</Link>
+            <Link to="/wishlist" className="block text-gray-700 pb-2 border-b border-gray-200">Wishlist</Link>
             <Link to="/orders" className="block text-gray-700 pb-2 border-b border-gray-200">Orders</Link>
           </div>
         )}
