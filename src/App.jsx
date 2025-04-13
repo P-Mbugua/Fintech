@@ -107,7 +107,7 @@ function App() {
               <Route path="/hot-cattegories" element={<MainLayout><HotCattegories /></MainLayout>} />
               <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
               <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
-              <Route path="/forgot-password" element={<AuthLayout><ForgotPassword /></AuthLayout>} />
+              <Route path="/reset-password" element={<AuthLayout><ForgotPassword /></AuthLayout>} />
               <Route path="/contact" element={<DashboardLayout><Contact /></DashboardLayout>} />
               <Route path="/about" element={<DashboardLayout><AboutUs /></DashboardLayout>}/>
               <Route path="/PhoneandAccessories" element={<DashboardLayout><PhoneandAccessories /></DashboardLayout>} />

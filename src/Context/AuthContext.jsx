@@ -24,17 +24,15 @@ export function AuthProvider({ children }) {
     const handleSession = async () => {
       try {
         const sessionFlag = sessionStorage.getItem("session-active");
-  
+
         if (!sessionFlag) {
-          // No session flag = browser was closed, invalidate session
           console.log("Browser was closed previously, logging out.");
           await account.deleteSession("current");
           setUser(null);
           setLoading(false);
           return;
         }
-  
-        // Try fetching the session
+
         const userData = await account.get();
         setUser(userData);
         console.log("Session valid:", userData);
@@ -45,14 +43,10 @@ export function AuthProvider({ children }) {
         setLoading(false);
       }
     };
-  
+
     handleSession();
-  
-    // Always reset sessionStorage flag on load
     sessionStorage.setItem("session-active", "true");
-  
   }, []);
-  
 
   // Register Function
   const register = async (name, email, phone, password) => {
@@ -61,7 +55,6 @@ export function AuthProvider({ children }) {
       const newUser = await account.create(ID.unique(), email, password);
       console.log("User registered successfully:", newUser);
 
-      // Ensure session is created before fetching user details
       await account.createEmailPasswordSession(email, password);
       const userData = await account.get();
       setUser(userData);
@@ -72,7 +65,6 @@ export function AuthProvider({ children }) {
       console.log("Collection ID:", "67e84557002bec656b65");
       console.log("User ID:", userData.$id);
 
-      // Store user details in the database with proper permissions
       await databases.createDocument(
         "67e83c7d003109ed269c", // Database ID
         "67e84557002bec656b65", // Collection ID
@@ -92,12 +84,10 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // Login Function (Handles existing session before login)
+  // Login Function
   const login = async (email, password) => {
     try {
       console.log("Attempting login...");
-
-      // Ensure no active session before login
       try {
         await account.deleteSession("current");
         console.log("Previous session deleted.");
@@ -105,7 +95,6 @@ export function AuthProvider({ children }) {
         console.log("No existing session found, proceeding with login.");
       }
 
-      // Create a new session
       await account.createEmailPasswordSession(email, password);
       const userData = await account.get();
       setUser(userData);
@@ -129,12 +118,20 @@ export function AuthProvider({ children }) {
     }
   };
 
+  // Reset Password Function
+  const resetPassword = async (email) => {
+    try {
+      await account.createRecovery(email, window.location.origin + "/reset-password");
+      console.log("Recovery email sent");
+    } catch (error) {
+      console.error("Password recovery failed:", error);
+      throw new Error(error.message);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, register, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, register, login, logout, resetPassword, loading }}>
       {!loading && children}
     </AuthContext.Provider>
   );
 }
-
-
-
