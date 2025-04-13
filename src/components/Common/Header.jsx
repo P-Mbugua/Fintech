@@ -21,22 +21,22 @@ const collectionId = "67e84557002bec656b65";
 
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { user, logout } = useAuth(); // Auth Context
+  const { user, logout } = useAuth(); 
   const navigate = useNavigate();
   const [userName, setUserName] = useState("My Account");
 
   useEffect(() => {
     const fetchUserName = async () => {
       try {
-        const userData = await account.get(); // Get logged-in user
+        const userData = await account.get(); 
         const email = userData.email;
 
         const response = await databases.listDocuments(databaseId, collectionId, [
-          Query.equal("email", email) // Fetch user by email
+          Query.equal("email", email) 
         ]);
 
         if (response.documents.length > 0) {
-          setUserName(response.documents[0].name); // Set user's name
+          setUserName(response.documents[0].name); 
         }
       } catch (error) {
         console.error("Error fetching user name:", error);
