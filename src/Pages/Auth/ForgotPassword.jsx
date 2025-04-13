@@ -1,68 +1,115 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; 
-import { useAuth } from "../../Context/AuthContext"; 
-import { ToastContainer, toast } from "react-toastify"; 
-import "react-toastify/dist/ReactToastify.css";
+import { useSearchParams, useNavigate } from "react-router-dom"; // <-- Added useNavigate
+import { Client, Account } from "appwrite";
+import { Lock, Eye, EyeOff } from "lucide-react";
+
+const client = new Client()
+  .setEndpoint("https://cloud.appwrite.io/v1")
+  .setProject("67e83a4b001b39dcc0dc");
+
+const account = new Account(client);
 
 function ForgotPassword() {
-  const [email, setEmail] = useState(""); 
-  const [loading, setLoading] = useState(false); 
-  const { resetPassword } = useAuth(); 
-  const navigate = useNavigate(); 
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate(); // <-- Hook for navigation
 
-  const handleResetPassword = async (e) => {
+  const userId = searchParams.get("userId");
+  const secret = searchParams.get("secret");
+
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [message, setMessage] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  const handleReset = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
-    if (!email) {
-      toast.warn("Please enter your email address to reset your password.");
-      setLoading(false);
-      return;
+    if (newPassword !== confirmPassword) {
+      return setMessage("Passwords do not match.");
     }
 
     try {
-      await resetPassword(email); 
-      toast.success("Password reset email sent! Please check your inbox.");
-      navigate("/login"); 
-    } catch (err) {
-      toast.error("Failed to send reset email. Try again.");
-      setLoading(false);
+      await account.updateRecovery(userId, secret, newPassword, confirmPassword);
+      setSuccess(true);
+      setMessage("✅ Password reset successful. Redirecting to login...");
+
+      // Redirect after 2 seconds
+      setTimeout(() => {
+        navigate("/login"); // <-- Redirect to login
+      }, 2000);
+    } catch (error) {
+      setMessage(error.message);
     }
   };
 
   return (
-    <div className="flex flex-col items-center bg-gray-200 min-h-screen justify-center p-4">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-xl font-bold text-center mb-2 text-gray-700">Forgot Password</h2>
-        <form onSubmit={handleResetPassword} className="space-y-3">
-          <input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full p-2 border border-gray-300 rounded"
-          />
+    <div className="max-w-md mx-auto p-6 mt-16 bg-white shadow-xl rounded-lg border">
+      <h1 className="text-2xl font-bold mb-5 text-center text-blue-700">
+        Reset Your Password
+      </h1>
+      {message && (
+        <div className={`mb-4 text-sm text-center font-medium ${success ? "text-green-600" : "text-red-600"}`}>
+          {message}
+        </div>
+      )}
+      {!success && (
+        <form onSubmit={handleReset} className="flex flex-col gap-5">
+          {/* New Password */}
+          <div className="relative">
+            <label className="text-sm font-semibold text-gray-700 mb-1 block">New Password</label>
+            <div className="flex items-center border rounded px-3 py-2">
+              <Lock className="w-4 h-4 text-gray-400 mr-2" />
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter new password"
+                className="w-full outline-none"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+              />
+              <button type="button" onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? (
+                  <EyeOff className="w-4 h-4 text-gray-500" />
+                ) : (
+                  <Eye className="w-4 h-4 text-gray-500" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Confirm Password */}
+          <div className="relative">
+            <label className="text-sm font-semibold text-gray-700 mb-1 block">Confirm Password</label>
+            <div className="flex items-center border rounded px-3 py-2">
+              <Lock className="w-4 h-4 text-gray-400 mr-2" />
+              <input
+                type={showConfirm ? "text" : "password"}
+                placeholder="Confirm new password"
+                className="w-full outline-none"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+              <button type="button" onClick={() => setShowConfirm(!showConfirm)}>
+                {showConfirm ? (
+                  <EyeOff className="w-4 h-4 text-gray-500" />
+                ) : (
+                  <Eye className="w-4 h-4 text-gray-500" />
+                )}
+              </button>
+            </div>
+          </div>
 
           <button
             type="submit"
-            className="w-full py-2 bg-blue-600 text-white rounded"
-            disabled={loading} 
+            className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
           >
-            {loading ? "Sending..." : "Send Reset Email"}
+            Reset Password
           </button>
         </form>
-
-        <div className="mt-3 text-center">
-          <button
-            onClick={() => navigate("/login")}
-            className="text-blue-500 hover:underline text-sm"
-          >
-            Back to Login
-          </button>
-        </div>
-      </div>
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover draggable />
+      )}
     </div>
   );
 }
