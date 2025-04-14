@@ -1,3 +1,4 @@
+// Important Packages Imports
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -38,6 +39,7 @@ import GiftAndFashion from "./Pages/Gift and Fashion/GiftAndFashion";
 import Health from "./Pages/Health/Health";
 import Watches from "./Pages/Other Products/Watches/watches"; 
 import TVs from "./Pages/Other Products/TVs/TVs";
+import Phone from "./Pages/Other Products/Phone/Phone";
 
 
 
@@ -103,7 +105,8 @@ function App() {
               <Route path="/gifts-fashion" element={<DashboardLayout><GiftAndFashion /></DashboardLayout>} />
               <Route path="/health-beauty" element={<DashboardLayout><Health /></DashboardLayout>} />
               <Route path="/watches" element={<DashboardLayout><Watches /></DashboardLayout>} />
-              <Route path="/tvs" element={<DashboardLayout><TVs /></DashboardLayout>} />  
+              <Route path="/tvs" element={<DashboardLayout><TVs /></DashboardLayout>} /> 
+              <Route path="/phones" element={<DashboardLayout><Phone /></DashboardLayout>} /> 
               <Route path="/hot-cattegories" element={<MainLayout><HotCattegories /></MainLayout>} />
               <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
               <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
