@@ -18,6 +18,7 @@ import MainLayout from "./Layouts/MainLayout";
 import Login from "./Pages/Auth/Login";
 import Register from "./Pages/Auth/Register";
 import ForgotPassword from "./Pages/Auth/ForgotPassword";
+import VerifyEmail from "./Pages/Auth/VerifyEmail";
 
 // Common pages
 import Header from "./components/Common/Header";
@@ -110,6 +111,7 @@ function App() {
               <Route path="/hot-cattegories" element={<MainLayout><HotCattegories /></MainLayout>} />
               <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
               <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
+              <Route path="/verify" element={<AuthLayout><VerifyEmail /></AuthLayout>} />
               <Route path="/reset-password" element={<AuthLayout><ForgotPassword /></AuthLayout>} />
               <Route path="/contact" element={<DashboardLayout><Contact /></DashboardLayout>} />
               <Route path="/about" element={<DashboardLayout><AboutUs /></DashboardLayout>}/>

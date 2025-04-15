@@ -77,6 +77,11 @@ export function AuthProvider({ children }) {
         ]
       );
       console.log("User added to database successfully!");
+
+      // 🟡 Send verification email
+      await account.createVerification(`${window.location.origin}/verify`);
+      console.log("Verification email sent to:", email);
+
       return userData;
     } catch (error) {
       console.error("Registration failed:", error);
