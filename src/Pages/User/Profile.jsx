@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Client, Account, Databases, Query } from "appwrite";
 import { CheckCircle, XCircle, Pencil, Loader2 } from "lucide-react";
 import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const client = new Client()
   .setEndpoint("https://cloud.appwrite.io/v1")
@@ -16,6 +17,8 @@ function Profile() {
   const [editing, setEditing] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [formData, setFormData] = useState({ name: "", phone: "", email: "" });
+
+  const navigate = useNavigate();
 
   const databaseId = "67e83c7d003109ed269c";
   const collectionId = "67e84557002bec656b65";
@@ -132,6 +135,12 @@ function Profile() {
                   className="mt-4 w-full bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 flex items-center justify-center gap-2"
                 >
                   <Pencil size={18} /> Edit
+                </button>
+                <button
+                  onClick={() => navigate("/settings")}
+                  className="mt-2 w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 flex items-center justify-center gap-2"
+                >
+                  Delete Account
                 </button>
               </>
             )}
