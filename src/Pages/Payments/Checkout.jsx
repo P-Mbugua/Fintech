@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Client, Databases, Query } from 'appwrite';
-import Payments from './Payments'; // Import the Payments component
+import Payments from './Payments'; 
 
 // Initialize Appwrite client
 const client = new Client()
@@ -31,8 +31,8 @@ function Checkout() {
           "67e83c7d003109ed269c",
           "67f1135f0015843036ee",
           [
-            Query.orderDesc('$createdAt'),  // Orders by the latest createdAt
-            Query.limit(1),  // Fetch only the latest document
+            Query.orderDesc('$createdAt'),  
+            Query.limit(1),  
           ]
         );
         
@@ -94,7 +94,7 @@ function Checkout() {
     const selected = e.target.value;
     setSelectedPaymentMethod(selected);
     if (selected === '2') {
-      setShowPaymentModal(true); // Show modal if M-Pesa
+      setShowPaymentModal(true);
     }
   };
 

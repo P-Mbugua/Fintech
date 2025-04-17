@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useCart } from "../../Context/CartContext"; // Ensure correct path
+import { useCart } from "../../Context/CartContext"; 
 import { Client, Account, Databases, Query } from "appwrite";
-import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
+import { useNavigate } from "react-router-dom"; 
 
 // Initialize Appwrite client
 const client = new Client()
-  .setEndpoint("https://cloud.appwrite.io/v1") // Replace with your endpoint
-  .setProject("67e83a4b001b39dcc0dc"); // Replace with your project ID
+  .setEndpoint("https://cloud.appwrite.io/v1")
+  .setProject("67e83a4b001b39dcc0dc"); 
 
 const account = new Account(client);
 const databases = new Databases(client);
 
 function Cart() {
-  const { cart, setCart } = useCart(); // Ensure useCart is correctly providing setCart
+  const { cart, setCart } = useCart();
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -24,27 +24,27 @@ function Cart() {
 
         // Fetch the cart items from the Appwrite database
         const response = await databases.listDocuments(
-          "67e83c7d003109ed269c", // Replace with your database ID
-          "67eade1800187dbb6aad", // Replace with your collection ID
+          "67e83c7d003109ed269c", 
+          "67eade1800187dbb6aad",
           [
-            Query.equal("userId", user.$id), // Fetch cart items for the logged-in user
+            Query.equal("userId", user.$id), 
           ]
         );
 
-        console.log("Fetched cart items:", response); // Debugging
+        console.log("Fetched cart items:", response); 
 
         // Update the cart context with the fetched data
-        setCart(response.documents); // This should be working now
+        setCart(response.documents);
 
       } catch (error) {
         console.error("Error fetching cart:", error.message);
       } finally {
-        setLoading(false); // Stop loading state
+        setLoading(false); 
       }
     };
 
     fetchCart();
-  }, [setCart]); // Only run this effect once when the component mounts
+  }, [setCart]); 
 
   // Function to increase quantity
   const increaseQuantity = (itemId) => {
@@ -52,7 +52,7 @@ function Cart() {
     setCart((prevCart) => {
       return prevCart.map((item) => {
         if (item.id === itemId) {
-          return { ...item, quantity: item.quantity + 1 }; // Increase quantity of the selected item
+          return { ...item, quantity: item.quantity + 1 }; 
         }
         return item;
       });
@@ -69,13 +69,13 @@ function Cart() {
       return prevCart.map((item) => {
         if (item.id === itemId) {
           if (item.quantity === 1) {
-            return null; // Set to null if quantity reaches 1
+            return null; 
           } else {
-            return { ...item, quantity: item.quantity - 1 }; // Decrease quantity
+            return { ...item, quantity: item.quantity - 1 }; 
           }
         }
         return item;
-      }).filter(item => item !== null); // Remove the deleted item
+      }).filter(item => item !== null); 
     });
 
     // Update the database
@@ -88,31 +88,31 @@ function Cart() {
       const user = await account.get();
       if (!user) throw new Error("User not logged in");
 
-      const cartItem = cart.find((item) => item.id === itemId); // Find the targeted cart item
-      if (!cartItem) return; // If no item is found, do nothing
+      const cartItem = cart.find((item) => item.id === itemId);
+      if (!cartItem) return; 
 
-      const documentId = cartItem.$id; // Get the document ID from the cart item
+      const documentId = cartItem.$id;
 
       // Update the quantity in the database
       if (action === "increase") {
         await databases.updateDocument(
-          "67e83c7d003109ed269c", // Replace with your database ID
-          "67eade1800187dbb6aad", // Replace with your collection ID
+          "67e83c7d003109ed269c", 
+          "67eade1800187dbb6aad",
           documentId, 
           { quantity: cartItem.quantity + 1 }
         );
       } else if (action === "decrease" && cartItem.quantity > 1) {
         await databases.updateDocument(
-          "67e83c7d003109ed269c", // Replace with your database ID
-          "67eade1800187dbb6aad", // Replace with your collection ID
+          "67e83c7d003109ed269c",
+          "67eade1800187dbb6aad",
           documentId, 
           { quantity: cartItem.quantity - 1 }
         );
       } else if (action === "decrease" && cartItem.quantity === 1) {
         await databases.deleteDocument(
-          "67e83c7d003109ed269c", // Replace with your database ID
-          "67eade1800187dbb6aad", // Replace with your collection ID
-          documentId // Remove from the database
+          "67e83c7d003109ed269c", 
+          "67eade1800187dbb6aad",
+          documentId 
         );
       }
     } catch (error) {
@@ -121,12 +121,12 @@ function Cart() {
   };
 
   if (loading) {
-    return <p>Loading...</p>; // Loading state while fetching data
+    return <p>Loading...</p>;
   }
 
   // Proceed to Checkout
   const proceedToCheckout = () => {
-    navigate("/checkout", { state: { cart } }); // Navigate to Checkout and pass the cart data
+    navigate("/checkout", { state: { cart } });
   };
 
   return (

@@ -8,8 +8,8 @@ import {
   Plus,
   Minus,
 } from "lucide-react";
-import { ToastContainer, toast } from "react-toastify"; // Import Toastify
-import "react-toastify/dist/ReactToastify.css"; // Import the Toastify CSS
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Contact() {
   const [expanded, setExpanded] = useState({});
