@@ -37,6 +37,7 @@ function AddToCartButton({ product }) {
         price01,
         total01,
         createdAt01,
+        image: product.image, // Include the product image here
       };
 
       // Save to Appwrite Database
