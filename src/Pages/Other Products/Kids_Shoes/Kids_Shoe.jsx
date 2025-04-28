@@ -34,7 +34,7 @@ function Kids_Shoe() {
           </div>
         </div>
 
-        {/* You can copy and paste more shoe cards here for other shoes */}
+       
       </div>
     </div>
   );
