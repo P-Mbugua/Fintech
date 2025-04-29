@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaShoppingCart, FaMoneyBillWave } from 'react-icons/fa'; // For icons
+import { FaShoppingCart, FaMoneyBillWave } from 'react-icons/fa'; 
 
 function Kids_Shoe() {
   return (
