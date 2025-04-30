@@ -27,7 +27,7 @@ function Kids_Shoe() {
               <FaMoneyBillWave size={20} />
             </button>
 
-            {/* Add to Cart Button */}
+       
             <button className="bg-yellow-500 p-3 rounded-full text-white hover:bg-yellow-600">
               <FaShoppingCart size={20} />
             </button>
