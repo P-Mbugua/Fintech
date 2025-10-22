@@ -82,7 +82,7 @@ function App() {
     // Simulating loading time
     setTimeout(() => {
       setLoading(false);
-    }, 2000); // Loader will show for 2 seconds
+    }, 1000); // Loader will show for 2 seconds
   }, []);
 
   if (loading) {
