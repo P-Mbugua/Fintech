@@ -53,13 +53,14 @@ function Home() {
     }
   }, [debouncedSearchQuery]);
 
-  return (
-    <div className="flex justify-center items-center p-1 bg-blue-600 relative mt-4">
+  return (  
+        <div className="fixed top-0 left-0 w-full flex justify-center items-center p-1 bg-blue-600 z-50  md:mt-15"> 
+
       <div className="w-full bg-white rounded-lg shadow-lg p-1 relative z-20">
         {/* Top Section */}
-        <div className="flex flex-col sm:flex-row items-center border-b border-gray-300 p-2 gap-4">
+        <div className="flex flex-col sm:flex-row items-center border-b border-gray-300 p-2 gap-4 ">
           {/* Dropdown for Departments */}
-          <div className="relative w-full sm:w-auto">
+          <div className="relative w-full sm:w-auto hidden md:block">
             <button
               onClick={() => setDropdownOpen(!isDropdownOpen)}
               className="bg-gray-800 text-white sm:w-auto px-4  flex items-center justify-between rounded-lg transition-all hover:bg-gray-700 focus:outline-none"
@@ -70,7 +71,7 @@ function Home() {
 
             {/* Dropdown Menu */}
             {isDropdownOpen && (
-              <div className="absolute  left-0 sm:left-auto sm:right-0 mt-2 w-full sm:w-56 bg-white border border-gray-300 rounded-md shadow-lg z-50 transition-transform duration-300 ease-in-out transform">
+              <div className="absolute left-0 mt-2 w-56 bg-white border border-gray-300 rounded-md shadow-lg z-50 transition-transform duration-300 ease-in-out transform">
                 {departments.map((dept, index) => (
                   <div key={index} className="relative group">
                     <button
@@ -105,7 +106,7 @@ function Home() {
           <div className="relative w-full mt-4 sm:mt-0">
             <input
               type="text"
-              placeholder="Search for products, brands..."
+              placeholder="I am searching for..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
@@ -143,21 +144,6 @@ function Home() {
           </div>
         </div>
 
-        {/* Featured Categories - Mobile View */}
-        <div className="sm:hidden p-4">
-          <h2 className="text-lg font-bold mb-2 text-gray-800">Featured Categories</h2>
-          <div className="flex overflow-x-auto space-x-4 scrollbar-hide">
-            {departments.map((dept, index) => (
-              <div key={index} className="flex-none w-24 text-center transition-all duration-500 hover:scale-105">
-                <button className="flex flex-col items-center p-2 bg-gray-100 rounded-lg shadow-md hover:bg-gray-300 transition-all">
-                  <span className="text-3xl">{dept.icon}</span>
-                  <span className="text-sm mt-1">{dept.name}</span>
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Navigation Tabs */}
         <div className="overflow-x-auto flex bg-gray-200 whitespace-nowrap mt-1 rounded-lg text-centre">
           {["ALOT For Less", "New Arrivals", "Summer", "Fire Sale", "Small Local Sellers", "Brands Store", "Clearance"].map((item, index) => (
@@ -175,5 +161,7 @@ function Home() {
     </div>
   );
 }
+
+
 
 export default Home;

@@ -20,7 +20,7 @@ const products = [
 
 /******  3b5a81f5-b0a4-43ea-9b4c-456bd48bb74b  *******/const HomePage = () => {
   return (
-    <div className="flex flex-col md:flex-row ">
+    <div className="flex flex-col md:flex-row lg:pt-44 md:pt-0 pt-32">
       {/* Sidebar Menu */}
       <aside className="w-1/4 bg-white p-4 shadow-lg hidden md:block">
         <h2 className="text-lg font-semibold mb-4 flex items-center">

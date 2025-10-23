@@ -108,7 +108,7 @@ function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6 text-gray-700 text-sm">
+          <nav className="hidden md:flex items-center space-x-6 text-gray-700 text-sm ">
             {!user ? (
               <>
                 <Link
@@ -179,7 +179,7 @@ function Header() {
 
 
                 {/* ✅ Mobile Sticky Nav (Visible on mobile and above all content) */}
-                <nav className="sticky top-0 md:hidden w-full bg-gray-800 text-white z-[999] border-b border-gray-700">
+                {/* <nav className="sticky top-0 md:hidden w-full bg-gray-800 text-white z-[999] border-b border-gray-700">
                   <div className="flex justify-around items-center py-2 text-xs">
                     <Link
                       to="/"
@@ -248,13 +248,88 @@ function Header() {
                       </>
                     )}
                   </div>
-                </nav>
+                </nav> */}
+
+
+
+
+
+{/* ✅ Mobile Sticky Nav (Visible on mobile and above all content) */}
+<nav className="fixed bottom-0 left-0 w-full bg-gray-800 text-white z-[999] border-t border-gray-700 md:hidden">
+  <div className="flex justify-around items-center py-2 text-xs">
+    <Link
+      to="/"
+      className="flex flex-col items-center justify-center hover:text-blue-400"
+    >
+      <Home size={20} />
+      <span>Home</span>
+    </Link>
+
+    <Link
+      to="/cart"
+      className="flex flex-col items-center justify-center relative hover:text-blue-400"
+    >
+      <ShoppingCart size={20} />
+      {cartCount > 0 && (
+        <span className="absolute -top-1 -right-2 bg-red-600 text-white text-[10px] font-bold px-1 py-[1px] rounded-full">
+          {cartCount}
+        </span>
+      )}
+      <span>Cart</span>
+    </Link>
+
+    <Link
+      to="/wishlist"
+      className="flex flex-col items-center justify-center hover:text-blue-400"
+    >
+      <Heart size={20} />
+      <span>Wishlist</span>
+    </Link>
+
+    {!user ? (
+      <>
+        <Link
+          to="/login"
+          className="flex flex-col items-center justify-center hover:text-blue-400"
+        >
+          <UserCheck size={20} />
+          <span>Login</span>
+        </Link>
+
+        <Link
+          to="/register"
+          className="flex flex-col items-center justify-center hover:text-blue-400"
+        >
+          <UserRoundPlus size={20} />
+          <span>Register</span>
+        </Link>
+      </>
+    ) : (
+      <>
+        <Link
+          to="/profile"
+          className="flex flex-col items-center justify-center hover:text-blue-400"
+        >
+          <User size={20} />
+          <span>{userName}</span>
+        </Link>
+
+        <button
+          onClick={handleLogout}
+          className="flex flex-col items-center justify-center text-red-500 hover:text-red-700"
+        >
+          <LogOut size={20} />
+          <span>Logout</span>
+        </button>
+      </>
+    )}
+  </div>
+</nav>
 
 
       
 
-      {/* Spacer for mobile so content below doesn’t overlap */}
-      <div className="md:hidden h-16"></div>
+
     </>
   );
 }
