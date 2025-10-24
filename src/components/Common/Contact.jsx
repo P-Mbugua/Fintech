@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Client, Databases, ID } from "appwrite";
 
 function Contact() {
   const [expanded, setExpanded] = useState({});
@@ -21,6 +22,13 @@ function Contact() {
   });
   const [submitting, setSubmitting] = useState(false);
   const [response, setResponse] = useState("");
+
+  // ✅ Initialize Appwrite Client
+  const client = new Client()
+    .setEndpoint("https://cloud.appwrite.io/v1") // don’t change unless self-hosted
+    .setProject("67e83a4b001b39dcc0dc"); // 🔹 replace with your project ID
+
+  const databases = new Databases(client);
 
   const toggleExpand = (index) => {
     setExpanded((prev) => ({ ...prev, [index]: !prev[index] }));
@@ -35,29 +43,27 @@ function Contact() {
     setSubmitting(true);
 
     try {
-      const res = await fetch(
-        "https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbw2HM4HbwtJQJz1fmHvZRic-gHyMtrfBPkmYMncwzHD1hLP2wHicWtFBkL1SpP_MGj9/exec",
+      // ✅ Send message to Appwrite Database
+      await databases.createDocument(
+        "67e83c7d003109ed269c", // replace with your Appwrite Database ID
+        "messages", // replace with your Messages Collection ID
+        ID.unique(),
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          status: "pending", // for management tracking later
         }
       );
 
       setResponse("Message sent successfully!");
-      setFormData({ name: "", email: "", phone: "", message: "" });
-
-      // Show success toast
       toast.success("Message sent successfully!");
-
+      setFormData({ name: "", email: "", phone: "", message: "" });
     } catch (err) {
+      console.error("Appwrite error:", err);
       setResponse("Error: " + err.message);
-
-      // Show error toast
       toast.error("Error: " + err.message);
-
     } finally {
       setSubmitting(false);
     }
@@ -216,7 +222,9 @@ function Contact() {
       {/* Online Services Section */}
       <div className="text-center py-12 mt-10 bg-white shadow-md rounded-lg max-w-2xl mx-auto px-6">
         <h2 className="text-2xl font-bold text-gray-800">Our Online Services</h2>
-        <p className="text-gray-600 mt-2">Get instant support on common queries.</p>
+        <p className="text-gray-600 mt-2">
+          Get instant support on common queries.
+        </p>
 
         <div className="mt-6 space-y-4">
           {services.map((service) => (

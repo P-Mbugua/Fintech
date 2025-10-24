@@ -18,10 +18,16 @@ const Register = () => {
     e.preventDefault();
     try {
       await register(name, email, phone, password);
-      toast.success("Registration successful! 🎉");
-      navigate("/dashboard");
+
+      // Toast message with instruction
+      toast.success(
+        "Registration successful! 🎉 Please check your email (inbox & spam) to verify your account before login."
+      );
+
+      // Redirect to login page
+      navigate("/login");
     } catch (err) {
-      toast.error("Registration failed. Please try again.");
+      toast.error(err.message || "Registration failed. Please try again.");
     }
   };
 
