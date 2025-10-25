@@ -75,11 +75,9 @@ export function AuthProvider({ children }) {
   const register = async (name, email, phone, password) => {
     try {
       console.log("Registering user...");
-      // 1. Create user
       const newUser = await account.create(ID.unique(), email, password);
       console.log("User registered:", newUser);
 
-      // 2. Create user document in DB
       const userDoc = buildUserDocDefaults({ name, email, phone });
       await databases.createDocument(
         "67e83c7d003109ed269c", // DB ID
@@ -94,12 +92,10 @@ export function AuthProvider({ children }) {
       );
       console.log("User document created in DB");
 
-      // 3. Temporarily log in to send verification
       await account.createEmailPasswordSession(email, password);
       await account.createVerification(`${window.location.origin}/verify`);
       console.log("Verification email sent to:", email);
 
-      // 4. Log out to prevent unverified session
       await account.deleteSession("current");
       setUser(null);
 
@@ -126,7 +122,6 @@ export function AuthProvider({ children }) {
       await account.createEmailPasswordSession(email, password);
       const userData = await account.get();
 
-      // Prevent login if email not verified
       if (!userData.emailVerification) {
         await account.deleteSession("current");
         setUser(null);
@@ -165,8 +160,33 @@ export function AuthProvider({ children }) {
     }
   };
 
+  // ------------------ GOOGLE SIGN-IN ------------------
+  const googleSignIn = async () => {
+    try {
+      await account.createOAuth2Session(
+        "google", // provider
+        `${window.location.origin}/dashboard`, // success redirect
+        `${window.location.origin}/register` // failure redirect
+      );
+      console.log("Redirecting to Google OAuth...");
+    } catch (error) {
+      console.error("Google sign-in failed:", error);
+      throw new Error(error.message || "Google sign-in failed.");
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, register, login, logout, resetPassword, loading }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        register,
+        login,
+        logout,
+        resetPassword,
+        googleSignIn, // ✅ added
+        loading,
+      }}
+    >
       {!loading && children}
     </AuthContext.Provider>
   );

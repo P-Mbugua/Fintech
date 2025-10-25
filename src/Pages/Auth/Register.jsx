@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,7 +11,7 @@ const Register = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const { register } = useAuth();
+  const { register, googleSignIn } = useAuth(); // Make sure googleSignIn exists in AuthContext
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -19,15 +19,23 @@ const Register = () => {
     try {
       await register(name, email, phone, password);
 
-      // Toast message with instruction
       toast.success(
         "Registration successful! 🎉 Please check your email (inbox & spam) to verify your account before login."
       );
 
-      // Redirect to login page
       navigate("/login");
     } catch (err) {
       toast.error(err.message || "Registration failed. Please try again.");
+    }
+  };
+
+  const handleGoogleRegister = async () => {
+    try {
+      await googleSignIn();
+      toast.success("Google sign-in successful! 🎉");
+      navigate("/dashboard"); // or wherever you want after Google login
+    } catch (err) {
+      toast.error(err.message || "Google sign-in failed. Please try again.");
     }
   };
 
@@ -62,7 +70,6 @@ const Register = () => {
             className="w-full p-2 border rounded"
           />
 
-          {/* Password Field with Eye Icon */}
           <div className="relative w-full">
             <input
               type={showPassword ? "text" : "password"}
@@ -85,6 +92,16 @@ const Register = () => {
             Register
           </button>
         </form>
+
+        {/* Google Sign-in Button */}
+        <div className="mt-4 text-center">
+          <button
+            onClick={handleGoogleRegister}
+            className="w-full flex items-center justify-center gap-2 py-2 border border-gray-300 rounded hover:bg-gray-100"
+          >
+            <FaGoogle className="text-red-500" /> Register with Google
+          </button>
+        </div>
       </div>
     </div>
   );
