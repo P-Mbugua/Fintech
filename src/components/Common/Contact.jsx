@@ -21,12 +21,11 @@ function Contact() {
     message: "",
   });
   const [submitting, setSubmitting] = useState(false);
-  const [response, setResponse] = useState("");
 
   // ✅ Initialize Appwrite Client
   const client = new Client()
-    .setEndpoint("https://cloud.appwrite.io/v1") // don’t change unless self-hosted
-    .setProject("67e83a4b001b39dcc0dc"); // 🔹 replace with your project ID
+    .setEndpoint("https://cloud.appwrite.io/v1")
+    .setProject("67e83a4b001b39dcc0dc");
 
   const databases = new Databases(client);
 
@@ -43,27 +42,30 @@ function Contact() {
     setSubmitting(true);
 
     try {
-      // ✅ Send message to Appwrite Database
       await databases.createDocument(
-        "67e83c7d003109ed269c", // replace with your Appwrite Database ID
-        "messages", // replace with your Messages Collection ID
+        "67e83c7d003109ed269c",
+        "messages",
         ID.unique(),
         {
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
           message: formData.message,
-          status: "pending", // for management tracking later
+          status: "pending",
         }
       );
 
-      setResponse("Message sent successfully!");
       toast.success("Message sent successfully!");
       setFormData({ name: "", email: "", phone: "", message: "" });
     } catch (err) {
       console.error("Appwrite error:", err);
-      setResponse("Error: " + err.message);
-      toast.error("Error: " + err.message);
+
+      // ✅ Show error via toast only
+      if (err.message.includes("current user is not authorized")) {
+        toast.error("You need to login first to perform this action.");
+      } else {
+        toast.error(err.message || "Something went wrong. Please try again.");
+      }
     } finally {
       setSubmitting(false);
     }
@@ -79,52 +81,53 @@ function Contact() {
     {
       id: 2,
       text: "How to cancel your order?",
-      icon: <XCircle className="w-5 h-5 text-red-600" />,
+      icon: <XCircle className="w-5 h-5 text-yellow-500" />,
       details:
         "Orders can be canceled before shipping. Contact support for assistance.",
     },
     {
       id: 3,
       text: "How to return your order?",
-      icon: <ShoppingCart className="w-5 h-5 text-green-600" />,
+      icon: <ShoppingCart className="w-5 h-5 text-green-500" />,
       details:
         "Returns are accepted within 7 days. Ensure the product is in its original packaging.",
     },
   ];
 
   return (
-    <div className="bg-gray-100 py-1">
+    <div className="bg-gray-100 py-4 font-sans mt-8 md:mt-14 lg:mt-14">
+
       {/* Header Section */}
-      <div className="bg-blue-700 w-3/4 text-white text-center py-2 shadow-lg items-center mx-auto">
+      <div className="bg-green-500 w-3/4 text-white text-center py-3 shadow-lg mx-auto rounded-xl hover:shadow-2xl transition-all cursor-default">
         <h1 className="text-4xl font-extrabold">NEED HELP?</h1>
-        <p className="mt-2 text-lg text-gray-200">
+        <p className="mt-2 text-lg text-gray-100">
           We're here for you 7 days a week!
         </p>
       </div>
 
-      {/* Contact Info Section */}
+      {/* Contact Info & Form Section */}
       <div className="flex flex-col md:flex-row items-center justify-center mt-10 gap-10 px-6">
-        <div className="bg-white shadow-lg p-8 rounded-lg max-w-lg w-full">
-          <h2 className="text-xl font-semibold text-gray-700">Contact Us</h2>
+        <div className="bg-white shadow-xl p-8 rounded-xl max-w-lg w-full hover:shadow-2xl transition-all duration-300 cursor-default">
+          <h2 className="text-2xl font-bold text-black">Contact Us</h2>
           <p className="text-gray-600 mt-2">
             If you have inquiries or need assistance, feel free to chat with us.
           </p>
 
           <div className="mt-6 space-y-4 text-gray-700">
-            <div className="flex items-center gap-3 border-b pb-3">
-              <Clock className="text-blue-600 w-6 h-6" />
+            <div className="flex items-center gap-3 border-b pb-3 hover:bg-gray-50 transition-all rounded-md p-2 cursor-pointer">
+              <Clock className="text-green-500 w-6 h-6" />
               <p>
                 Available <strong>Monday to Sunday</strong>,{" "}
                 <strong>9 AM - 6 PM</strong> on Live Chats.
               </p>
             </div>
-            <div className="flex items-center gap-3 border-b pb-3">
-              <PhoneCall className="text-red-600 w-6 h-6" />
+            <div className="flex items-center gap-3 border-b pb-3 hover:bg-gray-50 transition-all rounded-md p-2 cursor-pointer">
+              <PhoneCall className="text-yellow-500 w-6 h-6" />
               <p>
                 Call us:{" "}
                 <a
                   href="tel:+254103947514"
-                  className="font-bold hover:text-red-500"
+                  className="font-bold hover:text-green-500 transition"
                 >
                   +254 103 947 514
                 </a>
@@ -133,15 +136,15 @@ function Contact() {
                 </span>
               </p>
             </div>
-            <div className="flex items-center gap-3">
-              <MessageCircle className="text-green-600 w-6 h-6" />
+            <div className="flex items-center gap-3 hover:bg-gray-50 transition-all rounded-md p-2 cursor-pointer">
+              <MessageCircle className="text-green-500 w-6 h-6" />
               <p>
                 Order via WhatsApp:
                 <a
                   href="https://wa.me/254701571745"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-bold text-blue-600 hover:underline ml-1"
+                  className="font-bold text-black hover:text-green-500 ml-1 transition"
                 >
                   +254 701 571 745
                 </a>
@@ -161,7 +164,7 @@ function Contact() {
               required
               value={formData.name}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition hover:shadow-md cursor-text"
             />
             <input
               type="email"
@@ -170,7 +173,7 @@ function Contact() {
               required
               value={formData.email}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition hover:shadow-md cursor-text"
             />
             <input
               type="tel"
@@ -179,7 +182,7 @@ function Contact() {
               required
               value={formData.phone}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition hover:shadow-md cursor-text"
             />
             <textarea
               name="message"
@@ -188,28 +191,26 @@ function Contact() {
               required
               value={formData.message}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition hover:shadow-md cursor-text"
             ></textarea>
 
             <button
               type="submit"
               disabled={submitting}
-              className="bg-blue-700 text-white px-6 py-3 rounded-md hover:bg-blue-800 transition-all w-full font-semibold"
+              className={`w-full py-3 font-semibold text-white rounded-md shadow-md transition-all hover:shadow-lg ${
+                submitting
+                  ? "bg-green-300 cursor-not-allowed"
+                  : "bg-green-500 hover:bg-green-600"
+              }`}
             >
               {submitting ? "Sending..." : "Send Message"}
             </button>
-
-            {response && (
-              <p className="text-sm text-center text-green-600 mt-2">
-                {response}
-              </p>
-            )}
           </form>
         </div>
 
         {/* Image */}
         <div className="relative">
-          <div className="w-60 h-60 bg-gray-200 rounded-lg flex items-center justify-center shadow-xl overflow-hidden">
+          <div className="w-60 h-60 bg-gray-200 rounded-xl flex items-center justify-center shadow-xl overflow-hidden hover:shadow-2xl transition cursor-pointer">
             <img
               src="https://ke.jumia.is/cms/2023/W08/CTO/CallCenter_Lady.png"
               alt="Customer Support"
@@ -220,8 +221,8 @@ function Contact() {
       </div>
 
       {/* Online Services Section */}
-      <div className="text-center py-12 mt-10 bg-white shadow-md rounded-lg max-w-2xl mx-auto px-6">
-        <h2 className="text-2xl font-bold text-gray-800">Our Online Services</h2>
+      <div className="text-center py-12 mt-10 bg-white shadow-md rounded-xl max-w-2xl mx-auto px-6">
+        <h2 className="text-2xl font-bold text-black">Our Online Services</h2>
         <p className="text-gray-600 mt-2">
           Get instant support on common queries.
         </p>
@@ -230,7 +231,7 @@ function Contact() {
           {services.map((service) => (
             <div key={service.id} className="w-full">
               <button
-                className="flex items-center justify-between w-full bg-blue-600 text-white px-6 py-4 rounded-lg shadow-md hover:bg-blue-700 transition-all"
+                className="flex items-center justify-between w-full bg-green-500 text-white px-6 py-4 rounded-xl shadow-md hover:bg-green-600 hover:shadow-lg transition-all cursor-pointer"
                 onClick={() => toggleExpand(service.id)}
               >
                 <span className="flex items-center gap-2 text-lg font-medium">
@@ -243,7 +244,7 @@ function Contact() {
                 )}
               </button>
               {expanded[service.id] && (
-                <div className="bg-gray-50 text-gray-700 px-5 py-3 mt-2 rounded-lg shadow-sm border border-gray-200 transition-all">
+                <div className="bg-gray-100 text-gray-800 px-5 py-3 mt-2 rounded-xl shadow-sm border border-gray-200 transition-all">
                   {service.details}
                 </div>
               )}
@@ -252,7 +253,6 @@ function Contact() {
         </div>
       </div>
 
-      {/* Toast Container */}
       <ToastContainer />
     </div>
   );

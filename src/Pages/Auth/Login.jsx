@@ -18,7 +18,6 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       await login(email, password);
       toast.success("Login successful!");
@@ -35,34 +34,36 @@ const Login = () => {
       toast.warn("Please enter your registered email.");
       return;
     }
-
     try {
       await resetPassword(resetEmail);
       toast.success("Password reset link sent! Check your email.");
-      setIsResettingPassword(false); // Close the reset password input after sending the email
+      setIsResettingPassword(false);
     } catch (err) {
       toast.error("Failed to send reset email. Please try again.");
     }
   };
 
   return (
-    <div className="flex flex-col items-center bg-gray-200 min-h-screen justify-center p-4">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-xl font-bold text-center mb-2 text-gray-700">Login</h2>
+    <div className="flex items-center justify-center min-h-screen bg-gray-800 px-4 font-sans">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 border border-gray-200 transition-transform transform hover:scale-[1.02] duration-300">
+        <h2 className="text-2xl font-semibold text-green-500 text-center mb-4">
+          Welcome Back
+        </h2>
+        <p className="text-center text-gray-700 mb-6 text-sm">
+          Sign in to continue
+        </p>
+
         {!isResettingPassword ? (
-          // Login Form
-          <form onSubmit={handleLogin} className="space-y-3">
-            {/* Email Input */}
+          <form onSubmit={handleLogin} className="space-y-4">
             <input
               type="email"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition hover:border-green-500 hover:shadow-md"
             />
 
-            {/* Password Input with Eye Icon */}
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -70,42 +71,47 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full p-2 border border-gray-300 rounded pr-10"
+                className="w-full p-3 border border-gray-300 rounded-lg pr-12 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition hover:border-green-500 hover:shadow-md"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600"
+                className="absolute right-3 top-3 text-gray-600 hover:text-green-500 transition cursor-pointer"
               >
-                {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+                {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
               </button>
             </div>
 
-            <button type="submit" className="w-full py-2 bg-blue-600 text-white rounded">
+            <button
+              type="submit"
+              disabled={loading} // Disable while loading
+              className={`w-full py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5 cursor-pointer text-sm ${
+                loading ? "opacity-60 cursor-not-allowed" : ""
+              }`}
+            >
               {loading ? "Logging in..." : "Login"}
             </button>
           </form>
         ) : (
-          // Password Reset Form
-          <div className="space-y-3">
+          <div className="space-y-4">
             <input
               type="email"
               placeholder="Enter your registered email"
               value={resetEmail}
               onChange={(e) => setResetEmail(e.target.value)}
               required
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition hover:border-green-500 hover:shadow-md"
             />
             <button
               onClick={handleResetPassword}
-              className="w-full py-2 bg-blue-600 text-white rounded"
+              className="w-full py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5 cursor-pointer text-sm"
             >
               Send Reset Link
             </button>
             <div className="text-center mt-3">
               <button
                 onClick={() => setIsResettingPassword(false)}
-                className="text-blue-500 hover:underline text-sm"
+                className="text-green-500 hover:underline text-sm font-medium cursor-pointer"
               >
                 Back to Login
               </button>
@@ -114,11 +120,10 @@ const Login = () => {
         )}
 
         {!isResettingPassword && (
-          // Forgot Password Link
           <div className="mt-3 text-center">
             <button
               onClick={() => setIsResettingPassword(true)}
-              className="text-blue-500 hover:underline text-sm"
+              className="text-green-500 hover:underline text-sm font-medium cursor-pointer"
             >
               Forgot Password?
             </button>

@@ -7,7 +7,7 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
-// Initialize Appwrite
+// ------------------ Appwrite Initialization ------------------
 const client = new Client()
   .setEndpoint("https://cloud.appwrite.io/v1")
   .setProject("67e83a4b001b39dcc0dc");
@@ -19,7 +19,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Check session on load
+  // ------------------ SESSION CHECK ON LOAD ------------------
   useEffect(() => {
     const handleSession = async () => {
       try {
@@ -29,24 +29,20 @@ export function AuthProvider({ children }) {
           setUser(userData);
           console.log("Session valid:", userData);
         } else {
-          console.log("No active session found.");
           setUser(null);
+          console.log("No active session found.");
         }
       } catch (error) {
-        console.log(
-          "No active session (expected if unverified or logged out):",
-          error.message
-        );
+        console.log("No active session (expected if unverified or logged out):", error.message);
         setUser(null);
       } finally {
         setLoading(false);
       }
     };
-
     handleSession();
   }, []);
 
-  // Helper to build user document defaults
+  // ------------------ HELPER: Default User Document ------------------
   const buildUserDocDefaults = ({ name = "", email = "", phone = "" } = {}) => {
     const now = new Date().toISOString();
     return {
@@ -80,15 +76,11 @@ export function AuthProvider({ children }) {
 
       const userDoc = buildUserDocDefaults({ name, email, phone });
       await databases.createDocument(
-        "67e83c7d003109ed269c", // DB ID
+        "67e83c7d003109ed269c", // Database ID
         "67e84557002bec656b65", // Collection ID
         ID.unique(),
         userDoc,
-        [
-          Permission.read(Role.any()),
-          Permission.update(Role.any()),
-          Permission.delete(Role.any()),
-        ]
+        [Permission.read(Role.any()), Permission.update(Role.any()), Permission.delete(Role.any())]
       );
       console.log("User document created in DB");
 
@@ -99,10 +91,7 @@ export function AuthProvider({ children }) {
       await account.deleteSession("current");
       setUser(null);
 
-      return {
-        message: "Verification email sent. Please verify your email before login.",
-        user: newUser,
-      };
+      return { message: "Verification email sent. Please verify your email before login.", user: newUser };
     } catch (error) {
       console.error("Registration failed:", error);
       throw new Error(error.message || error);
@@ -113,11 +102,7 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     try {
       console.log("Attempting login...");
-      try {
-        await account.deleteSession("current");
-      } catch (err) {
-        console.log("No existing session, proceeding...");
-      }
+      try { await account.deleteSession("current"); } catch { /* no active session */ }
 
       await account.createEmailPasswordSession(email, password);
       const userData = await account.get();
@@ -166,7 +151,7 @@ export function AuthProvider({ children }) {
       await account.createOAuth2Session(
         "google", // provider
         `${window.location.origin}/dashboard`, // success redirect
-        `${window.location.origin}/register` // failure redirect
+        `${window.location.origin}/register`  // failure redirect
       );
       console.log("Redirecting to Google OAuth...");
     } catch (error) {
@@ -175,18 +160,9 @@ export function AuthProvider({ children }) {
     }
   };
 
+  // ------------------ PROVIDER ------------------
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        register,
-        login,
-        logout,
-        resetPassword,
-        googleSignIn, // ✅ added
-        loading,
-      }}
-    >
+    <AuthContext.Provider value={{ user, register, login, logout, resetPassword, googleSignIn, loading }}>
       {!loading && children}
     </AuthContext.Provider>
   );

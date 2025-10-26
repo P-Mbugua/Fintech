@@ -1,114 +1,244 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Client, Databases, Account, Query } from 'appwrite';
+
+const client = new Client()
+  .setEndpoint("https://cloud.appwrite.io/v1")
+  .setProject("67e83a4b001b39dcc0dc");
+
+const databases = new Databases(client);
+const account = new Account(client);
 
 function OrderHistory() {
-  const [activeTab, setActiveTab] = useState('Unpaid');
-  const [currentPage, setCurrentPage] = useState(1);
+  const [orders, setOrders] = useState([]);
+  const [userEmail, setUserEmail] = useState('');
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const statusTabs = ['Unpaid', 'To be Shipped', 'Shipped', 'Completed', 'Cancelled'];
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const user = await account.get();
+        setUserEmail(user.email);
+      } catch (err) {
+        console.error('User not logged in', err);
+      }
+    };
+    fetchUser();
+  }, []);
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(prev => prev - 1);
+  useEffect(() => {
+    if (!userEmail) return;
+
+    const fetchOrders = async () => {
+      try {
+        const response = await databases.listDocuments(
+          '67e83c7d003109ed269c', 
+          '68016180000538126583', 
+          [
+            Query.equal('userEmail', userEmail),
+            Query.orderDesc('$createdAt'),
+            Query.limit(50)
+          ]
+        );
+        setOrders(response.documents);
+      } catch (err) {
+        console.error('Error fetching orders', err);
+      }
+    };
+
+    fetchOrders();
+  }, [userEmail]);
+
+  const formatCurrency = (amount) => `KSh ${amount.toLocaleString()}`;
+
+  const openModal = (order) => {
+    setSelectedOrder(order);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedOrder(null);
+    setIsModalOpen(false);
+  };
+
+  const statusClass = (status) => {
+    switch (status.toLowerCase()) {
+      case 'pending': return 'bg-yellow-200 text-yellow-800';
+      case 'shipped': return 'bg-blue-200 text-blue-800';
+      case 'completed': return 'bg-green-200 text-green-800';
+      case 'cancelled': return 'bg-red-200 text-red-800';
+      default: return 'bg-gray-200 text-gray-800';
     }
   };
 
-  const handleNextPage = () => {
-    setCurrentPage(prev => prev + 1);
-  };
-
   return (
-    <div className="p-4 max-w-6xl mx-auto">
-      {/* Status Tabs */}
-      <div className="flex space-x-4 mb-6 border-b">
-        {statusTabs.map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 text-sm font-medium ${
-              activeTab === tab
-                ? 'text-blue-600 border-b-2 border-blue-600'
-                : 'text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            {tab}
-          </button>
-        ))}
+    <div className="p-4 md:p-8 max-w-4xl mx-auto font-sans text-gray-800">
+      <h1 className="text-3xl font-bold text-green-500 mb-6 text-center md:text-left">My Orders</h1>
+
+      {/* Small Screens - Card Style */}
+      <div className="space-y-4 lg:hidden">
+        {orders.length > 0 ? orders.map(order => {
+          const cartItems = JSON.parse(order.cart);
+          const shipping = JSON.parse(order.shippingInfo);
+
+          return (
+            <div key={order.$id} className="bg-white shadow-md rounded-xl p-4 hover:shadow-xl transition duration-300">
+              {/* Products */}
+              <div className="space-y-2">
+                {cartItems.map((item, idx) => (
+                  <div key={idx} className="flex items-center space-x-3">
+                    <img src={item.image} alt={item.productName || item.name} className="w-16 h-16 object-cover rounded-lg" />
+                    <div className="flex-1">
+                      <p className="text-gray-800 font-semibold truncate">{item.productName || item.name}</p>
+                      <p className="text-gray-400 text-sm">Qty: {item.quantity || 1}</p>
+                      <p className="text-green-500 font-bold">{formatCurrency((item.price01 || item.price) * (item.quantity || 1))}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Shipping Info */}
+              <div className="mt-3 text-gray-700 text-sm space-y-1">
+                <p className="font-medium">{shipping.firstName} {shipping.lastName}</p>
+                <p>{shipping.phone}</p>
+                <p>{shipping.address}, {shipping.region}</p>
+              </div>
+
+              {/* Payment & Status */}
+              <div className="mt-3 flex items-center justify-between">
+                <p className="text-gray-800 font-medium">{order.paymentMethod}</p>
+                <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass(order.status)}`}>
+                  {order.status}
+                </span>
+              </div>
+
+              {/* Total & Action */}
+              <div className="mt-3 flex items-center justify-between">
+                <p className="text-green-500 font-bold text-lg">{formatCurrency(order.totalAmount)}</p>
+                <button
+                  onClick={() => openModal(order)}
+                  className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 hover:scale-105 transition duration-300"
+                >
+                  View
+                </button>
+              </div>
+            </div>
+          );
+        }) : (
+          <p className="text-center text-gray-400 text-lg">No orders found.</p>
+        )}
       </div>
 
-      {/* Order Table */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      {/* Large Screens - Table */}
+      <div className="hidden lg:block overflow-x-auto">
+        <table className="min-w-full bg-white shadow-lg rounded-2xl overflow-hidden">
+          <thead className="bg-gray-100">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Product info
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Order Amount
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Order Status
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Options
-              </th>
+              <th className="px-6 py-3 text-left text-gray-800 font-semibold">Products</th>
+              <th className="px-6 py-3 text-left text-gray-800 font-semibold">Shipping</th>
+              <th className="px-6 py-3 text-left text-gray-800 font-semibold">Payment</th>
+              <th className="px-6 py-3 text-left text-gray-800 font-semibold">Status</th>
+              <th className="px-6 py-3 text-left text-gray-800 font-semibold">Total</th>
+              <th className="px-6 py-3 text-left text-gray-800 font-semibold">Actions</th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            <tr>
-              <td colSpan="4" className="px-6 py-4 whitespace-nowrap text-center text-gray-500">
-                No order
-              </td>
-            </tr>
+          <tbody>
+            {orders.length > 0 ? orders.map(order => {
+              const cartItems = JSON.parse(order.cart);
+              const shipping = JSON.parse(order.shippingInfo);
+
+              return (
+                <tr key={order.$id} className="border-b border-gray-200 hover:bg-gray-50 transition">
+                  <td className="px-6 py-4">
+                    <div className="flex flex-col space-y-2">
+                      {cartItems.map((item, idx) => (
+                        <div key={idx} className="flex items-center space-x-3">
+                          <img src={item.image} alt={item.productName || item.name} className="w-12 h-12 object-cover rounded-lg" />
+                          <div>
+                            <p className="text-gray-800 font-semibold">{item.productName || item.name}</p>
+                            <p className="text-gray-400 text-sm">Qty: {item.quantity || 1}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <p className="text-gray-800">{shipping.firstName} {shipping.lastName}</p>
+                    <p className="text-gray-400 text-sm">{shipping.phone}</p>
+                    <p className="text-gray-400 text-sm">{shipping.address}, {shipping.region}</p>
+                  </td>
+                  <td className="px-6 py-4 text-gray-800">{order.paymentMethod}</td>
+                  <td className="px-6 py-4">
+                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass(order.status)}`}>
+                      {order.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-green-500 font-bold">{formatCurrency(order.totalAmount)}</td>
+                  <td className="px-6 py-4">
+                    <button
+                      onClick={() => openModal(order)}
+                      className="bg-green-500 text-white px-4 py-1 rounded-lg hover:bg-green-600 hover:scale-105 transition"
+                    >
+                      View
+                    </button>
+                  </td>
+                </tr>
+              );
+            }) : (
+              <tr>
+                <td colSpan="6" className="text-center py-6 text-gray-400">No orders found.</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
 
-      {/* Pagination */}
-      <div className="mt-4 flex items-center justify-between">
-        <div className="flex-1 flex justify-between sm:hidden">
-          <button
-            onClick={handlePreviousPage}
-            disabled={currentPage === 1}
-            className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Previous
-          </button>
-          <button
-            onClick={handleNextPage}
-            className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-          >
-            Next
-          </button>
-        </div>
-        
-        <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-          <div>
-            <p className="text-sm text-gray-700">
-              Current Page: <span className="font-medium">{currentPage}</span>
-            </p>
-          </div>
-          <div>
-            <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+      {/* Modal for Order Details */}
+      {isModalOpen && selectedOrder && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 px-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl p-6 overflow-y-auto max-h-[90vh]">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-800">Order Details</h2>
+              <button onClick={closeModal} className="text-gray-600 hover:text-gray-800 text-3xl font-bold">&times;</button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              {JSON.parse(selectedOrder.cart).map((item, idx) => (
+                <div key={idx} className="flex items-center space-x-4 p-2 border border-gray-200 rounded-xl">
+                  <img src={item.image} alt={item.productName || item.name} className="w-24 h-24 object-cover rounded-lg" />
+                  <div>
+                    <p className="text-gray-800 font-semibold">{item.productName || item.name}</p>
+                    <p className="text-gray-400 text-sm">Qty: {item.quantity || 1}</p>
+                    <p className="text-green-500 font-bold">{formatCurrency((item.price01 || item.price) * (item.quantity || 1))}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Shipping Info</h3>
+              {Object.entries(JSON.parse(selectedOrder.shippingInfo)).map(([key, value]) => (
+                <p key={key} className="text-gray-700 capitalize text-sm"><strong>{key}:</strong> {value}</p>
+              ))}
+            </div>
+
+            <div className="mb-6 text-gray-800">
+              <p><strong>Payment Method:</strong> {selectedOrder.paymentMethod}</p>
+              <p><strong>Status:</strong> {selectedOrder.status}</p>
+              <p className="text-green-500 font-bold"><strong>Total:</strong> {formatCurrency(selectedOrder.totalAmount)}</p>
+            </div>
+
+            <div className="text-right">
               <button
-                onClick={handlePreviousPage}
-                disabled={currentPage === 1}
-                className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={closeModal}
+                className="bg-green-500 text-white px-6 py-2 rounded-lg shadow hover:bg-green-600 hover:scale-105 transition"
               >
-                <span className="sr-only">Previous</span>
-                Previous
+                Close
               </button>
-              <button
-                onClick={handleNextPage}
-                className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-              >
-                <span className="sr-only">Next</span>
-                Next
-              </button>
-            </nav>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

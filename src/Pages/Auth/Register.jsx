@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
-import { toast } from "react-toastify";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
@@ -11,63 +11,73 @@ const Register = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const { register, googleSignIn } = useAuth(); // Make sure googleSignIn exists in AuthContext
+  const { register } = useAuth();
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    // Password strength validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      toast.error(
+        "Password must be at least 6 characters long and include uppercase, lowercase letters, and a number."
+      );
+      setPassword(""); // Clear password field
+      return;
+    }
+
     try {
       await register(name, email, phone, password);
-
       toast.success(
         "Registration successful! 🎉 Please check your email (inbox & spam) to verify your account before login."
       );
-
       navigate("/login");
     } catch (err) {
       toast.error(err.message || "Registration failed. Please try again.");
-    }
-  };
-
-  const handleGoogleRegister = async () => {
-    try {
-      await googleSignIn();
-      toast.success("Google sign-in successful! 🎉");
-      navigate("/dashboard"); // or wherever you want after Google login
-    } catch (err) {
-      toast.error(err.message || "Google sign-in failed. Please try again.");
+      setName("");
+      setEmail("");
+      setPhone("");
+      setPassword("");
     }
   };
 
   return (
-    <div className="flex flex-col items-center bg-gray-200 min-h-screen justify-center p-4">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-xl font-bold text-center mb-2 text-gray-700">Register</h2>
+    <div className="flex items-center justify-center min-h-screen bg-gray-800 px-4 font-inter">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-gray-200 transition-transform transform hover:scale-[1.02] duration-300">
+        <h2 className="text-2xl font-semibold text-green-500 text-center mb-4">
+          Create Account
+        </h2>
+        <p className="text-center text-gray-700 mb-6 text-sm">
+          Join us and start your journey today
+        </p>
 
-        <form onSubmit={handleRegister} className="space-y-3">
+        <form onSubmit={handleRegister} className="space-y-4">
           <input
             type="text"
-            placeholder="Name"
+            placeholder="Full Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            className="w-full p-2 border rounded"
+            className="w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition hover:border-green-500 hover:shadow-md cursor-text"
           />
+
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full p-2 border rounded"
+            className="w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition hover:border-green-500 hover:shadow-md cursor-text"
           />
+
           <input
             type="text"
-            placeholder="Phone"
+            placeholder="Phone Number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             required
-            className="w-full p-2 border rounded"
+            className="w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition hover:border-green-500 hover:shadow-md cursor-text"
           />
 
           <div className="relative w-full">
@@ -77,32 +87,48 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full p-2 border rounded pr-10"
+              className="w-full p-3 border border-gray-300 rounded-lg pr-10 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition hover:border-green-500 hover:shadow-md cursor-text"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-2 text-gray-500"
+              className="absolute right-3 top-3 text-gray-600 hover:text-green-500 transition cursor-pointer"
             >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
+              {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
             </button>
           </div>
 
-          <button type="submit" className="w-full py-2 bg-green-600 text-white rounded">
+          <button
+            type="submit"
+            className="w-full py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5 cursor-pointer text-sm"
+          >
             Register
           </button>
         </form>
 
-        {/* Google Sign-in Button */}
-        <div className="mt-4 text-center">
-          <button
-            onClick={handleGoogleRegister}
-            className="w-full flex items-center justify-center gap-2 py-2 border border-gray-300 rounded hover:bg-gray-100"
+        <p className="text-center text-gray-600 mt-5 text-sm">
+          Already have an account?{" "}
+          <span
+            onClick={() => navigate("/login")}
+            className="text-green-500 font-medium cursor-pointer hover:underline hover:text-green-600 transition"
           >
-            <FaGoogle className="text-red-500" /> Register with Google
-          </button>
-        </div>
+            Login
+          </span>
+        </p>
       </div>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 };

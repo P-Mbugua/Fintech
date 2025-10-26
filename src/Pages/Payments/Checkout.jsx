@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Client, Databases, Query } from 'appwrite';
-import Payments from './Payments'; 
 
 // Initialize Appwrite client
 const client = new Client()
@@ -12,42 +11,39 @@ const databases = new Databases(client);
 function Checkout() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { cart } = state || {};
+  const { cart: passedCart, product } = state || {};
+  const [cart, setCart] = useState(passedCart || (product ? [product] : []));
   const [shippingInfo, setShippingInfo] = useState(null);
-  const [paymentMethods] = useState([
-    { id: '1', name: 'Credit Card' },
-    { id: '2', name: 'M-Pesa' },
-    { id: '3', name: 'PayPal' },
-  ]);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('delivery'); // default
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [isAccountVerified, setIsAccountVerified] = useState(false); // fetch account verification if needed
 
+  const paymentMethods = [
+    { id: 'delivery', name: 'Pay on Delivery' },
+    { id: 'order', name: 'Pay on Order' },
+  ];
+
+  // Fetch shipping info from Address collection
   useEffect(() => {
     const fetchShippingInfo = async () => {
       try {
-        // Query to fetch the latest document using createdAt field
         const response = await databases.listDocuments(
-          "67e83c7d003109ed269c",
-          "67f1135f0015843036ee",
-          [
-            Query.orderDesc('$createdAt'),  
-            Query.limit(1),  
-          ]
+          "67e83c7d003109ed269c", // Database ID
+          "67f1135f0015843036ee", // Address collection
+          [Query.orderDesc('$createdAt'), Query.limit(1)]
         );
-        
+
         const userShippingInfo = response.documents[0];
-        
+
         if (userShippingInfo) {
-          // Ensure we get the shipping details including user ID, email, etc.
           setShippingInfo({
-            firstName: userShippingInfo.firstName,
-            lastName: userShippingInfo.lastName,
-            phone: userShippingInfo.phone,
-            address: userShippingInfo.address,
-            region: userShippingInfo.region,
-            userId: userShippingInfo.userId,
-            email: userShippingInfo.email,
+            firstName: userShippingInfo.firstName || '',
+            lastName: userShippingInfo.lastName || '',
+            phone: userShippingInfo.phone || '',
+            address: userShippingInfo.address || '',
+            region: userShippingInfo.region || '',
+            userId: userShippingInfo.userId || '',
+            email: userShippingInfo.email || '',
           });
         } else {
           console.log('No shipping information available.');
@@ -61,28 +57,52 @@ function Checkout() {
   }, []);
 
   const handlePlaceOrder = async () => {
+    // Validate shipping info
+    if (!shippingInfo || !shippingInfo.firstName || !shippingInfo.lastName || !shippingInfo.email) {
+      alert('Please complete your shipping information before placing the order.');
+      navigate('/shipping');
+      return;
+    }
+
     const paymentMethod = paymentMethods.find(method => method.id === selectedPaymentMethod);
+
     if (!paymentMethod) {
       alert('Please select a valid payment method!');
       return;
     }
 
+    if (selectedPaymentMethod === 'order' && !isAccountVerified) {
+      alert('Your account is not verified. You cannot use Pay on Order.');
+      return;
+    }
+
     try {
       await databases.createDocument(
-        '67e83c7d003109ed269c',
-        '67f1135f0015843036ee',
+        '67e83c7d003109ed269c', // Database ID
+        '68016180000538126583', // OrderDetails collection
         'unique()',
         {
-          cart,
-          shippingInfo,
+          cart: JSON.stringify(cart), // string type
+          shippingInfo: JSON.stringify({
+            firstName: shippingInfo.firstName,
+            lastName: shippingInfo.lastName,
+            phone: shippingInfo.phone,
+            address: shippingInfo.address,
+            region: shippingInfo.region,
+            email: shippingInfo.email,
+            userId: shippingInfo.userId,
+          }), // string type
           paymentMethod: paymentMethod.name,
-          totalAmount: cart?.reduce((acc, item) => acc + item.price01 * item.quantity, 0) + 199,
+          totalAmount: cart.reduce((acc, item) => acc + (item.price01 || item.price) * (item.quantity || 1), 0) + 199,
           status: 'pending',
+          userEmail: shippingInfo.email,
+          userName: `${shippingInfo.firstName} ${shippingInfo.lastName}`,
         }
       );
       setIsOrderPlaced(true);
     } catch (error) {
       console.error('Error placing the order', error);
+      alert('Failed to place order. Check console for details.');
     }
   };
 
@@ -92,64 +112,61 @@ function Checkout() {
 
   const handlePaymentChange = (e) => {
     const selected = e.target.value;
-    setSelectedPaymentMethod(selected);
-    if (selected === '2') {
-      setShowPaymentModal(true);
+    if (selected === 'order' && !isAccountVerified) {
+      alert('Your account is not verified. You cannot use Pay on Order.');
+      return;
     }
+    setSelectedPaymentMethod(selected);
   };
 
-  return (
-    <div className="checkout-container bg-white p-10 rounded-xl shadow-lg max-w-4xl mx-auto relative">
-      <h1 className="text-4xl font-semibold mb-8 text-center text-indigo-600">Checkout</h1>
+  const formatCurrency = (amount) => `KSh ${amount.toLocaleString()}`;
 
-      {/* Shipping Information */}
-      <section className="mb-8">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-semibold text-gray-800">Shipping Information</h2>
-          {shippingInfo ? (
-            <button
-              className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition duration-200"
-              onClick={handleEditShipping}
-            >
-              Edit Shipping Info
-            </button>
-          ) : (
-            <button
-              className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition duration-200"
-              onClick={handleEditShipping}
-            >
-              Add Shipping Info
-            </button>
-          )}
+  return (
+    <div className="checkout-container bg-white p-6 sm:p-8 md:p-10 rounded-2xl shadow-2xl max-w-5xl mx-auto relative font-sans text-gray-800 mt-8 md:mt-14 lg:mt-14">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-10 text-center text-green-500">Checkout</h1>
+
+      {/* Shipping Info */}
+      <section className="mb-10">
+        <div className="flex justify-between items-center mb-5">
+          <h2 className="text-xl sm:text-2xl md:text-2xl font-semibold text-gray-800">Shipping Information</h2>
+          <button
+            onClick={handleEditShipping}
+            className="bg-green-500 text-white py-2 px-5 sm:px-6 rounded-md shadow-md hover:bg-green-600 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
+          >
+            Edit
+          </button>
         </div>
 
-        <div className="space-y-3 text-lg">
+        <div className="space-y-2 text-sm sm:text-base md:text-lg bg-gray-100 p-5 rounded-xl">
           {shippingInfo ? (
-            <div>
+            <div className="grid grid-cols-2 gap-4">
               <p><strong>Name:</strong> {shippingInfo.firstName} {shippingInfo.lastName}</p>
-              <p><strong>Address:</strong> {shippingInfo.address}</p>
               <p><strong>Phone:</strong> {shippingInfo.phone}</p>
+              <p><strong>Address:</strong> {shippingInfo.address}</p>
               <p><strong>Region:</strong> {shippingInfo.region}</p>
               <p><strong>Email:</strong> {shippingInfo.email}</p>
             </div>
           ) : (
-            <p className="text-gray-500">No shipping information available.</p>
+            <p className="text-gray-400">No shipping information available.</p>
           )}
         </div>
       </section>
 
       {/* Payment Method */}
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Payment Method</h2>
-        <div className="space-y-4">
+      <section className="mb-10">
+        <h2 className="text-xl sm:text-2xl md:text-2xl font-semibold text-gray-800 mb-4">Payment Method</h2>
+        <div className="overflow-x-auto max-w-full">
           <select
-            className="border-2 p-3 rounded-lg w-full text-gray-700 focus:ring-2 focus:ring-indigo-500"
+            className="border-2 border-gray-400 p-3 rounded-xl w-full max-w-full text-gray-800 text-sm sm:text-base focus:ring-2 focus:ring-green-500 transition-all duration-300 hover:border-green-500"
             onChange={handlePaymentChange}
             value={selectedPaymentMethod}
           >
-            <option value="">Select Payment Method</option>
             {paymentMethods.map((method) => (
-              <option key={method.id} value={method.id}>
+              <option
+                key={method.id}
+                value={method.id}
+                disabled={method.id === 'order' && !isAccountVerified}
+              >
                 {method.name}
               </option>
             ))}
@@ -158,65 +175,61 @@ function Checkout() {
       </section>
 
       {/* Product List Summary */}
-      <section className="mb-8">
-  <h2 className="text-2xl font-semibold text-gray-800 mb-4">Product List Summary</h2>
-  <ul className="space-y-4">
-    {cart && cart.length > 0 ? (
-      cart.map((item, index) => (
-        <li key={index} className="flex justify-between items-center p-4 bg-gray-50 rounded-lg shadow-sm">
-          <div className="flex items-center">
-            <img src={item.image} alt={item.productName} className="w-20 h-20 object-cover mr-4 rounded-lg" />
-            <span className="font-semibold text-gray-800">{item.productName}</span>
-          </div>
-          <div className="text-right">
-            <span className="text-sm text-gray-600">Quantity: </span>
-            <span className="font-semibold">{item.quantity}</span>
-            <p className="text-lg font-bold text-indigo-600 mt-2">KSh {item.price01 * item.quantity}</p>
-          </div>
-        </li>
-      ))
-    ) : (
-      <p className="text-gray-500">Your cart is empty.</p>
-    )}
-  </ul>
-</section>
+      <section className="mb-10">
+        <h2 className="text-xl sm:text-2xl md:text-2xl font-semibold text-gray-800 mb-4">Product List Summary</h2>
+        <ul className="space-y-4">
+          {cart.length > 0 ? (
+            cart.map((item, index) => (
+              <li
+                key={index}
+                className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-gray-50 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300"
+              >
+                <div className="flex items-center space-x-4 mb-3 sm:mb-0">
+                  <img src={item.image} alt={item.productName || item.name} className="w-16 h-16 sm:w-24 sm:h-24 md:w-24 md:h-24 object-cover rounded-lg" />
+                  <span className="font-semibold text-gray-800 text-sm sm:text-base md:text-lg">{item.productName || item.name}</span>
+                </div>
+                <div className="text-right space-y-1 text-sm sm:text-base md:text-lg">
+                  <p><span className="text-gray-600">Qty:</span> <span className="font-semibold">{item.quantity || 1}</span></p>
+                  <p className="text-green-500 font-bold">{formatCurrency((item.price01 || item.price) * (item.quantity || 1))}</p>
+                </div>
+              </li>
+            ))
+          ) : (
+            <p className="text-gray-400 text-sm sm:text-base md:text-lg">Your cart is empty.</p>
+          )}
+        </ul>
+      </section>
 
       {/* Total */}
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Total</h2>
-        <p className="font-semibold text-lg">Product Amount: KSh {cart?.reduce((acc, item) => acc + item.price01 * item.quantity, 0)}</p>
-        <p className="font-semibold text-lg">Shipping Fee: + KSh 199</p>
-        <p className="font-semibold text-lg">Total Payment: KSh {cart?.reduce((acc, item) => acc + item.price01 * item.quantity, 0) + 199}</p>
+      <section className="mb-10 p-5 bg-gray-100 rounded-xl shadow-inner text-sm sm:text-base md:text-lg">
+        <h2 className="text-xl sm:text-2xl md:text-2xl font-semibold text-gray-800 mb-4">Total</h2>
+        <div className="flex justify-between mb-2">
+          <span className="font-semibold">Product Amount:</span>
+          <span>{formatCurrency(cart.reduce((acc, item) => acc + (item.price01 || item.price) * (item.quantity || 1), 0))}</span>
+        </div>
+        <div className="flex justify-between mb-2">
+          <span className="font-semibold">Shipping Fee:</span>
+          <span>{formatCurrency(199)}</span>
+        </div>
+        <div className="flex justify-between border-t border-gray-400 pt-2 text-lg sm:text-xl md:text-xl font-bold text-green-500">
+          <span>Total Payment:</span>
+          <span>{formatCurrency(cart.reduce((acc, item) => acc + (item.price01 || item.price) * (item.quantity || 1), 0) + 199)}</span>
+        </div>
       </section>
 
       {/* Place Order Button */}
       <div className="text-center">
         <button
           onClick={handlePlaceOrder}
-          className="bg-indigo-600 text-white py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 disabled:opacity-50 transition duration-200"
           disabled={isOrderPlaced}
+          className="bg-green-500 text-white py-3 px-8 sm:px-10 rounded-xl shadow-md hover:bg-green-600 hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base md:text-lg"
         >
           {isOrderPlaced ? 'Order Placed' : 'Place Order'}
         </button>
       </div>
 
       {/* Success Message */}
-      {isOrderPlaced && <p className="text-center mt-4 text-green-600">Your order has been placed successfully!</p>}
-
-      {/* Modal for M-Pesa */}
-      {showPaymentModal && (
-        <div className="fixed inset-0 bg-transparent bg-black flex items-center justify-center z-50">
-          <div className="bg-gray-300 p-6 rounded-xl shadow-xl max-w-md w-full relative">
-            <button
-              onClick={() => setShowPaymentModal(false)}
-              className="absolute top-2 right-2 text-gray-500 hover:text-black text-lg"
-            >
-              ✕
-            </button>
-            <Payments />
-          </div>
-        </div>
-      )}
+      {isOrderPlaced && <p className="text-center mt-4 text-green-600 font-semibold text-sm sm:text-base md:text-lg">Your order has been placed successfully!</p>}
     </div>
   );
 }
