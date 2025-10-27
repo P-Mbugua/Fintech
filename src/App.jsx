@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./Context/AuthContext";
 import { CartProvider } from "./Context/CartContext";
 import { ThemeProvider } from "./Context/ThemeContext";
+import { WishlistProvider } from "./Context/WishListContent"; // ✅ Corrected import
 
 // Layouts
 import AuthLayout from "./Layouts/AuthLayout";
@@ -20,7 +21,7 @@ import Register from "./Pages/Auth/Register";
 import ForgotPassword from "./Pages/Auth/ForgotPassword";
 import VerifyEmail from "./Pages/Auth/VerifyEmail";
 
-// Common pages
+// Common Pages
 import Header from "./components/Common/Header";
 import Footer from "./components/Common/Footer";
 import Contact from "./components/Common/Contact";
@@ -42,8 +43,6 @@ import Watches from "./Pages/Other Products/Watches/watches";
 import TVs from "./Pages/Other Products/TVs/TVs";
 import Phone from "./Pages/Other Products/Phone/Phone";
 
-
-
 // Wishlist (Protected)
 import WishList from "./Pages/WishList/WishList";
 
@@ -53,6 +52,7 @@ import PhoneandAccessories from "./Pages/Phoneand Accessories/PhoneandAccessorie
 // Order Pages (Protected)
 import OrderHistory from "./Pages/Orders/OrderHistory";
 import OrderDetails from "./Pages/Orders/OrderDetails";
+import OrderConfirmation from "./Pages/Orders/OrderConfirmation";
 
 // Payment Pages (Protected)
 import Checkout from "./Pages/Payments/Checkout";
@@ -82,7 +82,7 @@ function App() {
     // Simulating loading time
     setTimeout(() => {
       setLoading(false);
-    }, 1000); // Loader will show for 2 seconds
+    }, 1000); // Loader will show for 1 second
   }, []);
 
   if (loading) {
@@ -92,75 +92,80 @@ function App() {
   return (
     <AuthProvider>
       <CartProvider>
-        <ThemeProvider>
-          <Router>
-            <Routes>
-              {/* Public Routes (No authentication required) */}
-              <Route path="/" element={<MainLayout><Home /></MainLayout>} />
-              <Route path="/banner" element={<MainLayout><Banner /></MainLayout>} />
-              <Route path="/hot-sales" element={<MainLayout><HotSales /></MainLayout>} />
-              <Route path="/products" element={<MainLayout><ProductsPage /></MainLayout>} />
-              <Route path="/cart" element={<DashboardLayout><Cart /></DashboardLayout>} />
-              <Route path= "/recommended" element={<MainLayout><Reccomended /></MainLayout>} />
-              <Route path="/home-accessories" element={<DashboardLayout><HomeAccessories /></DashboardLayout>} />
-              <Route path="/gifts-fashion" element={<DashboardLayout><GiftAndFashion /></DashboardLayout>} />
-              <Route path="/health-beauty" element={<DashboardLayout><Health /></DashboardLayout>} />
-              <Route path="/watches" element={<DashboardLayout><Watches /></DashboardLayout>} />
-              <Route path="/tvs" element={<DashboardLayout><TVs /></DashboardLayout>} /> 
-              <Route path="/phones" element={<DashboardLayout><Phone /></DashboardLayout>} /> 
-              <Route path="/hot-cattegories" element={<MainLayout><HotCattegories /></MainLayout>} />
-              <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
-              <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
-              <Route path="/verify" element={<AuthLayout><VerifyEmail /></AuthLayout>} />
-              <Route path="/reset-password" element={<AuthLayout><ForgotPassword /></AuthLayout>} />
-              <Route path="/contact" element={<DashboardLayout><Contact /></DashboardLayout>} />
-              <Route path="/about" element={<DashboardLayout><AboutUs /></DashboardLayout>}/>
-              <Route path="/PhoneandAccessories" element={<DashboardLayout><PhoneandAccessories /></DashboardLayout>} />
-              <Route path="/header" element={<Header />} />
-              <Route path="/footer" element={<Footer />} />
+        <WishlistProvider> {/* ✅ Wrap WishlistProvider */}
+          <ThemeProvider>
+            <Router>
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<MainLayout><Home /></MainLayout>} />
+                <Route path="/banner" element={<MainLayout><Banner /></MainLayout>} />
+                <Route path="/hot-sales" element={<MainLayout><HotSales /></MainLayout>} />
+                <Route path="/products" element={<MainLayout><ProductsPage /></MainLayout>} />
+                <Route path="/cart" element={<DashboardLayout><Cart /></DashboardLayout>} />
+                <Route path="/recommended" element={<MainLayout><Reccomended /></MainLayout>} />
+                <Route path="/home-accessories" element={<DashboardLayout><HomeAccessories /></DashboardLayout>} />
+                <Route path="/gifts-fashion" element={<DashboardLayout><GiftAndFashion /></DashboardLayout>} />
+                <Route path="/health-beauty" element={<DashboardLayout><Health /></DashboardLayout>} />
+                <Route path="/watches" element={<DashboardLayout><Watches /></DashboardLayout>} />
+                <Route path="/tvs" element={<DashboardLayout><TVs /></DashboardLayout>} /> 
+                <Route path="/phones" element={<DashboardLayout><Phone /></DashboardLayout>} /> 
+                <Route path="/hot-cattegories" element={<MainLayout><HotCattegories /></MainLayout>} />
+                <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
+                <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
+                <Route path="/verify" element={<AuthLayout><VerifyEmail /></AuthLayout>} />
+                <Route path="/reset-password" element={<AuthLayout><ForgotPassword /></AuthLayout>} />
+                <Route path="/contact" element={<DashboardLayout><Contact /></DashboardLayout>} />
+                <Route path="/about" element={<DashboardLayout><AboutUs /></DashboardLayout>}/>
+                <Route path="/PhoneandAccessories" element={<DashboardLayout><PhoneandAccessories /></DashboardLayout>} />
+                <Route path="/header" element={<Header />} />
+                <Route path="/footer" element={<Footer />} />
 
-              {/* Protected Routes (Require Authentication) */}
-              <Route path="/orders" element={
-                <ProtectedRoute><DashboardLayout><OrderHistory /></DashboardLayout></ProtectedRoute>
-              } />
-              <Route path="/order-details" element={
-                <ProtectedRoute><DashboardLayout><OrderDetails /></DashboardLayout></ProtectedRoute>
-              } />
-              <Route path="/wishlist" element={
-                <ProtectedRoute><DashboardLayout><WishList /></DashboardLayout></ProtectedRoute>  
-              }/>
+                {/* Protected Routes */}
+                <Route path="/orders" element={
+                  <ProtectedRoute><DashboardLayout><OrderHistory /></DashboardLayout></ProtectedRoute>
+                } />
+                <Route path="/order-details" element={
+                  <ProtectedRoute><DashboardLayout><OrderDetails /></DashboardLayout></ProtectedRoute>
+                } />
+                <Route path="/order-confirmation" element={
+                  <ProtectedRoute><DashboardLayout><OrderConfirmation /></DashboardLayout></ProtectedRoute>
+                } />
+                <Route path="/wishlist" element={
+                  <ProtectedRoute><DashboardLayout><WishList /></DashboardLayout></ProtectedRoute>  
+                }/>
 
-              <Route path="/checkout" element={
-                <ProtectedRoute><DashboardLayout><Checkout /></DashboardLayout></ProtectedRoute>
-              } />
-              <Route path="/payments" element={
-                <ProtectedRoute><DashboardLayout><Payments /></DashboardLayout></ProtectedRoute>
-              } />
-              <Route path="/shipping" element={
-                <ProtectedRoute><DashboardLayout><ShippingInformation /></DashboardLayout></ProtectedRoute>
-              } />
-              <Route path="/payment-success" element={
-                <ProtectedRoute><DashboardLayout><Success /></DashboardLayout></ProtectedRoute>
-              } />
+                <Route path="/checkout" element={
+                  <ProtectedRoute><DashboardLayout><Checkout /></DashboardLayout></ProtectedRoute>
+                } />
+                <Route path="/payments" element={
+                  <ProtectedRoute><DashboardLayout><Payments /></DashboardLayout></ProtectedRoute>
+                } />
+                <Route path="/shipping" element={
+                  <ProtectedRoute><DashboardLayout><ShippingInformation /></DashboardLayout></ProtectedRoute>
+                } />
+                <Route path="/payment-success" element={
+                  <ProtectedRoute><DashboardLayout><Success /></DashboardLayout></ProtectedRoute>
+                } />
 
-              <Route path="/profile" element={
-                <ProtectedRoute><DashboardLayout><Profile /></DashboardLayout></ProtectedRoute>
-              } />
-              <Route path="/settings" element={
-                <ProtectedRoute><DashboardLayout><Settings /></DashboardLayout></ProtectedRoute>
-              } />
+                <Route path="/profile" element={
+                  <ProtectedRoute><DashboardLayout><Profile /></DashboardLayout></ProtectedRoute>
+                } />
+                <Route path="/settings" element={
+                  <ProtectedRoute><DashboardLayout><Settings /></DashboardLayout></ProtectedRoute>
+                } />
 
-              <Route path="/dashboard" element={
-                <ProtectedRoute><DashboardLayout><Dashboard /></DashboardLayout></ProtectedRoute>
-              } />
-            </Routes>
-          </Router>
+                <Route path="/dashboard" element={
+                  <ProtectedRoute><DashboardLayout><Dashboard /></DashboardLayout></ProtectedRoute>
+                } />
+              </Routes>
+            </Router>
 
-          {/* Toastify Notifications */}
-          <ToastContainer position="top-right" autoClose={1000} />
+            {/* Toastify Notifications */}
+            <ToastContainer position="top-right" autoClose={1000} />
 
-          <LiveChat />
-        </ThemeProvider>
+            <LiveChat />
+          </ThemeProvider>
+        </WishlistProvider>
       </CartProvider>
     </AuthProvider>
   );

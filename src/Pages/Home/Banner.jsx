@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Menu, Smartphone, Star, Gift, ShoppingBag } from "lucide-react";
+import { Menu, Smartphone, Star, Gift, ShoppingBag, Heart } from "lucide-react";
+import { useWishlist } from "../../Context/WishListContent";
 
 const categories = [
   { name: "Phones & Accessories", icon: <Smartphone size={18} />, link: "/PhoneandAccessories" },
@@ -10,18 +11,18 @@ const categories = [
 ];
 
 const products = [
-  { title: "Portable Wardrobe", price: "KSh 4,500", img: "https://img.kilimall.com/c/public/store/11337/goods/image/101468730.jpg?x-image-process=image/format,webp/resize,w_720#" },
-  { title: "Baby Oil 100ml", price: "KSh 409", img: "https://img.kilimall.com/c/obs/seller/10541/goods_image/250123175708_0c62b8c8042fd169755eee95ddd76bf1.jpg?x-image-process=image/format,webp/resize,w_720#" },
-  { title: "Beauty Starter Kit", price: "KSh 2,438", img: "https://image.kilimall.com/kenya/shop/store/goods/8048/2023/04/16809012720888085599ebad041a1a5dcff599d812981.jpg?x-image-process=image/format,webp/resize,w_720#" },
-  { title: "TECNO Spark 30C", price: "KSh 11,599", img: "https://img.kilimall.com/c/obs/seller/2096/goods_image/240920161548_8167912c9fc1bb684477ff2aa31c3d4e.png?x-image-process=image/format,webp/resize,w_720#" },
+  { id: 1, title: "Portable Wardrobe", price: 4500, img: "https://img.kilimall.com/c/public/store/11337/goods/image/101468730.jpg?x-image-process=image/format,webp/resize,w_720#" },
+  { id: 2, title: "Baby Oil 100ml", price: 409, img: "https://img.kilimall.com/c/obs/seller/10541/goods_image/250123175708_0c62b8c8042fd169755eee95ddd76bf1.jpg?x-image-process=image/format,webp/resize,w_720#" },
+  { id: 3, title: "Beauty Starter Kit", price: 2438, img: "https://image.kilimall.com/kenya/shop/store/goods/8048/2023/04/16809012720888085599ebad041a1a5dcff599d812981.jpg?x-image-process=image/format,webp/resize,w_720#" },
+  { id: 4, title: "TECNO Spark 30C", price: 11599, img: "https://img.kilimall.com/c/obs/seller/2096/goods_image/240920161548_8167912c9fc1bb684477ff2aa31c3d4e.png?x-image-process=image/format,webp/resize,w_720#" },
 ];
 
+const HomePage = () => {
+  const { addToWishlist } = useWishlist();
 
-
-/******  3b5a81f5-b0a4-43ea-9b4c-456bd48bb74b  *******/const HomePage = () => {
   return (
     <div className="flex flex-col md:flex-row lg:pt-44 md:pt-0 pt-32">
-      {/* Sidebar Menu */}
+      {/* Sidebar */}
       <aside className="w-1/4 bg-white p-4 shadow-lg hidden md:block">
         <h2 className="text-lg font-semibold mb-4 flex items-center">
           <Menu className="mr-2" /> Categories
@@ -42,51 +43,28 @@ const products = [
         </ul>
       </aside>
 
-      {/* Main Content */}
+      {/* Main */}
       <main className="flex-1 p-4 bg-gray-100">
-        {/* Promotion Banners */}
-        <div className="relative w-full flex space-x-4 overflow-hidden mb-4">
-          <motion.div
-            initial={{ x: -100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className="flex-1 h-32 bg-red-600 text-white flex items-center justify-center text-md font-bold rounded-lg p-3 shadow-lg"
-          >
-            Flash Sale! Up to 70% Off
-          </motion.div>
-          <motion.div
-            initial={{ x: 100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className="flex-1 h-32 bg-green-500 text-white flex items-center justify-center text-md font-bold rounded-lg p-3 shadow-lg"
-          >
-            Free Shipping on Orders Over KSh 5,000
-          </motion.div>
-        </div>
-
-        {/* Product Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {products.map((product, index) => (
+          {products.map((product) => (
             <motion.div
-              key={index}
+              key={product.id}
               whileHover={{ scale: 1.04 }}
-              className="bg-white shadow-md rounded-lg p-3 flex flex-col items-center hover:shadow-lg transition"
+              className="bg-white shadow-md rounded-lg p-3 flex flex-col items-center hover:shadow-lg transition relative"
             >
-              <img
-                src={product.img}
-                alt={product.title}
-                className="w-24 h-24 object-contain"
-              />
-              <h3 className="text-sm font-semibold text-center mt-2">
-                {product.title}
-              </h3>
-              <p className="text-green-600 font-bold text-sm">{product.price}</p>
+              <img src={product.img} alt={product.title} className="w-24 h-24 object-contain" />
+              <h3 className="text-sm font-semibold text-center mt-2">{product.title}</h3>
+              <p className="text-green-600 font-bold text-sm">KSh {product.price.toLocaleString()}</p>
+
               <div className="mt-2 flex space-x-2">
+                <button
+                  onClick={() => addToWishlist(product)}
+                  className="bg-red-500 text-white text-xs px-3 py-1 rounded-lg flex items-center"
+                >
+                  <Heart className="w-4 h-4 mr-1" /> Wishlist
+                </button>
                 <button className="bg-blue-500 text-white text-xs px-3 py-1 rounded-lg flex items-center">
                   <ShoppingBag className="w-4 h-4 mr-1" /> Add
-                </button>
-                <button className="bg-green-500 text-white text-xs px-3 py-1 rounded-lg">
-                  Order
                 </button>
               </div>
             </motion.div>

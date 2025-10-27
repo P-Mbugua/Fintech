@@ -63,49 +63,53 @@ function OrderHistory() {
 
   const statusClass = (status) => {
     switch (status.toLowerCase()) {
-      case 'pending': return 'bg-yellow-200 text-yellow-800';
-      case 'shipped': return 'bg-blue-200 text-blue-800';
-      case 'completed': return 'bg-green-200 text-green-800';
-      case 'cancelled': return 'bg-red-200 text-red-800';
-      default: return 'bg-gray-200 text-gray-800';
+      case 'pending': return 'bg-yellow-100 text-yellow-800';
+      case 'shipped': return 'bg-blue-100 text-blue-800';
+      case 'completed': return 'bg-green-100 text-green-800';
+      case 'cancelled': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
     }
   };
 
   return (
-    <div className="p-4 md:p-8 max-w-4xl mx-auto font-sans text-gray-800">
-      <h1 className="text-3xl font-bold text-green-500 mb-6 text-center md:text-left">My Orders</h1>
+    <div className="p-4 md:p-8 max-w-5xl mx-auto font-sans text-gray-800">
+      <h1 className="text-3xl font-extrabold text-green-600 mb-8 text-center md:text-left tracking-wide">My Orders</h1>
 
       {/* Small Screens - Card Style */}
-      <div className="space-y-4 lg:hidden">
+      <div className="space-y-6 lg:hidden">
         {orders.length > 0 ? orders.map(order => {
           const cartItems = JSON.parse(order.cart);
           const shipping = JSON.parse(order.shippingInfo);
 
           return (
-            <div key={order.$id} className="bg-white shadow-md rounded-xl p-4 hover:shadow-xl transition duration-300">
+            <div key={order.$id} className="bg-white shadow-md rounded-2xl p-5 hover:shadow-xl transition duration-300">
+              
               {/* Products */}
-              <div className="space-y-2">
+              <div className="space-y-3 mb-4">
                 {cartItems.map((item, idx) => (
-                  <div key={idx} className="flex items-center space-x-3">
-                    <img src={item.image} alt={item.productName || item.name} className="w-16 h-16 object-cover rounded-lg" />
+                  <div key={idx} className="flex items-center space-x-4">
+                    <img src={item.image} alt={item.productName || item.name} className="w-20 h-20 object-cover rounded-lg" />
                     <div className="flex-1">
                       <p className="text-gray-800 font-semibold truncate">{item.productName || item.name}</p>
-                      <p className="text-gray-400 text-sm">Qty: {item.quantity || 1}</p>
-                      <p className="text-green-500 font-bold">{formatCurrency((item.price01 || item.price) * (item.quantity || 1))}</p>
+                      <p className="text-gray-500 text-sm">Qty: {item.quantity || 1}</p>
+                      <p className="text-green-600 font-bold mt-1">{formatCurrency((item.price01 || item.price) * (item.quantity || 1))}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
               {/* Shipping Info */}
-              <div className="mt-3 text-gray-700 text-sm space-y-1">
-                <p className="font-medium">{shipping.firstName} {shipping.lastName}</p>
+              <div className="mt-4 p-4 bg-gray-50 rounded-xl grid grid-cols-2 gap-x-4 gap-y-2 text-gray-700 text-sm">
+                <p className="font-semibold">Name:</p>
+                <p>{shipping.firstName} {shipping.lastName}</p>
+                <p className="font-semibold">Phone:</p>
                 <p>{shipping.phone}</p>
+                <p className="font-semibold">Address:</p>
                 <p>{shipping.address}, {shipping.region}</p>
               </div>
 
               {/* Payment & Status */}
-              <div className="mt-3 flex items-center justify-between">
+              <div className="mt-4 flex items-center justify-between">
                 <p className="text-gray-800 font-medium">{order.paymentMethod}</p>
                 <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusClass(order.status)}`}>
                   {order.status}
@@ -113,11 +117,11 @@ function OrderHistory() {
               </div>
 
               {/* Total & Action */}
-              <div className="mt-3 flex items-center justify-between">
-                <p className="text-green-500 font-bold text-lg">{formatCurrency(order.totalAmount)}</p>
+              <div className="mt-4 flex items-center justify-between">
+                <p className="text-green-600 font-bold text-lg">{formatCurrency(order.totalAmount)}</p>
                 <button
                   onClick={() => openModal(order)}
-                  className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 hover:scale-105 transition duration-300"
+                  className="bg-green-600 text-white px-5 py-2 rounded-xl shadow-md hover:bg-green-700 hover:scale-105 transition"
                 >
                   View
                 </button>
@@ -130,9 +134,9 @@ function OrderHistory() {
       </div>
 
       {/* Large Screens - Table */}
-      <div className="hidden lg:block overflow-x-auto">
-        <table className="min-w-full bg-white shadow-lg rounded-2xl overflow-hidden">
-          <thead className="bg-gray-100">
+      <div className="hidden lg:block overflow-x-auto mt-6">
+        <table className="min-w-full bg-white shadow-lg rounded-2xl overflow-hidden border border-gray-200">
+          <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-gray-800 font-semibold">Products</th>
               <th className="px-6 py-3 text-left text-gray-800 font-semibold">Shipping</th>
@@ -153,7 +157,7 @@ function OrderHistory() {
                     <div className="flex flex-col space-y-2">
                       {cartItems.map((item, idx) => (
                         <div key={idx} className="flex items-center space-x-3">
-                          <img src={item.image} alt={item.productName || item.name} className="w-12 h-12 object-cover rounded-lg" />
+                          <img src={item.image} alt={item.productName || item.name} className="w-14 h-14 object-cover rounded-lg" />
                           <div>
                             <p className="text-gray-800 font-semibold">{item.productName || item.name}</p>
                             <p className="text-gray-400 text-sm">Qty: {item.quantity || 1}</p>
@@ -173,11 +177,11 @@ function OrderHistory() {
                       {order.status}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-green-500 font-bold">{formatCurrency(order.totalAmount)}</td>
+                  <td className="px-6 py-4 text-green-600 font-bold">{formatCurrency(order.totalAmount)}</td>
                   <td className="px-6 py-4">
                     <button
                       onClick={() => openModal(order)}
-                      className="bg-green-500 text-white px-4 py-1 rounded-lg hover:bg-green-600 hover:scale-105 transition"
+                      className="bg-green-600 text-white px-4 py-1 rounded-xl shadow hover:bg-green-700 hover:scale-105 transition"
                     >
                       View
                     </button>
@@ -196,42 +200,53 @@ function OrderHistory() {
       {/* Modal for Order Details */}
       {isModalOpen && selectedOrder && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 px-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl p-6 overflow-y-auto max-h-[90vh]">
+          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-4xl p-6 overflow-y-auto max-h-[90vh]">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-800">Order Details</h2>
-              <button onClick={closeModal} className="text-gray-600 hover:text-gray-800 text-3xl font-bold">&times;</button>
+              <h2 className="text-2xl font-bold text-gray-900">Order Details</h2>
+              <button onClick={closeModal} className="text-gray-600 hover:text-gray-900 text-3xl font-bold">&times;</button>
             </div>
 
+            {/* Product Items */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               {JSON.parse(selectedOrder.cart).map((item, idx) => (
-                <div key={idx} className="flex items-center space-x-4 p-2 border border-gray-200 rounded-xl">
-                  <img src={item.image} alt={item.productName || item.name} className="w-24 h-24 object-cover rounded-lg" />
+                <div key={idx} className="flex items-center space-x-4 p-4 border border-gray-200 rounded-2xl hover:shadow-md transition">
+                  <img src={item.image} alt={item.productName || item.name} className="w-24 h-24 object-cover rounded-xl" />
                   <div>
-                    <p className="text-gray-800 font-semibold">{item.productName || item.name}</p>
-                    <p className="text-gray-400 text-sm">Qty: {item.quantity || 1}</p>
-                    <p className="text-green-500 font-bold">{formatCurrency((item.price01 || item.price) * (item.quantity || 1))}</p>
+                    <p className="text-gray-900 font-semibold">{item.productName || item.name}</p>
+                    <p className="text-gray-500 text-sm">Qty: {item.quantity || 1}</p>
+                    <p className="text-green-600 font-bold">{formatCurrency((item.price01 || item.price) * (item.quantity || 1))}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">Shipping Info</h3>
+            {/* Shipping Info */}
+            <div className="mb-6 p-4 bg-gray-50 rounded-xl grid grid-cols-2 gap-x-6 gap-y-2 text-gray-700">
               {Object.entries(JSON.parse(selectedOrder.shippingInfo)).map(([key, value]) => (
-                <p key={key} className="text-gray-700 capitalize text-sm"><strong>{key}:</strong> {value}</p>
+                <React.Fragment key={key}>
+                  <p className="font-semibold capitalize">{key.replace(/([A-Z])/g, ' $1')}:</p>
+                  <p>{value}</p>
+                </React.Fragment>
               ))}
             </div>
 
-            <div className="mb-6 text-gray-800">
-              <p><strong>Payment Method:</strong> {selectedOrder.paymentMethod}</p>
-              <p><strong>Status:</strong> {selectedOrder.status}</p>
-              <p className="text-green-500 font-bold"><strong>Total:</strong> {formatCurrency(selectedOrder.totalAmount)}</p>
+            {/* Payment & Status */}
+            <div className="mb-6 p-4 bg-gray-50 rounded-xl grid grid-cols-2 gap-x-6 gap-y-2 text-gray-900">
+              <p className="font-semibold">Payment Method:</p>
+              <p>{selectedOrder.paymentMethod}</p>
+
+              <p className="font-semibold">Status:</p>
+              <p>{selectedOrder.status}</p>
+
+              <p className="font-semibold">Total:</p>
+              <p className="text-green-600 font-bold">{formatCurrency(selectedOrder.totalAmount)}</p>
             </div>
 
+            {/* Close Button */}
             <div className="text-right">
               <button
                 onClick={closeModal}
-                className="bg-green-500 text-white px-6 py-2 rounded-lg shadow hover:bg-green-600 hover:scale-105 transition"
+                className="bg-green-600 text-white px-6 py-2 rounded-2xl shadow-lg hover:bg-green-700 hover:scale-105 transition-all"
               >
                 Close
               </button>
