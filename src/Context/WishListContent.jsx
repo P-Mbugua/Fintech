@@ -28,7 +28,7 @@ export const WishlistProvider = ({ children }) => {
     }
   };
 
-  // Fetch wishlist from Appwrite
+ 
   const fetchWishlist = async () => {
     if (!userId) return;
     try {
