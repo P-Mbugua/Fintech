@@ -27,6 +27,7 @@ import Footer from "./components/Common/Footer";
 import Contact from "./components/Common/Contact";
 import LiveChat from "./components/Common/LiveChat";
 import AboutUs from "./components/Common/AboutUs";
+import FloatingContactButton from "./components/Common/FloatingContactButton";
 
 // Public Pages
 import Home from "./Pages/Home/Home";
@@ -163,6 +164,7 @@ function App() {
             {/* Toastify Notifications */}
             <ToastContainer position="top-right" autoClose={1000} />
 
+            <FloatingContactButton />
             <LiveChat />
           </ThemeProvider>
         </WishlistProvider>
