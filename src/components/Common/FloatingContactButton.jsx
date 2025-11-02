@@ -50,7 +50,6 @@ export default function FloatingContactButton() {
   const account = new Account(client);
   const databases = new Databases(client);
 
-  // Collections you posted (we will try them, in order, and gracefully handle errors)
   // NOTE: If console shows different collection IDs, replace these with the exact collection IDs.
   const DATABASE_ID = "database-67e83c7d003109ed269c";
   const COLLECTION_IDS = [
