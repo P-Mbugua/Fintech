@@ -55,9 +55,9 @@ export default function FloatingContactButton() {
   const COLLECTION_IDS = [
     "table-wishlist", // provided link (may be slug)
     "wishlist", // earlier guessed id
-    "67eade1800187dbb6aad", // table-67eade...
-    "67e84557002bec656b65", // table-67e845...
-    "68016180000538126583", // earlier orders collection id you used
+    "67eade1800187dbb6aad", 
+    "67e84557002bec656b65",
+    "68016180000538126583",
   ];
 
   // Contact details (change these to your business channels)
