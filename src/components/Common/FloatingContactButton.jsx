@@ -54,7 +54,7 @@ export default function FloatingContactButton() {
   const DATABASE_ID = "database-67e83c7d003109ed269c";
   const COLLECTION_IDS = [
     "table-wishlist", // provided link (may be slug)
-    "wishlist", // earlier guessed id
+    "wishlist", 
     "67eade1800187dbb6aad", 
     "67e84557002bec656b65",
     "68016180000538126583",
