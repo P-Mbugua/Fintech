@@ -21,77 +21,78 @@ const products = [
 /******  3b5a81f5-b0a4-43ea-9b4c-456bd48bb74b  *******/const HomePage = () => {
   return (
     <div className="flex flex-col md:flex-row ">
-      {/* Sidebar Menu */}
-      <aside className="w-1/4 bg-white p-4 shadow-lg hidden md:block">
-        <h2 className="text-lg font-semibold mb-4 flex items-center">
-          <Menu className="mr-2" /> Categories
-        </h2>
-        <ul>
-          {categories.map((category, index) => (
-            <a href={category.link} key={index} className="block">
-              <motion.li
-                whileHover={{ scale: 1.05, x: 5 }}
-                transition={{ type: "spring", stiffness: 200 }}
-                className="flex items-center p-2 mb-2 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer text-sm"
-              >
-                {category.icon}
-                <span className="ml-2">{category.name}</span>
-              </motion.li>
-            </a>
-          ))}
-        </ul>
-      </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 p-4 bg-gray-100">
-        {/* Promotion Banners */}
-        <div className="relative w-full flex space-x-4 overflow-hidden mb-4">
-          <motion.div
-            initial={{ x: -100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className="flex-1 h-32 bg-red-600 text-white flex items-center justify-center text-md font-bold rounded-lg p-3 shadow-lg"
-          >
-            Flash Sale! Up to 70% Off
-          </motion.div>
-          <motion.div
-            initial={{ x: 100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className="flex-1 h-32 bg-green-500 text-white flex items-center justify-center text-md font-bold rounded-lg p-3 shadow-lg"
-          >
-            Free Shipping on Orders Over KSh 5,000
-          </motion.div>
-        </div>
+            {/* Sidebar Menu */}
+                  <aside className="w-1/4 bg-white p-4 shadow-lg hidden md:block">
+                    <h2 className="text-lg font-semibold mb-4 flex items-center">
+                      <Menu className="mr-2" /> Categories
+                    </h2>
+                    <ul>
+                      {categories.map((category, index) => (
+                        <a href={category.link} key={index} className="block">
+                          <motion.li
+                            whileHover={{ scale: 1.05, x: 5 }}
+                            transition={{ type: "spring", stiffness: 200 }}
+                            className="flex items-center p-2 mb-2 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer text-sm"
+                          >
+                            {category.icon}
+                            <span className="ml-2">{category.name}</span>
+                          </motion.li>
+                        </a>
+                      ))}
+                    </ul>
+                  </aside>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {products.map((product, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.04 }}
-              className="bg-white shadow-md rounded-lg p-3 flex flex-col items-center hover:shadow-lg transition"
-            >
-              <img
-                src={product.img}
-                alt={product.title}
-                className="w-24 h-24 object-contain"
-              />
-              <h3 className="text-sm font-semibold text-center mt-2">
-                {product.title}
-              </h3>
-              <p className="text-green-600 font-bold text-sm">{product.price}</p>
-              <div className="mt-2 flex space-x-2">
-                <button className="bg-blue-500 text-white text-xs px-3 py-1 rounded-lg flex items-center">
-                  <ShoppingBag className="w-4 h-4 mr-1" /> Add
-                </button>
-                <button className="bg-green-500 text-white text-xs px-3 py-1 rounded-lg">
-                  Order
-                </button>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+               {/* Main Content */}
+                  <main className="flex-1 p-4 bg-gray-100">
+                    {/* Promotion Banners */}
+                    <div className="relative w-full flex space-x-4 overflow-hidden mb-4">
+                      <motion.div
+                        initial={{ x: -100, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.6 }}
+                        className="flex-1 h-8 bg-red-600 text-white flex items-center justify-center text-md font-bold rounded-lg p-3 shadow-lg"
+                      >
+                        Flash Sale! Up to 70% Off
+                      </motion.div>
+                      <motion.div
+                        initial={{ x: 100, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.6 }}
+                        className="flex-1 h-8 bg-green-500 text-white flex items-center justify-center text-md font-bold rounded-lg p-3 shadow-lg"
+                      >
+                        Free Shipping on Orders Over KSh 5,000
+                      </motion.div>
+                    </div>
+
+                 {/* Product Grid */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                      {products.map((product, index) => (
+                        <motion.div
+                          key={index}
+                          whileHover={{ scale: 1.04 }}
+                          className="bg-white shadow-md rounded-lg p-3 flex flex-col items-center hover:shadow-lg transition"
+                        >
+                          <img
+                            src={product.img}
+                            alt={product.title}
+                            className="w-24 h-24 object-contain"
+                          />
+                          <h3 className="text-sm font-semibold text-center mt-2">
+                            {product.title}
+                          </h3>
+                          <p className="text-green-600 font-bold text-sm">{product.price}</p>
+                          <div className="mt-2 flex space-x-2">
+                            <button className="bg-blue-500 text-white text-xs px-3 py-1 rounded-lg flex items-center">
+                              <ShoppingBag className="w-4 h-4 mr-1" /> Add
+                            </button>
+                            <button className="bg-green-500 text-white text-xs px-3 py-1 rounded-lg">
+                              Order
+                            </button>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
       </main>
     </div>
   );

@@ -33,6 +33,7 @@ function AddToCartButton({ product }) {
       const productData = {
         userId: user.$id,
         productId: String(product.id),
+        productName: String(product.name),
         quantity,
         price01,
         total01,

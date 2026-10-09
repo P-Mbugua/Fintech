@@ -78,16 +78,16 @@ import ShippingInformation from "./Pages/Shipping Information/ShippingInformatio
 function App() {
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // Simulating loading time
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000); // Loader will show for 2 seconds
-  }, []);
+  // useEffect(() => {
+  //   // Simulating loading time
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 2000); // Loader will show for 2 seconds
+  // }, []);
 
-  if (loading) {
-    return <FintechLoader />;
-  }
+  // if (loading) {
+  //   return <FintechLoader />;
+  // }
 
   return (
     <AuthProvider>
