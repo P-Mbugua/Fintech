@@ -118,7 +118,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link to="/sell" className="hover:text-blue-500 cursor-pointer">
-                    Sell on Fintech
+                    Sell on SokoPOa
                   </Link>
                 </li>
                 <li>
@@ -156,7 +156,8 @@ function Footer() {
 
       {/* Middle Section - Blue Background */}
       <div className="bg-blue-900 text-white">
-        <div className="container mx-auto px-1 flex flex-wrap justify-between items-center pb-2">
+        <div className="container mx-auto px-1 flex flex-wrap justify-between items-center">
+
           {/* App Download Buttons */}
           <div className="mb-6 md:mb-0">
             <h4 className="font-semibold mb-1">Download Our Apps</h4>
@@ -179,18 +180,21 @@ function Footer() {
               <FaInstagram className="text-xl cursor-pointer hover:text-pink-400" />
             </div>
           </div>
+
+
+           {/*Policy Section*/}
+          <div className="bg-blue-900 border-t border-gray-600 text-center py-6 text-sm">
+            <p>&copy; {new Date().getFullYear()} SokoPoa. All rights reserved.</p>
+            <div className="flex justify-center space-x-4 mt-1">
+              <FaCcVisa className="text-2xl text-white hover:text-gray-300" />
+              <FaCcMastercard className="text-2xl text-white hover:text-gray-300" />
+              <FaCcPaypal className="text-2xl text-white hover:text-gray-300" />
+            </div>
+          </div>
+
         </div>
       </div>
 
-      {/* Bottom Section */}
-      <div className="bg-blue-900 border-t border-gray-600 text-center py-6 text-sm">
-        <p>&copy; {new Date().getFullYear()} Fintech. All rights reserved.</p>
-        <div className="flex justify-center space-x-4 mt-1">
-          <FaCcVisa className="text-2xl text-white hover:text-gray-300" />
-          <FaCcMastercard className="text-2xl text-white hover:text-gray-300" />
-          <FaCcPaypal className="text-2xl text-white hover:text-gray-300" />
-        </div>
-      </div>
     </footer>
   );
 }

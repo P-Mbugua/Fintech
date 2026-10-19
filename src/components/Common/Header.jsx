@@ -77,8 +77,8 @@ function Header() {
                   className="inline-flex items-center gap-1 text-gray-900"
                   >
                   {/* Wordmark */}
-                  <span className="font-sans text-[19px] font-extrabold tracking-[0.09em] leading-none">
-                    SOKOPOA
+                  <span className="font-sans text-[14px] sm:text-[14px] md:text-[16px] font-extrabold tracking-[0.09em] leading-none">
+                       SOKOPOA
                   </span>
                   <span className="flex h-5 w-5 items-center justify-center rounded-xl bg-blue-600 shadow-sm">
                     <svg
@@ -110,7 +110,7 @@ function Header() {
 
 
 
-            <div className="flex text-sm font-semibold pl-10 space-x-4">
+            <div className="flex text-sm font-semibold pl-10 space-x-4 lg:flex hidden">
               <Link to="/orders" className="block text-gray-700">Help Centre</Link>
               <div className="w-px h-6 bg-gray-200"></div>
               <Link to="/orders" className="block text-gray-700">Sell on SokoPoa</Link>
@@ -203,11 +203,12 @@ function Header() {
               </>
             )}
 
-            <Link to="/cart" className="block text-gray-700 pb-2 border-b border-gray-200">
+            {/* <Link to="/cart" className="block text-gray-700 pb-2 border-b border-gray-200">
               Cart ({cartCount})
             </Link>
             <Link to="/wishlist" className="block text-gray-700 pb-2 border-b border-gray-200">Wishlist</Link>
-            <Link to="/orders" className="block text-gray-700 pb-2 border-b border-gray-200">Orders</Link>
+            <Link to="/orders" className="block text-gray-700 pb-2 border-b border-gray-200">Orders</Link> */}
+
           </div>
         )}
       </header>
